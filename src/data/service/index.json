@@ -1,0 +1,67 @@
+[
+  {
+    "title": "Real Estate Investment",
+    "shortDescription": "Identifying and developing investment opportunities within the real estate market.",
+    "fullDescription": "Maraseq Group focuses on exploring and developing real estate investment opportunities while fostering partnerships with investors. Through understanding market dynamics and emerging opportunities, we aim to contribute to sustainable value and long-term growth in the real estate sector.",
+    "captions": {
+      "image1": "31.jpg",
+      "image2": "32.jpg",
+      "caption": "Investment Opportunities",
+      "captionFullDescription": "Real estate investment is built on identifying promising opportunities and transforming them into viable ventures. Maraseq Group works on recognizing potential projects and aligning them with investors looking for meaningful growth within the market.",
+      "captionShortDescription": "Exploring and developing investment opportunities within the real estate market."
+    },
+    "thumbImage": "21.jpg",
+    "img": "21.png",
+    "id": "01",
+    "buttonText": "Find A Home",
+    "active": false,
+    "icon": "flaticon-house",
+    "category": ["buying", "women"],
+    "featured": true,
+    "coreFeature": false
+  },
+
+  {
+    "title": "Real Estate Marketing",
+    "shortDescription": "Supporting the promotion of real estate projects and connecting them with potential clients.",
+    "fullDescription": "Maraseq Group supports the promotion and visibility of real estate projects by connecting opportunities with potential clients and investors. Through structured marketing approaches, we aim to help projects reach the right audience and enhance their presence in the market.",
+     "captions": {
+      "image1": "31.jpg",
+      "image2": "32.jpg",
+      "caption": "Project Marketing",
+      "captionFullDescription": "Effective real estate marketing helps projects reach the right audience. Maraseq Group focuses on presenting opportunities clearly while building connections between projects and interested buyers or investors.",
+      "captionShortDescription": "Promoting projects and connecting opportunities with the right audience."
+    },
+    "thumbImage": "21.jpg",
+    "img": "22.png",
+    "id": "02",
+    "buttonText": "Find A Home",
+    "active": true,
+    "icon": "flaticon-house-3",
+    "category": ["buying", "women"],
+    "featured": true,
+    "coreFeature": false
+  },
+
+  {
+   "title": "Opportunity Development",
+    "shortDescription": "Exploring emerging opportunities and fostering collaboration with developers and investors.",
+    "fullDescription": "Maraseq Group works on discovering new real estate opportunities and building collaborations with developers and investors. By identifying potential projects and aligning interests, we aim to contribute to the development of valuable initiatives within the market.",
+    "captions": {
+      "image1": "31.jpg",
+      "image2": "32.jpg",
+      "caption": "Opportunity Development",
+      "captionFullDescription": "Opportunity development focuses on recognizing potential within the market and connecting the right partners to bring ideas to life. Maraseq Group contributes to this process through exploration, collaboration, and strategic alignment.",
+      "captionShortDescription": "Discovering opportunities and building collaborations in the real estate market."
+    },
+    "thumbImage": "21.jpg",
+    "img": "23.png",
+    "id": "04",
+    "buttonText": "Find A Home",
+    "active": false,
+    "icon": "flaticon-deal-1",
+    "category": ["buying", "women"],
+    "featured": true,
+    "coreFeature": false
+  }
+]
