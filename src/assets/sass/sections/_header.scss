@@ -19,10 +19,6 @@
 /* --------------------------------------------------------------
     Header
 -------------------------------------------------------------- */
-.ltn__header-area {
-  // z-index: 9999;
-  // position: relative;
-}
 /* ----------------------------------------------
     Header Top Area
 ---------------------------------------------- */
@@ -1324,7 +1320,7 @@
 }
 /* Sticky Background Black */
 .sticky-active.ltn__sticky-bg-black {
-  background-color: var(--ltn__heading-color);
+  background-color: rgba(0, 0, 0, 0.82);
   .ltn__main-menu > ul > li > a,
   .header-wishlist a,
   .mini-cart-icon,
@@ -2253,6 +2249,21 @@
     border: 1px solid var(--border-color-1);
     padding: 7px 20px 6px;
     margin-right: 0;
+  }
+}
+
+.header-two-logo-slot {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 1199px) {
+  .ltn__header-logo-and-mobile-menu-in-mobile {
+    .header-two-logo-slot {
+      width: 50%;
+      justify-content: flex-start;
+    }
   }
 }
 

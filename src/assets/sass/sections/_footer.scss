@@ -120,6 +120,11 @@
     position: relative;
     top: -10px;
 }
+
+.footer-logo-white {
+    filter: brightness(0) invert(1);
+}
+
 .footer-title {
     font-size: 20px;
     margin-bottom: 25px;

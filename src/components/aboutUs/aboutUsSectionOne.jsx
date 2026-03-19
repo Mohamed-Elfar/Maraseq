@@ -31,7 +31,7 @@ function AboutUsSectionOne() {
               <div className="ltn__feature-item ltn__feature-item-3">
                 <div className="ltn__feature-icon">
                   <span>
-                    <i className="flaticon-house-4"></i>
+                    <i className="flaticon-mountain"></i>
                   </span>
                 </div>
                 <div className="ltn__feature-info">
@@ -51,7 +51,7 @@ function AboutUsSectionOne() {
               <div className="ltn__feature-item ltn__feature-item-3">
                 <div className="ltn__feature-icon">
                   <span>
-                    <i className="flaticon-call-center-agent"></i>
+                    <i className="flaticon-maps-and-location"></i>
                   </span>
                 </div>
                 <div className="ltn__feature-info">
@@ -70,7 +70,7 @@ function AboutUsSectionOne() {
               <div className="ltn__feature-item ltn__feature-item-3">
                 <div className="ltn__feature-icon">
                   <span>
-                    <i className="flaticon-maps-and-location"></i>
+                    <i className="flaticon-secure-shield"></i>
                   </span>
                 </div>
                 <div className="ltn__feature-info">

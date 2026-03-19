@@ -16,6 +16,8 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import ModalVideo from "react-modal-video";
 import blogData from "@/data/blog";
 import BlogItem from "@/components/blog";
+import newsOneImage from "@/assets/images/home/newsOne.png";
+import newsTwoImage from "@/assets/images/home/newsTwo.png";
 import CallToAction from "@/components/callToAction";
 import VideoBanner from "@/components/banner/videoBanner";
 import ProductItem from "@/components/product";
@@ -230,6 +232,8 @@ const portfolioSettings = {
       },
     ],
   };
+  const newsImages = [newsOneImage.src, newsTwoImage.src];
+
   return (
     <LayoutTwo topbar={true}>
 
@@ -425,8 +429,16 @@ const portfolioSettings = {
           >
             {blogData.map((data, key) => {
               const slug = productSlug(data.title);
+              const imageSrc = newsImages[key % newsImages.length];
+
               return (
-                <BlogItem key={key} baseUrl="blog" data={data} slug={slug} />
+                <BlogItem
+                  key={key}
+                  baseUrl="blog"
+                  data={data}
+                  slug={slug}
+                  imageSrc={imageSrc}
+                />
               );
             })}
           </Slider>

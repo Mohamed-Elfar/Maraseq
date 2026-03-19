@@ -12,6 +12,7 @@ import {
   FaMapMarkerAlt,
   FaPhoneAlt,
 } from "react-icons/fa";
+import maraseqEnglishLogo from "@/assets/images/logo/english - vrsion Maraseq logo.svg";
 
 const Footer = function () {
   return (
@@ -26,7 +27,11 @@ const Footer = function () {
                   <div className="footer-logo">
                     <div className="site-logo">
                       {/* <img src="/img/logo.png" alt="Logo" /> */}
-                      <img src="/img/logo-2.png" alt="Logo" />
+                      <img
+                        src={maraseqEnglishLogo.src}
+                        alt="Maraseq Group Logo"
+                        className="footer-logo-white"
+                      />
                     </div>
                   </div>
                   <p>
@@ -40,7 +45,7 @@ const Footer = function () {
                           <FaMapMarkerAlt />
                         </div>
                         <div className="footer-address-info">
-                          <p>Brooklyn, New York, United States</p>
+                          <p>Qutur, Tanta, Gharbia Governorate, Egypt</p>
                         </div>
                       </li>
                       <li>

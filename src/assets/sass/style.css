@@ -5820,7 +5820,7 @@ ul.wp-block-latest-posts.is-grid.alignwide {
 
 /* Sticky Background Black */
 .sticky-active.ltn__sticky-bg-black {
-  background-color: color-mix(in srgb, var(--ltn__secondary-color) 78%, black 10%);
+  background-color: rgba(0, 0, 0, 0.82);
 }
 .sticky-active.ltn__sticky-bg-black .ltn__main-menu > ul > li > a,
 .sticky-active.ltn__sticky-bg-black .header-wishlist a,
@@ -6619,6 +6619,18 @@ ul.wp-block-latest-posts.is-grid.alignwide {
   margin-right: 0;
 }
 
+.header-two-logo-slot {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 1199px) {
+  .ltn__header-logo-and-mobile-menu-in-mobile .header-two-logo-slot {
+    width: 50%;
+    justify-content: flex-start;
+  }
+}
 .css-13cymwt-control:focus {
   border-color: var(--ltn__secondary-color) !important;
   box-shadow: 0 0 0 1px var(--ltn__secondary-color) !important;
@@ -10247,10 +10259,6 @@ ul.wp-block-latest-posts.is-grid.alignwide {
 .ltn__feature-item-6 .ltn__feature-icon {
   color: var(--ltn__secondary-color);
 }
-.ltn__feature-item-6 .ltn__feature-icon img {
-  filter: invert(29%) sepia(30%) saturate(966%) hue-rotate(125deg) brightness(91%) contrast(91%);
-  transition: all 0.3s ease 0s;
-}
 .ltn__feature-item-6 .ltn__feature-icon i {
   transition: all 0.3s ease 0s;
 }
@@ -12818,6 +12826,147 @@ input.cart-plus-minus-box {
     min-width: 90px;
   }
 }
+/* ----------------------------------------------------
+    Screenshot Area
+---------------------------------------------------- */
+/* img-slide-item-1 */
+.ltn__img-slide-item-1 {
+  margin: 10px 0 20px 0;
+  padding: 0 0;
+}
+
+.slick-current .ltn__img-slide-item-1 {
+  box-shadow: var(--ltn__box-shadow-1);
+}
+
+/* img-slide-item-2 */
+.ltn__img-slide-item-2 {
+  margin-bottom: 30px;
+}
+
+/* img-slide-item-3 */
+.ltn__img-slide-item-3 {
+  position: relative;
+  margin-bottom: 85px;
+}
+.ltn__img-slide-item-3 .ltn__img-slide-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 35px;
+  background-color: white;
+  position: absolute;
+  bottom: 0;
+  width: calc(100% - 60px);
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  transition: all 0.3s ease 0s;
+  opacity: 0;
+  visibility: hidden;
+  box-shadow: var(--ltn__box-shadow-2);
+}
+.ltn__img-slide-item-3 .ltn__img-slide-info-brief {
+  padding-right: 20px;
+}
+.ltn__img-slide-item-3 h6 {
+  margin-bottom: 5px;
+  color: var(--ltn__secondary-color);
+}
+.ltn__img-slide-item-3 h1 {
+  margin-bottom: 0;
+  font-size: 30px;
+}
+.ltn__img-slide-item-3 .btn-wrapper {
+  margin-top: 0;
+}
+.ltn__img-slide-item-3 .btn-wrapper .btn {
+  padding: 15px 20px 13px;
+}
+.ltn__img-slide-item-3:hover .ltn__img-slide-info {
+  bottom: -65px;
+  opacity: 1;
+  visibility: visible;
+}
+
+.slick-current .ltn__img-slide-item-3 .ltn__img-slide-info {
+  bottom: -65px;
+  opacity: 1;
+  visibility: visible;
+}
+
+.ltn__img-slide-item-4 {
+  position: relative;
+  margin-bottom: 30px;
+}
+.ltn__img-slide-item-4 .ltn__img-slide-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 35px;
+  position: absolute;
+  bottom: 5px;
+  width: 100%;
+  transition: all 0.3s ease 0s;
+  background: var(--gradient-color-3);
+  opacity: 0;
+  visibility: hidden;
+}
+.ltn__img-slide-item-4 .ltn__img-slide-info-brief {
+  padding-right: 20px;
+}
+.ltn__img-slide-item-4 h6 {
+  margin-bottom: 5px;
+  color: var(--white);
+  font-weight: 400;
+}
+.ltn__img-slide-item-4 h1 {
+  margin-bottom: 0;
+  font-size: 26px;
+  color: var(--white);
+  font-weight: 500;
+}
+.ltn__img-slide-item-4 .btn-wrapper {
+  margin-top: 0;
+}
+.ltn__img-slide-item-4 .btn-wrapper .btn {
+  padding: 15px 20px 13px;
+}
+.ltn__img-slide-item-4:hover .ltn__img-slide-info {
+  bottom: 0;
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (max-width: 1399px) {
+  .ltn__img-slide-item-3 .ltn__img-slide-info {
+    padding: 30px 20px;
+    width: calc(100% - 30px);
+  }
+  .ltn__img-slide-item-3 .ltn__img-slide-info-brief {
+    padding-right: 15px;
+  }
+  .ltn__img-slide-item-3 h1 {
+    font-size: 18px;
+  }
+  .ltn__img-slide-item-3 .btn-wrapper .btn {
+    padding: 10px 10px 8px;
+  }
+  .ltn__img-slide-item-4 .ltn__img-slide-info {
+    padding: 30px 20px;
+  }
+  .ltn__img-slide-item-4 h1 {
+    font-size: 18px;
+  }
+  .ltn__img-slide-item-4 .btn-wrapper .btn {
+    padding: 10px 10px 8px;
+  }
+}
+.ltn__image-slider-5-active .slick-slide {
+  padding: 0 0px;
+}
+
 /* ----------------------------------------------------
     Pricing List Area
 ---------------------------------------------------- */
@@ -15540,6 +15689,10 @@ input.cart-plus-minus-box {
 .footer-logo {
   position: relative;
   top: -10px;
+}
+
+.footer-logo-white {
+  filter: brightness(0) invert(1);
 }
 
 .footer-title {

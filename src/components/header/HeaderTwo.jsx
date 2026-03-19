@@ -85,14 +85,7 @@ const HeaderStyleTwo = function ({ SetToggleClassName, topbar }) {
 
               <Col xs={8} xl={2}>
                 <div className="site-logo-wrap">
-                  <div
-                    className="site-logo text-xl-center"
-                    style={{
-                      width: "100%",
-                      display: "flex",
-                      justifyContent: "center",
-                    }}
-                  >
+                  <div className="site-logo text-xl-center header-two-logo-slot">
                     <Link href="/">
                       <img
                         src="/img/logo.svg"

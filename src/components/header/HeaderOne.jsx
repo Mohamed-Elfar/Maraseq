@@ -71,7 +71,7 @@ const HeaderStyleOne = function ({ SetToggleClassName, topbar }) {
   const keys = ["title"];
   const SearchProduct = (data) => {
     return data.filter((item) =>
-      keys.some((key) => item[key].toLowerCase().includes(query)),
+      keys.some((key) => item[key].toLowerCase().includes(query))
     );
   };
 
@@ -93,7 +93,7 @@ const HeaderStyleOne = function ({ SetToggleClassName, topbar }) {
         <div
           className={clsx(
             "ltn__header-middle-area ltn__header-sticky ltn__sticky-bg-white",
-            scroll > headerHeight && "sticky-active",
+            scroll > headerHeight && "sticky-active"
           )}
         >
           <Container>
@@ -102,13 +102,7 @@ const HeaderStyleOne = function ({ SetToggleClassName, topbar }) {
                 <div className="site-logo-wrap">
                   <div className="site-logo">
                     <Link href="/">
-                      <img
-                        src="/img/logo.svg"
-                        alt="Logo"
-                        width={50}
-                        height={50}
-                        style={{ filter: "brightness(0) invert(1)" }}
-                      />
+                      <img src="/img/logo.png" alt="Logo" />
                     </Link>
                   </div>
                 </div>

@@ -148,7 +148,7 @@ function MyAccount() {
                                           </div>
                                           <div className="footer-address-info">
                                             <p>
-                                              Brooklyn, New York, United States
+                                              Qutur, Tanta, Gharbia Governorate, Egypt
                                             </p>
                                           </div>
                                         </li>
@@ -423,7 +423,7 @@ function MyAccount() {
                                           </h6>
                                           <small>
                                             <i className="icon-placeholder"></i>
-                                            Brooklyn, New York, United States
+                                            Qutur, Tanta, Gharbia Governorate, Egypt
                                           </small>
                                           <div className="product-ratting">
                                             <ul>
@@ -499,7 +499,7 @@ function MyAccount() {
                                           </h6>
                                           <small>
                                             <i className="icon-placeholder"></i>
-                                            Brooklyn, New York, United States
+                                            Qutur, Tanta, Gharbia Governorate, Egypt
                                           </small>
                                           <div className="product-ratting">
                                             <ul>
@@ -575,7 +575,7 @@ function MyAccount() {
                                           </h6>
                                           <small>
                                             <i className="icon-placeholder"></i>
-                                            Brooklyn, New York, United States
+                                            Qutur, Tanta, Gharbia Governorate, Egypt
                                           </small>
                                           <div className="product-ratting">
                                             <ul>
@@ -701,7 +701,7 @@ function MyAccount() {
                                           </h6>
                                           <small>
                                             <i className="icon-placeholder"></i>
-                                            Brooklyn, New York, United States
+                                            Qutur, Tanta, Gharbia Governorate, Egypt
                                           </small>
                                           <div className="product-ratting">
                                             <ul>
@@ -777,7 +777,7 @@ function MyAccount() {
                                           </h6>
                                           <small>
                                             <i className="icon-placeholder"></i>
-                                            Brooklyn, New York, United States
+                                            Qutur, Tanta, Gharbia Governorate, Egypt
                                           </small>
                                           <div className="product-ratting">
                                             <ul>
@@ -853,7 +853,7 @@ function MyAccount() {
                                           </h6>
                                           <small>
                                             <i className="icon-placeholder"></i>
-                                            Brooklyn, New York, United States
+                                            Qutur, Tanta, Gharbia Governorate, Egypt
                                           </small>
                                           <div className="product-ratting">
                                             <ul>
@@ -1221,7 +1221,7 @@ function MyAccount() {
                                 <div className="col-lg-12">
                                   <div className="property-details-google-map mb-60">
                                     <iframe
-                                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d9334.271551495209!2d-73.97198251485975!3d40.668170674982946!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25b0456b5a2e7%3A0x68bdf865dda0b669!2sBrooklyn%20Botanic%20Garden%20Shop!5e0!3m2!1sen!2sbd!4v1590597267201!5m2!1sen!2sbd"
+                                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27367.521335544432!2d30.974130060919684!3d30.972151866016276!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14f7b3b31ed01575%3A0x2ae50b1962e6af90!2z2YLYt9mI2LHYjCDZhdiv2YrZhtipINmC2LfZiNix2Iwg2YXYsdmD2LIg2YLYt9mI2LHYjCDZhdit2KfZgdi42Kkg2KfZhNi62LHYqNmK2Kk!5e0!3m2!1sar!2seg!4v1773696322276!5m2!1sar!2seg"
                                       width="100%"
                                       height="100%"
                                     ></iframe>
