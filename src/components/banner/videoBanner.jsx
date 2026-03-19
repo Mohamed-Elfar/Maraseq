@@ -2,7 +2,7 @@ import { FaPlay } from "react-icons/fa";
 import { useState } from "react";
 import ModalVideo from "react-modal-video";
 
-const VideoBanner = () => {
+const VideoBanner = ({ backgroundImage = "../img/bg/19.jpg" }) => {
   const [isOpen, setOpen] = useState(false);
   return (
     <>
@@ -15,7 +15,7 @@ const VideoBanner = () => {
       />
       <div
         className="ltn__video-bg-img bg-overlay-black-30 bg-image bg-fixed ltn__animation-pulse1"
-        style={{ backgroundImage: `url("../img/bg/19.jpg")` }}
+        style={{ backgroundImage: `url("${backgroundImage}")` }}
       >
         <button onClick={() => setOpen(true)} className="ltn__video-icon-2">
           <FaPlay />

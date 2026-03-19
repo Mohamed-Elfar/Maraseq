@@ -26,6 +26,7 @@ import BrandCarouselOne from "@/components/brandCarousel";
 import portfolioData from "@/data/portfolio";
 import PortfolioitemThree from "@/components/portfolio/itemThree";
 import imageSlider from "@/assets/images/home/imageSlider.png";
+import videoPopupAreaImage from "@/assets/images/home/video-popup-area.png";
 
 
 
@@ -388,7 +389,7 @@ const portfolioSettings = {
 
       {/* <!-- VIDEO AREA START --> */}
       <div className="ltn__video-popup-area">
-        <VideoBanner />
+        <VideoBanner backgroundImage={videoPopupAreaImage.src} />
       </div>
       {/* <!-- VIDEO AREA END --> */}
 
