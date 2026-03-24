@@ -32,6 +32,9 @@ const BlogItem = ({ baseUrl, data, slug, imageSrc }) => {
           <h3 className="ltn__blog-title">
             <Link href={`${baseUrl}/${slug}`}>{data.title}</Link>
           </h3>
+          {data.shortDescription ? (
+            <p className="ltn__blog-summary">{data.shortDescription}</p>
+          ) : null}
           <div className="ltn__blog-meta-btn">
             <div className="ltn__blog-meta">
               <ul>

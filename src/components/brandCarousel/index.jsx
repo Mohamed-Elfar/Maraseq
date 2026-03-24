@@ -1,5 +1,6 @@
 import Slider from "react-slick";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
+import maraseqLogo from "@/assets/images/logo/english - vrsion Maraseq logo.svg";
 
 function BrandCarouselOne({ data }) {
   const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
@@ -75,7 +76,7 @@ function BrandCarouselOne({ data }) {
         {data.map((item, key) => {
           return (
             <div key={key} className="ltn__brand-logo-item">
-              <img src={`/img/brand-logo/${item.image}`} alt="Brand Logo" />
+              <img src={maraseqLogo.src} alt="Maraseq Logo" />
             </div>
           );
         })}

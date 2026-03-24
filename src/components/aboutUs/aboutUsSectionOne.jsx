@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -35,11 +34,7 @@ function AboutUsSectionOne() {
                   </span>
                 </div>
                 <div className="ltn__feature-info">
-                  <h4>
-                    <Link href="https://maraseqgroup.com/service/buy-a-home">
-                      Our Vision
-                    </Link>
-                  </h4>
+                  <h4>Our Vision</h4>
                   <p>
                     To grow Maraseq Group into a trusted name that contributes
                     to shaping real estate opportunities and keeps pace with the
@@ -55,11 +50,7 @@ function AboutUsSectionOne() {
                   </span>
                 </div>
                 <div className="ltn__feature-info">
-                  <h4>
-                    <Link href="https://maraseqgroup.com/service/buy-a-home">
-                      Our Mission
-                    </Link>
-                  </h4>
+                  <h4>Our Mission</h4>
                   <p>
                     To explore and develop real estate opportunities while
                     providing clear pathways that help navigate the market and
@@ -74,11 +65,7 @@ function AboutUsSectionOne() {
                   </span>
                 </div>
                 <div className="ltn__feature-info">
-                  <h4>
-                    <Link href="https://maraseqgroup.com/service/buy-a-home">
-                      Our Commitment
-                    </Link>
-                  </h4>
+                  <h4>Our Commitment</h4>
                   <p>
                     At Maraseq Group, we are committed to working with
                     initiative, partnership, and continuous development, while

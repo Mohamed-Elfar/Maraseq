@@ -1,34 +1,34 @@
 [
   {
-    "subtitle": "Real Estate Agency",
-    "Title": "Find Your Dream House By Us",
+    "subtitle": "Clearer opportunities, smarter decisions",
+    "Title": "Where Your Path Begins",
     "Desc": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.",
     "icon": "FaHome",
     "bgImage": "heroSlider.png",
     "id": "1",
-    "buttonText": "Make An Enquiry",
+    "buttonText": "Start Now",
     "variationCenter": true,
     "variationRight": false
   },
   {
-    "subtitle": "Real Estate Agency",
-    "Title": "The Right Place of House Finding",
+    "subtitle": "Many opportunities, one right direction",
+    "Title": "Explore Your Path",
     "Desc": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.",
     "icon": "FaHome",
     "bgImage": "12.jpg",
     "id": "2",
-    "buttonText": "Make An Enquiry",
+    "buttonText": "Discover Now",
     "variationCenter": false,
     "variationRight": true
   },
   {
-    "subtitle": "Real Estate Agency",
-    "Title": "Search and Find Luxury House",
+    "subtitle": "Smarter choices, better investments",
+    "Title": "The Right Path Starts Here",
     "Desc": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.",
     "icon": "FaHome",
     "bgImage": "13.jpg",
     "id": "3",
-    "buttonText": "Make An Enquiry",
+    "buttonText": "Contact Us",
     "variationCenter": false,
     "variationRight": false
   }

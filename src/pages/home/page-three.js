@@ -32,6 +32,7 @@ import videoPopupAreaImage from "@/assets/images/home/video-popup-area.png";
 
 function HomeVersionThree(props) {
   const [isOpen, setOpen] = useState(false);
+  const [featuredFilter, setFeaturedFilter] = useState("all");
   const { products } = useSelector((state) => state.product);
   const featureData = getProducts(featuresData, "buying", "featured", 3);
   const countryProducts = getProducts(products, "buying", "country", 5);
@@ -42,6 +43,41 @@ function HomeVersionThree(props) {
   const { wishlistItems } = useSelector((state) => state.wishlist);
   const { compareItems } = useSelector((state) => state.compare);
   const portfolios = getProducts(portfolioData, "buying", "carousel", 5);
+
+  const featuredFilterOptions = [
+    { key: "all", label: "All" },
+    { key: "investment", label: "Investment" },
+    { key: "residential", label: "Residential" },
+    { key: "ready", label: "Ready" },
+    { key: "under_construction", label: "Under Construction" },
+  ];
+
+  const filteredFeaturedProducts = featuredProducts.filter((product) => {
+    if (featuredFilter === "all") return true;
+
+    const opportunityType =
+      product.opportunityType || (product.rent ? "residential" : "investment");
+    const opportunityStage =
+      product.opportunityStage || (product.rent ? "under_construction" : "ready");
+
+    if (featuredFilter === "investment") {
+      return opportunityType === "investment";
+    }
+
+    if (featuredFilter === "residential") {
+      return opportunityType === "residential";
+    }
+
+    if (featuredFilter === "ready") {
+      return opportunityStage === "ready";
+    }
+
+    if (featuredFilter === "under_construction") {
+      return opportunityStage === "under_construction";
+    }
+
+    return true;
+  });
 
   const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
     <button
@@ -234,6 +270,24 @@ const portfolioSettings = {
     ],
   };
   const newsImages = [newsOneImage.src, newsTwoImage.src];
+  const marketInsightsCards = [
+    {
+      title: "How to choose the right property?",
+      shortDescription: "Key insights to help you find your best path",
+      type: "MARKET INSIGHTS",
+    },
+    {
+      title: "Real estate trends today",
+      shortDescription: "What's shaping investment decisions right now",
+      type: "MARKET INSIGHTS",
+    },
+    {
+      title: "How to invest smartly?",
+      shortDescription:
+        "Clear steps to build a successful investment",
+      type: "MARKET INSIGHTS",
+    },
+  ];
 
   return (
     <LayoutTwo topbar={true}>
@@ -272,7 +326,7 @@ const portfolioSettings = {
         titleSectionData={{
           sectionClasses: "text-center",
           subTitle: "Our Services",
-          title: "Our Main Focus",
+          title: "Our Core Paths",
         }}
       />
       {/* <!-- FEATURE AREA END -->*/}
@@ -288,7 +342,7 @@ const portfolioSettings = {
                       headingClasses="section-subtitle-2 ltn__secondary-color"
                       titleSectionData={{
                         subTitle: "Property",
-                        title: "Property By Categories",
+                        title: "Choose Your Path",
                       }}
                     />
                   </Col>
@@ -302,7 +356,7 @@ const portfolioSettings = {
 
 
       {/* <!-- IMAGE SLIDER AREA START (img-slider-3) --> */}
-      <div className="ltn__img-slider-area">
+      {/* <div className="ltn__img-slider-area">
         <Slider {...portfolioSettings} className="ltn__image-slider-4-active slick-arrow-1 slick-arrow-1-inner ltn__no-gutter-all">
 
           {
@@ -318,7 +372,7 @@ const portfolioSettings = {
           }
 
         </Slider>
-      </div>
+      </div> */}
       {/* <!-- IMAGE SLIDER AREA END --> */}
 
 
@@ -333,20 +387,35 @@ const portfolioSettings = {
                 headingClasses="section-subtitle-2"
                 titleSectionData={{
                   subTitle: "Properties",
-                  title: "Featured Listings",
+                  title: "Opportunities on the Right Path",
                 }}
               />
+
+              <div className="featured-filter-tabs text-center mt-20 mb-20">
+                {featuredFilterOptions.map((filterItem) => (
+                  <button
+                    key={filterItem.key}
+                    type="button"
+                    className={`featured-filter-tab ${
+                      featuredFilter === filterItem.key ? "active" : ""
+                    }`}
+                    onClick={() => setFeaturedFilter(filterItem.key)}
+                  >
+                    {filterItem.label}
+                  </button>
+                ))}
+              </div>
             </Col>
           </Row>
 
           <Row>
             <Col lg={12}>
-              {!!featuredProducts?.length ? (
+              {!!filteredFeaturedProducts?.length ? (
                 <Slider
                   {...productCarouselsettings}
                   className="ltn__product-slider-item-four-active-full-width slick-arrow-1"
                 >
-                  {featuredProducts.map((product, key) => {
+                  {filteredFeaturedProducts.map((product, key) => {
                     const slug = productSlug(product.title);
 
                     const discountedPrice = getDiscountPrice(
@@ -418,25 +487,34 @@ const portfolioSettings = {
                 sectionClasses="text-center"
                 headingClasses="section-subtitle-2"
                 titleSectionData={{
-                  subTitle: "News & Blogs",
-                  title: "Leatest News Feeds",
+                  subTitle: "Market Insights",
+                  title: "Your Real Estate Guide",
                 }}
               />
+              <p className="text-center mb-40">
+                Insights to help you understand the market and decide with
+                confidence
+              </p>
             </Col>
           </Row>
           <Slider
             {...blogSettings}
             className="ltn__blog-slider-one-active slick-arrow-1 ltn__blog-item-3-normal"
           >
-            {blogData.map((data, key) => {
-              const slug = productSlug(data.title);
+            {blogData.slice(0, 3).map((data, key) => {
+              const override = marketInsightsCards[key] || {};
+              const cardData = {
+                ...data,
+                ...override,
+              };
+              const slug = productSlug(cardData.title);
               const imageSrc = newsImages[key % newsImages.length];
 
               return (
                 <BlogItem
                   key={key}
                   baseUrl="blog"
-                  data={data}
+                  data={cardData}
                   slug={slug}
                   imageSrc={imageSrc}
                 />

@@ -2101,6 +2101,12 @@
       font-size: 22px;
     }
 
+    .ltn__blog-summary {
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+
     .ltn__blog-item-5 {
       .ltn__blog-brief {
         padding: 40px 20px 35px 20px;
@@ -6198,6 +6204,7 @@ input.cart-plus-minus-box {
   opacity: 1;
   transition: all 0.3s ease 0s;
   margin: 10px 0;
+  padding: 0 24px;
 
   img {
     transition: all 0.3s ease 0s;
@@ -6211,6 +6218,12 @@ input.cart-plus-minus-box {
     img {
       transform: scale(1.1);
     }
+  }
+}
+
+@media (max-width: 767px) {
+  .ltn__brand-logo-item {
+    padding: 0 12px;
   }
 }
 

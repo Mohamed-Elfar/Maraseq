@@ -22,13 +22,18 @@ const ProductItem = ({
   wishlistItem,
   compareItem,
 }) => {
-  let badgeText = "";
+  let badgeText = "For Sale";
 
   if (productData.rent) {
     badgeText = "For Rent";
-  } else {
-    badgeText = "For Sale";
+  } else if (productData.featured) {
+    badgeText = "Investment";
   }
+
+  const recommendedLabel = productData.recommendedLabel || "Recommended";
+  const pathDescription =
+    productData.pathDescription || "Designed for your investment path";
+  const idealForText = productData.idealFor || "Ideal for long-term investment";
 
   const dispatch = useDispatch();
 
@@ -46,7 +51,7 @@ const ProductItem = ({
   );
   const addToCartTooltip = (props) => (
     <Tooltip id="button-tooltip" {...props}>
-     Add To Cart
+      Add To Cart
     </Tooltip>
   );
 
@@ -63,11 +68,21 @@ const ProductItem = ({
           <div className="product-badge">
             <ul>
               <li
-                className={`sale-badge ${productData.rent ? "bg-green" : ""}`}
+                className={`sale-badge ${
+                  badgeText === "For Rent"
+                    ? "bg-green"
+                    : badgeText === "Investment"
+                      ? "bg-gold"
+                      : ""
+                }`}
               >
                 {badgeText}
               </li>
+              <li className="recommended-badge">{recommendedLabel}</li>
             </ul>
+          </div>
+          <div className="product-path-overlay">
+            <p>{idealForText}</p>
           </div>
           <div className="product-img-location-gallery">
             <div className="product-img-location">
@@ -106,16 +121,13 @@ const ProductItem = ({
         </div>
         <div className="product-info">
           <div className="product-price">
-            <span>
-              {`$ ${productData.price}`}
-              <label>/Month</label>
-            </span>
+            <span>{`From $${productData.price} / month`}</span>
           </div>
           <h2 className="product-title">
             <Link href={`/${baseUrl}/${slug}`}>{productData.title}</Link>
           </h2>
           <div className="product-description">
-            <p>{productData.fullDescription}</p>
+            <p>{pathDescription}</p>
           </div>
           <ul className="ltn__list-item-2 ltn__list-item-2-before">
             <li>
@@ -123,23 +135,29 @@ const ProductItem = ({
                 {productData.propertyDetails.bedrooms}
                 <i className="flaticon-bed"></i>
               </span>
-              Bedrooms
+              Beds
             </li>
             <li>
               <span>
                 {productData.propertyDetails.baths}
                 <i className="flaticon-clean"></i>
               </span>
-              Bathrooms
+              Baths
             </li>
             <li>
               <span>
                 {productData.propertyDetails.area}
                 <i className="flaticon-square-shape-design-interface-tool-symbol"></i>
               </span>
-              square Ft
+              m²
             </li>
           </ul>
+          <div className="product-opportunity-cta">
+            <Link className="ltn__service-btn" href={`/${baseUrl}/${slug}`}>
+              Explore Opportunity
+              <i className="flaticon-right-arrow"></i>
+            </Link>
+          </div>
         </div>
         <div className="product-info-bottom">
           <div className="real-estate-agent">
@@ -161,16 +179,14 @@ const ProductItem = ({
           <div className="product-hover-action">
             <ul>
               <li>
-              <OverlayTrigger
+                <OverlayTrigger
                   placement="right"
                   delay={{ show: 250, hide: 400 }}
                   overlay={quickViewTooltip}
                 >
-                <button onClick={() => setModalShow(true)}>
-                  <i className="flaticon-expand"></i>
-                </button>
-
-
+                  <button onClick={() => setModalShow(true)}>
+                    <i className="flaticon-expand"></i>
+                  </button>
                 </OverlayTrigger>
               </li>
               <li>

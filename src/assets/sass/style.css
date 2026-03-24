@@ -6878,6 +6878,11 @@ ul.wp-block-latest-posts.is-grid.alignwide {
   border-left: 1px solid #576466;
 }
 
+.ltn__slider-3 .ltn__slide-item-3 {
+  height: 100vh;
+  min-height: 100vh;
+}
+
 .ltn__slide-item-6 .text-right .slide-item-info,
 .ltn__slide-item-2 .text-right .slide-item-info {
   margin-left: auto;
@@ -7871,6 +7876,30 @@ ul.wp-block-latest-posts.is-grid.alignwide {
   background-color: var(--red-2);
 }
 
+.featured-filter-tabs {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.featured-filter-tab {
+  border: 1px solid var(--border-color-1);
+  background-color: var(--white);
+  color: var(--ltn__paragraph-color);
+  padding: 8px 16px;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.featured-filter-tab.active,
+.featured-filter-tab:hover {
+  background-color: var(--ltn__secondary-color);
+  border-color: var(--ltn__secondary-color);
+  color: var(--white);
+}
+
 .product-info {
   padding: 20px 0 0;
 }
@@ -8018,6 +8047,40 @@ ul.wp-block-latest-posts.is-grid.alignwide {
 .ltn__product-item-4 .product-img img {
   transition: all 0.5s ease 0s;
 }
+.ltn__product-item-4 .product-path-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  background: rgba(7, 28, 31, 0.55);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.35s ease;
+  z-index: 3;
+}
+.ltn__product-item-4 .product-path-overlay p {
+  color: var(--white);
+  font-weight: 600;
+  margin: 0;
+  transform: translateY(10px);
+  transition: transform 0.35s ease;
+}
+.ltn__product-item-4 .product-badge ul {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+}
+.ltn__product-item-4 .product-badge .recommended-badge {
+  background-color: var(--ltn__heading-color);
+}
+.ltn__product-item-4 .product-badge .bg-gold {
+  background-color: #8a6d2f;
+}
 .ltn__product-item-4 .product-img-location-gallery {
   position: absolute;
   bottom: 0;
@@ -8082,6 +8145,10 @@ ul.wp-block-latest-posts.is-grid.alignwide {
   font-size: 14px;
   margin-bottom: 15px;
 }
+.ltn__product-item-4 .product-opportunity-cta {
+  margin-top: 10px;
+  margin-bottom: 18px;
+}
 .ltn__product-item-4 .product-info-bottom {
   display: flex;
   justify-content: space-between;
@@ -8119,10 +8186,18 @@ ul.wp-block-latest-posts.is-grid.alignwide {
   color: var(--white);
 }
 .ltn__product-item-4:hover .product-img img {
-  transform: scale(1.1);
+  transform: scale(1.08);
 }
 .ltn__product-item-4:hover .product-img::before {
   display: none;
+}
+.ltn__product-item-4:hover .product-path-overlay {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.ltn__product-item-4:hover .product-path-overlay p {
+  transform: translateY(0);
 }
 
 .real-estate-agent {
@@ -11014,6 +11089,11 @@ ul.wp-block-latest-posts.is-grid.alignwide {
   }
   .ltn__blog-list-wrap .ltn__blog-title {
     font-size: 22px;
+  }
+  .ltn__blog-list-wrap .ltn__blog-summary {
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 18px;
   }
   .ltn__blog-list-wrap .ltn__blog-item-5 .ltn__blog-brief {
     padding: 40px 20px 35px 20px;
@@ -14326,6 +14406,7 @@ input.cart-plus-minus-box {
   opacity: 1;
   transition: all 0.3s ease 0s;
   margin: 10px 0;
+  padding: 0 24px;
 }
 .ltn__brand-logo-item img {
   transition: all 0.3s ease 0s;
@@ -14338,6 +14419,11 @@ input.cart-plus-minus-box {
   transform: scale(1.1);
 }
 
+@media (max-width: 767px) {
+  .ltn__brand-logo-item {
+    padding: 0 12px;
+  }
+}
 /* ----------------------------------------------------
     Progress Bar 
 ---------------------------------------------------- */

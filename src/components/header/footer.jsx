@@ -30,8 +30,9 @@ const Footer = function () {
                     </div>
                   </div>
                   <p>
-                    Lorem Ipsum is simply dummy text of the and typesetting
-                    industry. Lorem Ipsum is dummy text of the printing.
+                    We develop real estate opportunities and create clear paths
+                    that guide confident decisions, driven by market insight and
+                    value-based partnerships.
                   </p>
                   <div className="footer-address">
                     <ul>

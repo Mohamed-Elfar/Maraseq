@@ -1,7 +1,7 @@
 [
   {
     "title": "Real Estate Investment",
-    "shortDescription": "Identifying and developing investment opportunities within the real estate market.",
+    "shortDescription": "We identify and develop strategic investment opportunities that deliver real returns and sustainable growth.",
     "fullDescription": "Maraseq Group focuses on exploring and developing real estate investment opportunities while fostering partnerships with investors. Through understanding market dynamics and emerging opportunities, we aim to contribute to sustainable value and long-term growth in the real estate sector.",
     "captions": {
       "image1": "31.jpg",
@@ -13,7 +13,7 @@
     "thumbImage": "21.jpg",
     "img": "21.png",
     "id": "01",
-    "buttonText": "Find A Home",
+    "buttonText": "Explore Path",
     "active": false,
     "icon": "flaticon-house",
     "category": ["buying", "women"],
@@ -35,7 +35,7 @@
     "thumbImage": "21.jpg",
     "img": "22.png",
     "id": "02",
-    "buttonText": "Find A Home",
+    "buttonText": "Explore Path",
     "active": true,
     "icon": "flaticon-house-3",
     "category": ["buying", "women"],
@@ -45,7 +45,7 @@
 
   {
    "title": "Opportunity Development",
-    "shortDescription": "Exploring emerging opportunities and fostering collaboration with developers and investors.",
+    "shortDescription": "We explore emerging opportunities and build strong partnerships to turn them into scalable projects.",
     "fullDescription": "Maraseq Group works on discovering new real estate opportunities and building collaborations with developers and investors. By identifying potential projects and aligning interests, we aim to contribute to the development of valuable initiatives within the market.",
     "captions": {
       "image1": "31.jpg",
@@ -57,7 +57,7 @@
     "thumbImage": "21.jpg",
     "img": "23.png",
     "id": "04",
-    "buttonText": "Find A Home",
+    "buttonText": "Explore Path",
     "active": false,
     "icon": "flaticon-deal-1",
     "category": ["buying", "women"],

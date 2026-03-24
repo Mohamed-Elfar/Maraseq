@@ -2,6 +2,63 @@ import { Container, Row, Col, Nav, Tab, Form } from "react-bootstrap";
 import { FaCarAlt, FaUserAlt } from "react-icons/fa";
 import Link from "next/link";
 
+const locationOptions = [
+  "All Locations",
+  "New Cairo",
+  "New Capital",
+  "Sheikh Zayed",
+  "Fifth Settlement",
+  "North Coast",
+  "Cairo",
+  "Giza",
+  "Alexandria",
+  "Qalyubia",
+  "Dakahlia",
+  "Sharqia",
+  "Gharbia",
+  "Monufia",
+  "Beheira",
+  "Kafr El Sheikh",
+  "Damietta",
+  "Port Said",
+  "Ismailia",
+  "Suez",
+  "Fayoum",
+  "Beni Suef",
+  "Minya",
+  "Assiut",
+  "Sohag",
+  "Qena",
+  "Luxor",
+  "Aswan",
+  "Red Sea",
+  "New Valley",
+  "Matrouh",
+  "North Sinai",
+  "South Sinai",
+];
+
+const opportunityTypeOptions = [
+  "All Opportunities",
+  "Apartment",
+  "Villa",
+  "Duplex",
+  "Penthouse",
+  "Office",
+  "Retail",
+  "Land",
+];
+
+const goalOptions = [
+  "All",
+  "Living",
+  "Investment",
+  "Passive Income",
+  "Resale",
+  "Ready",
+  "Under Construction",
+];
+
 function CarDealerSearchForm({ navMenuClass, customClasses }) {
   return (
     <>
@@ -11,6 +68,9 @@ function CarDealerSearchForm({ navMenuClass, customClasses }) {
         <Container>
           <Row>
             <Col xs={12}>
+              <h5 className="text-center mb-20 text-white">
+                Start where it fits you ... we'll take you further
+              </h5>
               <div className="ltn__car-dealer-form-tab">
                 <Tab.Container id="left-tabs-example" defaultActiveKey="first">
                   <div
@@ -44,12 +104,12 @@ function CarDealerSearchForm({ navMenuClass, customClasses }) {
                               className="ltn__car-dealer-form-item"
                             >
                               <Form.Select className="nice-select">
-                                <option>Choose Area</option>
-                                <option value="1">Chicago</option>
-                                <option value="2">London</option>
-                                <option value="3">Los Angeles</option>
-                                <option value="4">New York</option>
-                                <option value="5">New Jersey</option>
+                                <option>Choose your location</option>
+                                {locationOptions.map((option) => (
+                                  <option key={option} value={option}>
+                                    {option}
+                                  </option>
+                                ))}
                               </Form.Select>
                             </Col>
                             <Col
@@ -59,11 +119,12 @@ function CarDealerSearchForm({ navMenuClass, customClasses }) {
                               className="ltn__car-dealer-form-item"
                             >
                               <Form.Select className="nice-select">
-                                <option>Property Status</option>
-                                <option value="1">Open house</option>
-                                <option value="2">Rent</option>
-                                <option value="3">Sale</option>
-                                <option value="4">Sold</option>
+                                <option>Select property type</option>
+                                {opportunityTypeOptions.map((option) => (
+                                  <option key={option} value={option}>
+                                    {option}
+                                  </option>
+                                ))}
                               </Form.Select>
                             </Col>
                             <Col
@@ -73,11 +134,12 @@ function CarDealerSearchForm({ navMenuClass, customClasses }) {
                               className="ltn__car-dealer-form-item"
                             >
                               <Form.Select className="nice-select">
-                                <option>Property Type</option>
-                                <option value="1">Apartment</option>
-                                <option value="2">Co-op</option>
-                                <option value="3">Condo</option>
-                                <option value="4">Single Family Home</option>
+                                <option>Set your objective</option>
+                                {goalOptions.map((option) => (
+                                  <option key={option} value={option}>
+                                    {option}
+                                  </option>
+                                ))}
                               </Form.Select>
                             </Col>
                             <Col
@@ -91,7 +153,7 @@ function CarDealerSearchForm({ navMenuClass, customClasses }) {
                                   href="/shop/right-sidebar"
                                   className="btn theme-btn-1 btn-effect-1 text-uppercase"
                                 >
-                                  Search
+                                  Start Your Path
                                 </Link>
                               </div>
                             </Col>
@@ -113,12 +175,12 @@ function CarDealerSearchForm({ navMenuClass, customClasses }) {
                               className="ltn__car-dealer-form-item"
                             >
                               <Form.Select className="nice-select">
-                                <option>Choose Area</option>
-                                <option value="1">Chicago</option>
-                                <option value="2">London</option>
-                                <option value="3">Los Angeles</option>
-                                <option value="4">New York</option>
-                                <option value="5">New Jersey</option>
+                                <option>Choose your location</option>
+                                {locationOptions.map((option) => (
+                                  <option key={option} value={option}>
+                                    {option}
+                                  </option>
+                                ))}
                               </Form.Select>
                             </div>
                             <div
@@ -128,11 +190,12 @@ function CarDealerSearchForm({ navMenuClass, customClasses }) {
                               className="ltn__car-dealer-form-item"
                             >
                               <Form.Select className="nice-select">
-                                <option>Property Status</option>
-                                <option value="1">Open house</option>
-                                <option value="2">Rent</option>
-                                <option value="3">Sale</option>
-                                <option value="4">Sold</option>
+                                <option>Select property type</option>
+                                {opportunityTypeOptions.map((option) => (
+                                  <option key={option} value={option}>
+                                    {option}
+                                  </option>
+                                ))}
                               </Form.Select>
                             </div>
                             <div
@@ -142,11 +205,12 @@ function CarDealerSearchForm({ navMenuClass, customClasses }) {
                               className="ltn__car-dealer-form-item"
                             >
                               <Form.Select className="nice-select">
-                                <option>Property Type</option>
-                                <option value="1">Apartment</option>
-                                <option value="2">Co-op</option>
-                                <option value="3">Condo</option>
-                                <option value="4">Single Family Home</option>
+                                <option>Set your objective</option>
+                                {goalOptions.map((option) => (
+                                  <option key={option} value={option}>
+                                    {option}
+                                  </option>
+                                ))}
                               </Form.Select>
                             </div>
                             <div
@@ -160,7 +224,7 @@ function CarDealerSearchForm({ navMenuClass, customClasses }) {
                                   href="/shop/right-sidebar"
                                   className="btn theme-btn-1 btn-effect-1 text-uppercase"
                                 >
-                                  Search
+                                  Start Your Path
                                 </Link>
                               </div>
                             </div>
