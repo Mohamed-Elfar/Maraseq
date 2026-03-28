@@ -241,7 +241,7 @@ const Footer = function () {
                       <Link href="#">Claim</Link>
                     </li>
                     <li>
-                      <Link href="#">Privacy & Policy</Link>
+                      <Link href="/privacy-policy">Privacy & Policy</Link>
                     </li>
                   </ul>
                 </div>
