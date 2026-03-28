@@ -243,9 +243,6 @@ const Footer = function () {
                       <Link href="/terms-and-conditions">Terms & Conditions</Link>
                     </li>
                     <li>
-                      <Link href="#">Claim</Link>
-                    </li>
-                    <li>
                       <Link href="/privacy-policy">Privacy & Policy</Link>
                     </li>
                   </ul>
