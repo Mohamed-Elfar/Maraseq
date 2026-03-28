@@ -9,7 +9,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import clsx from "clsx";
-import { FaCartArrowDown, FaRegUser, FaSearch, FaTimes } from "react-icons/fa";
+import { FaRegHeart, FaSearch, FaTimes } from "react-icons/fa";
 import MenuList from "@/components/header/elements/menuList";
 import maraseqLogo from "@/assets/images/logo/english - vrsion Maraseq logo.svg";
 const HeaderStyleOne = function ({ SetToggleClassName, topbar }) {
@@ -47,8 +47,6 @@ const HeaderStyleOne = function ({ SetToggleClassName, topbar }) {
     SetOffCanVastoggleBtn(false);
     SetToggleClassName(false);
   }
-
-  const { cartItems } = useSelector((state) => state.cart);
 
   const [scroll, setScroll] = useState(0);
   const [headerHeight, setHeaderHeight] = useState(0);
@@ -172,49 +170,13 @@ const HeaderStyleOne = function ({ SetToggleClassName, topbar }) {
                     </ul>
                   </div>
                 </div>
-                {/* <!-- user-menu --> */}
-                <div className="ltn__drop-menu user-menu">
-                  <ul>
-                    <li>
-                      <Link href="#">
-                        <FaRegUser />
-                      </Link>
-                      <ul>
-                        <li>
-                          <Link href="/login">Sign in</Link>
-                        </li>
-                        <li>
-                          <Link href="/register">Register</Link>
-                        </li>
-                        <li>
-                          <Link href="/my-account">My Account</Link>
-                        </li>
-                        <li>
-                          <Link href="/wishlist">Wishlist</Link>
-                        </li>
-                      </ul>
-                    </li>
-                  </ul>
-                </div>
-                {/* <!-- mini-cart --> */}
+                {/* <!-- wishlist --> */}
                 <div className="mini-cart-icon">
-                  <button
-                    onClick={cartMenu}
-                    className={`ltn__utilize-toggle ${
-                      cartMenuOpener ? "close" : ""
-                    }`}
-                  >
-                    <FaCartArrowDown />
-                    {/* <sup>6</sup> */}
-
-                    {cartItems.length > 0 ? (
-                      <sup>{cartItems.length}</sup>
-                    ) : (
-                      <sup>0</sup>
-                    )}
-                  </button>
+                  <Link href="/wishlist" className="ltn__utilize-toggle">
+                    <FaRegHeart />
+                  </Link>
                 </div>
-                {/* <!-- mini-cart --> */}
+                {/* <!-- wishlist --> */}
                 {/* <!-- Mobile Menu Button --> */}
                 <div className="mobile-menu-toggle d-xl-none">
                   <button

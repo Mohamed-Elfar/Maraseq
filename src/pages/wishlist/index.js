@@ -6,15 +6,13 @@ import ShopBreadCrumb from "@/components/breadCrumbs/shop";
 import CallToAction from "@/components/callToAction";
 import { useDispatch, useSelector } from "react-redux";
 import { productSlug, getDiscountPrice } from "@/lib/product";
-import { addToCart, } from "@/store/slices/cart-slice";
 import { deleteFromWishlist } from "@/store/slices/wishlist-slice"
 
 const Wishlist = () => {
 
     const dispatch = useDispatch();
     const { wishlistItems } = useSelector((state) => state.wishlist);
-    const [quantityCount] = useState(1);
-    let cartTotalPrice = 0;
+    const whatsappNumber = "201102223231";
     return (
         <>
             <LayoutOne topbar={true}>
@@ -42,9 +40,10 @@ const Wishlist = () => {
                                                             product.price,
                                                             product.discount
                                                         ).toFixed(2);
-
-                                                        cartTotalPrice +=
-                                                            discountedPrice * product.quantity;
+                                                        const whatsappMessage = encodeURIComponent(
+                                                            `Hello, I am interested in this property: ${product.title}`
+                                                        );
+                                                        const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
                                                         return (<tr key={key}>
                                                             <td class="cart-product-remove">
                                                                 <span
@@ -64,14 +63,14 @@ const Wishlist = () => {
                                                             <td class="cart-product-price"> ${discountedPrice}</td>
                                                             <td class="cart-product-stock">In Stock</td>
                                                             <td class="cart-product-add-cart">
-                                                                <button class="submit-button-1" onClick={() =>
-                                                                    dispatch(
-                                                                        addToCart({
-                                                                            ...product,
-                                                                            quantity: quantityCount,
-                                                                        })
-                                                                    )
-                                                                }>Add to Cart</button>
+                                                                <a
+                                                                    className="submit-button-1"
+                                                                    href={whatsappLink}
+                                                                    target="_blank"
+                                                                    rel="noopener noreferrer"
+                                                                >
+                                                                    Contact on WhatsApp
+                                                                </a>
                                                             </td>
                                                         </tr>)
                                                     })}
