@@ -87,7 +87,7 @@ const MobileMenu = function ({ offCanVastoggleBtn, closeSideBar }) {
           <div className="ltn__utilize-menu">
             <ul>
               <li>
-                <Link href="#">Home</Link>
+                <Link href="/">Home</Link>
                 <span
                   className="menu-expand"
                   onClick={onClickHandler}

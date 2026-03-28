@@ -146,7 +146,7 @@ function Faq() {
                   </Accordion>
 
                   <div className="need-support text-center mt-100">
-                    <h2>Still need help? Let us guide your path</h2>
+                    <h2>Have a question? We guide you to the right path</h2>
                     <div className="btn-wrapper mb-30">
                       <Link href="/contact" className="theme-btn-1 btn">
                         Contact Us
