@@ -147,16 +147,7 @@ const Footer = function () {
                   <div className="footer-menu">
                     <ul>
                       <li>
-                        <Link href="/order-tracking">Order tracking</Link>
-                      </li>
-                      <li>
                         <Link href="/wishlist">Wish List</Link>
-                      </li>
-                      <li>
-                        <Link href="/login">Login</Link>
-                      </li>
-                      <li>
-                        <Link href="/account">My account</Link>
                       </li>
                       <li>
                         <Link href="/terms-and-conditions">Terms & Conditions</Link>
@@ -174,16 +165,7 @@ const Footer = function () {
                   <div className="footer-menu">
                     <ul>
                       <li>
-                        <Link href="/login">Login</Link>
-                      </li>
-                      <li>
-                        <Link href="/account">My account</Link>
-                      </li>
-                      <li>
                         <Link href="/wishlist">Wish List</Link>
-                      </li>
-                      <li>
-                        <Link href="/order-tracking">Order tracking</Link>
                       </li>
                       <li>
                         <Link href="/faq">FAQ</Link>
