@@ -1,10 +1,8 @@
-import { useState } from "react";
 import { LayoutOne } from "@/layouts";
 import { Container, Row, Col } from "react-bootstrap";
 import {
   FaArrowRight,
   FaArrowLeft,
-  FaPlay,
   FaSearch,
   FaRegEnvelopeOpen,
   FaPhoneAlt,
@@ -17,13 +15,10 @@ import BlogItem from "@/components/blog";
 import blogData from "@/data/blog";
 import CallToAction from "@/components/callToAction";
 import Accordion from "react-bootstrap/Accordion";
-import ModalVideo from "react-modal-video";
 import Link from "next/link";
 import CounterUp from "@/components/counterUp";
 
 function Faq() {
-  const [isOpen, setOpen] = useState(false);
-
   const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
     <button
       {...props}
@@ -37,6 +32,7 @@ function Faq() {
       <FaArrowLeft />
     </button>
   );
+
   const SlickArrowRight = ({ currentSlide, slideCount, ...props }) => (
     <button
       {...props}
@@ -51,6 +47,7 @@ function Faq() {
       <FaArrowRight />
     </button>
   );
+
   const blogSettings = {
     dots: false,
     infinite: true,
@@ -64,13 +61,6 @@ function Faq() {
   return (
     <>
       <LayoutOne topbar={true}>
-        <ModalVideo
-          channel="youtube"
-          autoplay
-          isOpen={isOpen}
-          videoId="LjCzPp-MK48"
-          onClose={() => setOpen(false)}
-        />
         <ShopBreadCrumb
           title="Frequently asked questions"
           sectionPace=""
@@ -83,158 +73,80 @@ function Faq() {
             <Row>
               <Col xs={12} lg={8}>
                 <div className="ltn__faq-inner ltn__faq-inner-2">
-                  <Accordion defaultActiveKey="2">
+                  <Accordion defaultActiveKey="1">
                     <Accordion.Item eventKey="1">
-                      <Accordion.Header>How to buy a product?</Accordion.Header>
+                      <Accordion.Header>
+                        How do I start my real estate journey with Maraseq?
+                      </Accordion.Header>
                       <Accordion.Body>
                         <p>
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua. Scelerisque eleifend donec
-                          pretium vulputate sapien nec sagittis. Proin libero
-                          nunc consequat interdum. Condimentum lacinia quis vel
-                          eros donec ac. Mauris sit amet massa vitae tortor.
-                          Quisque id diam vel quam elementum pulvinar. Gravida
-                          in fermentum et sollicitudin ac orci phasellus.
-                          Facilisis gravida neque convallis a cras semper. Non
-                          arcu risus quis varius quam quisque id.
+                          Start by defining your goal, and we will guide you to
+                          the right path based on your needs.
                         </p>
                       </Accordion.Body>
                     </Accordion.Item>
 
                     <Accordion.Item eventKey="2">
                       <Accordion.Header>
-                        How can i make refund from your website?
+                        How do I choose the right property?
                       </Accordion.Header>
                       <Accordion.Body>
-                        <div className="ltn__video-img alignleft">
-                          <img
-                            src="/img/bg/17.jpg"
-                            alt="video popup bg image"
-                          />
-                          <button
-                            className="ltn__video-icon-2 ltn__video-icon-2-small"
-                            onClick={() => setOpen(true)}
-                          >
-                            <FaPlay />
-                          </button>
-                        </div>
                         <p>
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua. Scelerisque eleifend donec
-                          pretium vulputate sapien nec sagittis. Proin libero
-                          nunc consequat interdum. Condimentum lacinia quis vel
-                          eros donec ac. Mauris sit amet massa vitae tortor.
-                          Quisque id diam vel quam elementum pulvinar. Gravida
-                          in fermentum et sollicitudin ac orci phasellus.
-                          Facilisis gravida neque convallis a cras semper. Non
-                          arcu risus quis varius quam quisque id.
+                          We analyze your needs, budget, and preferred location
+                          to offer clear and suitable options.
                         </p>
                       </Accordion.Body>
                     </Accordion.Item>
 
                     <Accordion.Item eventKey="3">
                       <Accordion.Header>
-                        I am a new user. How should I start?
+                        Do you offer investment opportunities?
                       </Accordion.Header>
                       <Accordion.Body>
                         <p>
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua. Scelerisque eleifend donec
-                          pretium vulputate sapien nec sagittis. Proin libero
-                          nunc consequat interdum. Condimentum lacinia quis vel
-                          eros donec ac. Mauris sit amet massa vitae tortor.
-                          Quisque id diam vel quam elementum pulvinar. Gravida
-                          in fermentum et sollicitudin ac orci phasellus.
-                          Facilisis gravida neque convallis a cras semper. Non
-                          arcu risus quis varius quam quisque id.
+                          Yes, we provide investment options based on market
+                          insights for sustainable returns.
                         </p>
                       </Accordion.Body>
                     </Accordion.Item>
 
                     <Accordion.Item eventKey="4">
-                      <Accordion.Header>Returns and refunds</Accordion.Header>
+                      <Accordion.Header>
+                        Can I reserve a property remotely?
+                      </Accordion.Header>
                       <Accordion.Body>
                         <p>
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua. Scelerisque eleifend donec
-                          pretium vulputate sapien nec sagittis. Proin libero
-                          nunc consequat interdum. Condimentum lacinia quis vel
-                          eros donec ac. Mauris sit amet massa vitae tortor.
-                          Quisque id diam vel quam elementum pulvinar. Gravida
-                          in fermentum et sollicitudin ac orci phasellus.
-                          Facilisis gravida neque convallis a cras semper. Non
-                          arcu risus quis varius quam quisque id.
+                          Yes, we provide a smooth process to reserve and
+                          complete agreements from anywhere.
                         </p>
                       </Accordion.Body>
                     </Accordion.Item>
 
                     <Accordion.Item eventKey="5">
-                      <Accordion.Header>
-                        Are my details secured?
-                      </Accordion.Header>
+                      <Accordion.Header>Is my information secure?</Accordion.Header>
                       <Accordion.Body>
                         <p>
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua. Scelerisque eleifend donec
-                          pretium vulputate sapien nec sagittis. Proin libero
-                          nunc consequat interdum. Condimentum lacinia quis vel
-                          eros donec ac. Mauris sit amet massa vitae tortor.
-                          Quisque id diam vel quam elementum pulvinar. Gravida
-                          in fermentum et sollicitudin ac orci phasellus.
-                          Facilisis gravida neque convallis a cras semper. Non
-                          arcu risus quis varius quam quisque id.
+                          We are committed to protecting your data and using it
+                          only to enhance your experience.
                         </p>
                       </Accordion.Body>
                     </Accordion.Item>
 
                     <Accordion.Item eventKey="6">
                       <Accordion.Header>
-                        Sale code is not working
+                        Do you provide consultation before purchase?
                       </Accordion.Header>
                       <Accordion.Body>
                         <p>
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua. Scelerisque eleifend donec
-                          pretium vulputate sapien nec sagittis. Proin libero
-                          nunc consequat interdum. Condimentum lacinia quis vel
-                          eros donec ac. Mauris sit amet massa vitae tortor.
-                          Quisque id diam vel quam elementum pulvinar. Gravida
-                          in fermentum et sollicitudin ac orci phasellus.
-                          Facilisis gravida neque convallis a cras semper. Non
-                          arcu risus quis varius quam quisque id.
-                        </p>
-                      </Accordion.Body>
-                    </Accordion.Item>
-
-                    <Accordion.Item eventKey="7">
-                      <Accordion.Header>
-                        How do I make payment by my credit card
-                      </Accordion.Header>
-                      <Accordion.Body>
-                        <p>
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua. Scelerisque eleifend donec
-                          pretium vulputate sapien nec sagittis. Proin libero
-                          nunc consequat interdum. Condimentum lacinia quis vel
-                          eros donec ac. Mauris sit amet massa vitae tortor.
-                          Quisque id diam vel quam elementum pulvinar. Gravida
-                          in fermentum et sollicitudin ac orci phasellus.
-                          Facilisis gravida neque convallis a cras semper. Non
-                          arcu risus quis varius quam quisque id.
+                          Yes, we help you understand the market before making
+                          any decision.
                         </p>
                       </Accordion.Body>
                     </Accordion.Item>
                   </Accordion>
 
                   <div className="need-support text-center mt-100">
-                    <h2>Still need help? Reach out to support 24/7:</h2>
+                    <h2>Still need help? Let us guide your path</h2>
                     <div className="btn-wrapper mb-30">
                       <Link href="/contact" className="theme-btn-1 btn">
                         Contact Us
@@ -247,6 +159,7 @@ function Faq() {
                   </div>
                 </div>
               </Col>
+
               <Col xs={12} lg={4}>
                 <aside className="sidebar-area ltn__right-sidebar">
                   {/* <!-- Newsletter Widget --> */}
@@ -263,6 +176,7 @@ function Faq() {
                       <FaRegEnvelopeOpen />
                     </div>
                   </div>
+
                   {/* <!-- Banner Widget --> */}
                   <div className="widget ltn__banner-widget">
                     <Link href="/shop">
@@ -274,11 +188,11 @@ function Faq() {
             </Row>
           </div>
         </div>
-        {/* <!-- FAQ AREA START --> */}
+        {/* <!-- FAQ AREA END --> */}
 
         {/* <!-- COUNTER UP AREA START -->  */}
         <CounterUp />
-        {/* <!-- COUNTER UP AREA END -->
+        {/* <!-- COUNTER UP AREA END --> */}
 
         {/* <!-- BLOG AREA START (blog-3) -->  */}
         <div className="ltn__blog-area pt-120 pb-70">
@@ -286,8 +200,8 @@ function Faq() {
             <Row>
               <Col lg={12}>
                 <TitleSection
-                sectionClasses="text-center"
-                headingClasses="section-subtitle-2"
+                  sectionClasses="text-center"
+                  headingClasses="section-subtitle-2"
                   titleSectionData={{
                     subTitle: "News & Blogs",
                     title: "Leatest News Feeds",
@@ -303,11 +217,11 @@ function Faq() {
                 const slug = productSlug(data.title);
                 return (
                   <BlogItem
-                  key={key}
-                  baseUrl="blog"
-                  data={data}
-                  slug={slug}
-                />
+                    key={key}
+                    baseUrl="blog"
+                    data={data}
+                    slug={slug}
+                  />
                 );
               })}
             </Slider>
