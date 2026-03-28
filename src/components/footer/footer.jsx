@@ -164,7 +164,7 @@ const Footer = function () {
                         <Link href="/my-account">My account</Link>
                       </li>
                       <li>
-                        <Link href="/about">Terms & Conditions</Link>
+                        <Link href="/terms-and-conditions">Terms & Conditions</Link>
                       </li>
                       <li>
                         <Link href="/about">Promotional Offers</Link>
@@ -240,7 +240,7 @@ const Footer = function () {
                 <div className="ltn__copyright-menu text-end">
                   <ul>
                     <li>
-                      <Link href="#">Terms & Conditions</Link>
+                      <Link href="/terms-and-conditions">Terms & Conditions</Link>
                     </li>
                     <li>
                       <Link href="#">Claim</Link>
