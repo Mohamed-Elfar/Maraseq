@@ -14,7 +14,7 @@ const PropertyCategories = () => {
           >
             <div className="ltn__banner-info">
               <h3>
-                <Link href="/shop"> Apartments Path </Link>
+                <Link href="/shop/properties"> Apartments Path </Link>
               </h3>
               <p>Flexible options for modern living</p>
               <mark> 13 Listings</mark>
@@ -30,7 +30,7 @@ const PropertyCategories = () => {
           >
             <div className="ltn__banner-info">
               <h3>
-                <Link href="/shop"> Compound Path </Link>
+                <Link href="/shop/properties"> Compound Path </Link>
               </h3>
               <p>Integrated communities with balanced living</p>
               <mark> 13 Listings</mark>
@@ -46,7 +46,7 @@ const PropertyCategories = () => {
           >
             <div className="ltn__banner-info">
               <h3>
-                <Link href="/shop"> Houses Path </Link>
+                <Link href="/shop/properties"> Houses Path </Link>
               </h3>
               <p>More space, more privacy</p>
               <mark> 13 Listings</mark>
@@ -62,7 +62,7 @@ const PropertyCategories = () => {
           >
             <div className="ltn__banner-info">
               <h3>
-                <Link href="/shop"> Retail Path </Link>
+                <Link href="/shop/properties"> Retail Path </Link>
               </h3>
               <p>Strategic locations for business growth</p>
               <mark> 13 Listings</mark>
@@ -78,7 +78,7 @@ const PropertyCategories = () => {
           >
             <div className="ltn__banner-info">
               <h3>
-                <Link href="/shop"> Villas Path </Link>
+                <Link href="/shop/properties"> Villas Path </Link>
               </h3>
               <p>Luxury living with refined details</p>
               <mark> 13 Listings</mark>
@@ -91,3 +91,5 @@ const PropertyCategories = () => {
 };
 
 export default PropertyCategories;
+
+

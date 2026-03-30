@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import Slider from "react-slick";
 import {
   FaStar,
@@ -457,3 +457,4 @@ const BlogSideBar = ({ popularProducts, topRatedProducts, latestdBlogs }) => {
 };
 
 export default BlogSideBar;
+

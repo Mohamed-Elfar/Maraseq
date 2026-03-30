@@ -19,8 +19,14 @@
     "featured": true,
     "new": true,
     "rent": true,
-    "category": ["buying"],
-    "tag": ["Popular", "desgin", "ux"],
+    "category": [
+      "buying"
+    ],
+    "tag": [
+      "Popular",
+      "desgin",
+      "ux"
+    ],
     "thumbImg": "1.jpg",
     "backgroundImage": "3.jpg",
     "galleryImageList": [
@@ -108,14 +114,22 @@
       "author": true
     },
     "id": "2",
+    "slug": "real-estate-trends-today",
     "admin": "Admin",
     "title": "7 home trends that will shape your house in 2021",
     "type": "BUSINESS",
     "featured": true,
     "new": true,
     "rent": true,
-    "category": ["buying", "selling"],
-    "tag": ["Popular", "desgin", "ux"],
+    "category": [
+      "buying",
+      "selling"
+    ],
+    "tag": [
+      "Popular",
+      "desgin",
+      "ux"
+    ],
     "thumbImg": "2.jpg",
     "backgroundImage": "3.jpg",
     "galleryImageList": [
@@ -209,8 +223,14 @@
     "featured": true,
     "new": true,
     "rent": true,
-    "category": ["buying"],
-    "tag": ["Popular", "desgin", "ux"],
+    "category": [
+      "buying"
+    ],
+    "tag": [
+      "Popular",
+      "desgin",
+      "ux"
+    ],
     "thumbImg": "3.jpg",
     "backgroundImage": "3.jpg",
     "galleryImageList": [
@@ -304,8 +324,15 @@
     "featured": true,
     "new": true,
     "rent": true,
-    "category": ["buying", "selling"],
-    "tag": ["Popular", "desgin", "ux"],
+    "category": [
+      "buying",
+      "selling"
+    ],
+    "tag": [
+      "Popular",
+      "desgin",
+      "ux"
+    ],
     "thumbImg": "5.jpg",
     "backgroundImage": "3.jpg",
     "galleryImageList": [
@@ -399,8 +426,15 @@
     "featured": true,
     "new": true,
     "rent": true,
-    "category": ["buying", "selling"],
-    "tag": ["Popular", "desgin", "ux"],
+    "category": [
+      "buying",
+      "selling"
+    ],
+    "tag": [
+      "Popular",
+      "desgin",
+      "ux"
+    ],
     "thumbImg": "4.jpg",
     "backgroundImage": "3.jpg",
     "galleryImageList": [
@@ -494,8 +528,15 @@
     "featured": true,
     "new": true,
     "rent": true,
-    "category": ["buying", "selling"],
-    "tag": ["Popular", "desgin", "ux"],
+    "category": [
+      "buying",
+      "selling"
+    ],
+    "tag": [
+      "Popular",
+      "desgin",
+      "ux"
+    ],
     "thumbImg": "5.jpg",
     "backgroundImage": "3.jpg",
     "galleryImageList": [
@@ -589,8 +630,15 @@
     "featured": true,
     "new": true,
     "rent": true,
-    "category": ["buying", "selling"],
-    "tag": ["Popular", "desgin", "ux"],
+    "category": [
+      "buying",
+      "selling"
+    ],
+    "tag": [
+      "Popular",
+      "desgin",
+      "ux"
+    ],
     "thumbImg": "1.jpg",
     "backgroundImage": "3.jpg",
     "galleryImageList": [
@@ -684,8 +732,15 @@
     "featured": true,
     "new": true,
     "rent": true,
-    "category": ["buying", "selling"],
-    "tag": ["Popular", "desgin", "ux"],
+    "category": [
+      "buying",
+      "selling"
+    ],
+    "tag": [
+      "Popular",
+      "desgin",
+      "ux"
+    ],
     "thumbImg": "2.jpg",
     "backgroundImage": "3.jpg",
     "galleryImageList": [

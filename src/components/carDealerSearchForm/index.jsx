@@ -150,7 +150,7 @@ function CarDealerSearchForm({ navMenuClass, customClasses }) {
                             >
                               <div className="btn-wrapper text-center mt-0">
                                 <Link
-                                  href="/shop/right-sidebar"
+                                  href="/shop/properties"
                                   className="btn theme-btn-1 btn-effect-1 text-uppercase"
                                 >
                                   Start Your Path
@@ -164,7 +164,7 @@ function CarDealerSearchForm({ navMenuClass, customClasses }) {
                     <Tab.Pane eventKey="second">
                       <div className="car-dealer-form-inner">
                         <form
-                          action="/shop/right-sidebar"
+                          action="/shop/properties"
                           className="ltn__car-dealer-form-box"
                         >
                           <Row>
@@ -221,7 +221,7 @@ function CarDealerSearchForm({ navMenuClass, customClasses }) {
                             >
                               <div className="btn-wrapper text-center mt-0">
                                 <Link
-                                  href="/shop/right-sidebar"
+                                  href="/shop/properties"
                                   className="btn theme-btn-1 btn-effect-1 text-uppercase"
                                 >
                                   Start Your Path
@@ -243,3 +243,5 @@ function CarDealerSearchForm({ navMenuClass, customClasses }) {
   );
 }
 export default CarDealerSearchForm;
+
+

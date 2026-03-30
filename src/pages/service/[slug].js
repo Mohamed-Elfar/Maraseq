@@ -131,7 +131,7 @@ function ServiceDetails({ service }) {
                   </div>
                   {/* <!-- Banner Widget --> */}
                   <div className="widget ltn__banner-widget">
-                    <Link href="/shop">
+                    <Link href="/shop/properties">
                       <img src="/img/banner/banner-1.jpg" alt="Banner Image" />
                     </Link>
                   </div>

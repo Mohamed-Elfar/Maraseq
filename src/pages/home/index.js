@@ -108,55 +108,55 @@ function HomeVersionThree(props) {
     </button>
   );
 
-const portfolioSettings = {
-        rtl: false,
-        arrows: true,
-        dots: false,
-        infinite: true,
+  const portfolioSettings = {
+    rtl: false,
+    arrows: true,
+    dots: false,
+    infinite: true,
     speed: 500,
     slidesToShow: 5,
-        slidesToScroll: 1,
-        centerMode: true,
+    slidesToScroll: 1,
+    centerMode: true,
     centerPadding: '0px',
-        prevArrow: <SlickArrowLeft />,
-        nextArrow: <SlickArrowRight />,
-        responsive: [
-            {
-                breakpoint: 1200,
-                settings: {
+    prevArrow: <SlickArrowLeft />,
+    nextArrow: <SlickArrowRight />,
+    responsive: [
+      {
+        breakpoint: 1200,
+        settings: {
           slidesToShow: 3,
-                    slidesToScroll: 1
-                }
-            },
-            {
-                breakpoint: 992,
-                settings: {
-            arrows: true,
-            dots: false,
+          slidesToScroll: 1
+        }
+      },
+      {
+        breakpoint: 992,
+        settings: {
+          arrows: true,
+          dots: false,
           slidesToShow: 3,
-                    slidesToScroll: 1
-                }
-            },
-            {
-                breakpoint: 768,
-                settings: {
-                arrows: true,
-                dots: false,
+          slidesToScroll: 1
+        }
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          arrows: true,
+          dots: false,
           slidesToShow: 1,
-                    slidesToScroll: 1,
-                }
-            },
-            {
-                breakpoint: 580,
-                settings: {
-                arrows: true,
-                dots: false,
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                }
-            }
-        ]
-    };
+          slidesToScroll: 1,
+        }
+      },
+      {
+        breakpoint: 580,
+        settings: {
+          arrows: true,
+          dots: false,
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        }
+      }
+    ]
+  };
 
   const productsettings = {
     dots: false,
@@ -314,7 +314,7 @@ const portfolioSettings = {
       </div>
       {/* <!-- ABOUT US AREA END --> */}
 
-  
+
 
       {/* <!-- FEATURE AREA START ( Feature - 6) --> */}
       <Feature
@@ -332,26 +332,26 @@ const portfolioSettings = {
       {/* <!-- FEATURE AREA END -->*/}
 
       {/* <!-- BANNER AREA START ( Banner - 4 ) --> */}
-            <div className="ltn__banner-area pt-120">
-              <Container>
+      <div className="ltn__banner-area pt-120">
+        <Container>
 
-                <Row>
-                  <Col xs={12}>
-                    <TitleSection
-                      sectionClasses="text-center"
-                      headingClasses="section-subtitle-2 ltn__secondary-color"
-                      titleSectionData={{
-                        subTitle: "Property",
-                        title: "Choose Your Path",
-                      }}
-                    />
-                  </Col>
-                </Row>
+          <Row>
+            <Col xs={12}>
+              <TitleSection
+                sectionClasses="text-center"
+                headingClasses="section-subtitle-2 ltn__secondary-color"
+                titleSectionData={{
+                  subTitle: "Property",
+                  title: "Choose Your Path",
+                }}
+              />
+            </Col>
+          </Row>
 
 
-                <PropertyCategories />
-              </Container>
-            </div>
+          <PropertyCategories />
+        </Container>
+      </div>
       {/* <!-- BANNER AREA END --> */}
 
 
@@ -396,9 +396,8 @@ const portfolioSettings = {
                   <button
                     key={filterItem.key}
                     type="button"
-                    className={`featured-filter-tab ${
-                      featuredFilter === filterItem.key ? "active" : ""
-                    }`}
+                    className={`featured-filter-tab ${featuredFilter === filterItem.key ? "active" : ""
+                      }`}
                     onClick={() => setFeaturedFilter(filterItem.key)}
                   >
                     {filterItem.label}

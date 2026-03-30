@@ -4,7 +4,7 @@ const AminitiesItemTwo = ({ data }) => {
   return (
     <>
       <div className="ltn__category-item ltn__category-item-5 ltn__category-item-5-2">
-        <Link href="/shop">
+        <Link href="/shop/properties">
           <span className="category-icon">
             <i className={`${data.icon}`}></i>
           </span>
@@ -18,3 +18,5 @@ const AminitiesItemTwo = ({ data }) => {
 };
 
 export default AminitiesItemTwo;
+
+

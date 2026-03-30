@@ -28,10 +28,6 @@ const MenuList = ({ addListing }) => {
           </li>
 
           <li>
-            <Link href="/portfolio/page-two">Portfolio - 02</Link>
-          </li>
-
-          <li>
             <Link href="/team">Team</Link>
           </li>
 
@@ -46,14 +42,14 @@ const MenuList = ({ addListing }) => {
       </li>
 
       <li className="menu-icon">
-        <Link  href="/shop/left-sidebar">
+        <Link  href="/shop/properties">
           Property  
         </Link>
 
       </li>
 
       <li className="menu-icon">
-        <Link href="/blog/grid">
+        <Link href="/blog">
           News  
         </Link>
       </li>
@@ -68,3 +64,4 @@ const MenuList = ({ addListing }) => {
 };
 
 export default MenuList;
+

@@ -21,6 +21,11 @@ import { Container, Row, Col } from "react-bootstrap";
 import BlogSideBar from "@/components/blog/sidebar";
 import ShopBreadCrumb from "@/components/breadCrumbs/shop";
 
+const getBlogSlug = (blog) => {
+  const source = blog.slug || blog.title;
+  return productSlug(source, { lower: true });
+};
+
 function BlogtDetails({ blog }) {
   const { products } = useSelector((state) => state.product);
   const { cartItems } = useSelector((state) => state.cart);
@@ -165,7 +170,7 @@ function BlogtDetails({ blog }) {
                         </li>
                       </ul>
                     </div>
-                    <div className="ltn__social-media text-right text-end col-lg-4">
+                    <div className="ltn__social-media text-end col-lg-4">
                       <h4>Social Share</h4>
                       <ul>
                         <li>
@@ -200,7 +205,7 @@ function BlogtDetails({ blog }) {
                         <Link href="#">Tips On Minimalist</Link>
                       </h3>
                     </div>
-                    <div className="blog-prev blog-next text-right text-end col-lg-6">
+                    <div className="blog-prev blog-next text-end col-lg-6">
                       <h6>Next Post</h6>
                       <h3 className="ltn__blog-title">
                         <Link href="#">Less Is More</Link>
@@ -346,7 +351,7 @@ function BlogtDetails({ blog }) {
                     </div>
                   </div>
                   <hr />
-                  
+
                   {/* <!-- comment-reply --> */}
                   <div className="ltn__comment-reply-area ltn__form-box mb-60---">
                     <h4 className="title-2">Post Comment</h4>
@@ -420,9 +425,16 @@ export default BlogtDetails;
 
 export async function getStaticProps({ params }) {
   // get blog data based on slug
-  const blog = blogData.filter(
-    (single) => productSlug(single.title) === params.slug
-  )[0];
+  const blog = blogData.find((single) => {
+    const byCustomOrTitle = getBlogSlug(single) === params.slug;
+    const byTitleLegacy =
+      productSlug(single.title, { lower: true }) === params.slug;
+    return byCustomOrTitle || byTitleLegacy;
+  });
+
+  if (!blog) {
+    return { notFound: true };
+  }
 
   return { props: { blog } };
 }
@@ -431,9 +443,7 @@ export async function getStaticPaths() {
   // get the paths we want to pre render based on blogs
   const paths = blogData.map((singleBlog) => ({
     params: {
-      slug: productSlug(singleBlog.title, {
-        lower: true, // convert to lower case, defaults to `false`
-      }),
+      slug: getBlogSlug(singleBlog),
     },
   }));
 

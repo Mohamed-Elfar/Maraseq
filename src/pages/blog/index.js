@@ -1,64 +1,54 @@
-import { LayoutOne } from "@/layouts";
 import { useState, useEffect } from "react";
-import BlogItemTwo from "@/components/blog/blogItemTwo";
-import blogData from "@/data/blog";
+import { LayoutOne } from "@/layouts";
 import { Container, Row, Col } from "react-bootstrap";
 import ShopBreadCrumb from "@/components/breadCrumbs/shop";
-import BlogSideBar from "@/components/blog/sidebar";
-import { useSelector } from "react-redux";
-import { getProducts, productSlug } from "@/lib/product";
+import { productSlug } from "@/lib/product";
+import blogData from "@/data/blog";
+import BlogItem from "@/components/blog";
+import CallToAction from "@/components/callToAction";
 import ReactPaginate from "react-paginate";
 import { FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa";
 
-function Blog() {
-
-  const { products } = useSelector((state) => state.product);
-  const featuredBlogs = getProducts(blogData, "buying", "featured", 7);
-  const latestdBlogs = getProducts(blogData, "buying", "featured", 4);
-  const topRatedProducts = getProducts(products, "buying", "featured", 3);
-  const popularProducts = getProducts(products, "buying", "featured", 3);
-
+function BlogPage() {
   const perPageLimit = 6;
-  const [currentItems, setCurrentItems] = useState(featuredBlogs);
+  const [currentItems, setCurrentItems] = useState(blogData);
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
 
   useEffect(() => {
     const endOffset = itemOffset + perPageLimit;
-    setCurrentItems(featuredBlogs.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(featuredBlogs.length / perPageLimit));
+    setCurrentItems(blogData.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(blogData.length / perPageLimit));
   }, [itemOffset, perPageLimit]);
 
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * perPageLimit) % featuredBlogs.length;
+    const newOffset = (event.selected * perPageLimit) % blogData.length;
     setItemOffset(newOffset);
   };
-
 
   return (
     <>
       <LayoutOne topbar={true}>
-        <ShopBreadCrumb title="News Feeds" sectionPace="" currentSlug="Blog" />
+        <ShopBreadCrumb
+          title="Blog"
+          sectionPace=""
+          currentSlug="Blog"
+        />
 
-        <div className="ltn__blog-area mb-120">
+        <div className="ltn__blog-area ltn__blog-item-3-normal mb-100">
           <Container>
             <Row>
-              <Col xs={12} lg={8}>
-                <div className="ltn__blog-list-wrap">
-                  {currentItems.map((blog, key) => {
-                    const slug = productSlug(blog.title);
+              {currentItems.map((data, key) => {
+                const slug = productSlug(data.title);
+                return (
+                  <Col xs={12} sm={6} lg={4} key={key}>
+                    <BlogItem baseUrl="blog" data={data} slug={slug} />
+                  </Col>
+                );
+              })}
+            </Row>
 
-                    return (
-                      <BlogItemTwo
-                        key={key}
-                        blogData={blog}
-                        slug={slug}
-                        baseUrl="blog"
-                      />
-                    );
-                  })}
-                </div>
-                <Row>
+            <Row>
               <Col xs={12}>
                 <div className="ltn__pagination-area">
                   <ReactPaginate
@@ -84,15 +74,14 @@ function Blog() {
                 </div>
               </Col>
             </Row>
-              </Col>
+          </Container>
+        </div>
 
-
-              <Col xs={12} lg={{ span: 4, order: 0 }}>
-                <BlogSideBar
-                  latestdBlogs={latestdBlogs}
-                  topRatedProducts={topRatedProducts}
-                  popularProducts={popularProducts}
-                />
+        <div className="ltn__call-to-action-area call-to-action-6 before-bg-bottom">
+          <Container>
+            <Row>
+              <Col xs={12}>
+                <CallToAction />
               </Col>
             </Row>
           </Container>
@@ -102,4 +91,4 @@ function Blog() {
   );
 }
 
-export default Blog;
+export default BlogPage;

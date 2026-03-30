@@ -15,9 +15,9 @@ const HeaderCartMenu = function ({ cartMenuOpener, closeSideBar }) {
       }`}
     >
       <div className="ltn__utilize-menu-inner ltn__scrollbar">
-        <div className="ltn__utilize-menu-head">
+        <div className="ltn__utilize-cart-head">
           <span className="ltn__utilize-menu-title">Cart</span>
-          <button onClick={closeSideBar} className="ltn__utilize-close">
+          <button onClick={closeSideBar} className="ltn__utilize-cart-close">
             ×
           </button>
         </div>
@@ -69,11 +69,8 @@ const HeaderCartMenu = function ({ cartMenuOpener, closeSideBar }) {
                 </h5>
               </div>
               <div className="btn-wrapper">
-                <Link href="/cart" className="theme-btn-1 btn btn-effect-1">
-                  View Cart
-                </Link>
-                <Link href="/checkout" className="theme-btn-2 btn btn-effect-2">
-                  Checkout
+                <Link href="/shop/properties" className="theme-btn-1 btn btn-effect-1">
+                  Browse Properties
                 </Link>
               </div>
               <p>Free Shipping on All Orders Over $100!</p>

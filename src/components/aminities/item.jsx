@@ -4,7 +4,7 @@ const AminitiesItem = ({ data }) => {
   return (
     <>
       <div className="ltn__category-item ltn__category-item-5 text-center">
-        <Link href="/shop">
+        <Link href="/shop/properties">
           <span className="category-icon">
             <i className={`${data.icon}`}></i>
           </span>
@@ -19,3 +19,5 @@ const AminitiesItem = ({ data }) => {
 };
 
 export default AminitiesItem;
+
+

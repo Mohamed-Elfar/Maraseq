@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -131,7 +131,7 @@ const Footer = function () {
                         <Link href="/blog">Blog</Link>
                       </li>
                       <li>
-                        <Link href="/shop">All Products</Link>
+                        <Link href="/shop/properties">All Products</Link>
                       </li>
                       <li>
                         <Link href="/locations">Locations Map</Link>
@@ -240,3 +240,6 @@ const Footer = function () {
 };
 
 export default Footer;
+
+
+

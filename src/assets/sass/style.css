@@ -6095,22 +6095,7 @@ ul.wp-block-latest-posts.is-grid.alignwide {
   stroke-dashoffset: -115px;
 }
 
-.ltn__utilize-menu-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 25px;
-  padding-bottom: 15px;
-  border-bottom: 1px solid #eee;
-}
-.ltn__utilize-menu-head .ltn__utilize-menu-title {
-  font-weight: 700;
-}
-.ltn__utilize-menu-head .ltn__utilize-close {
-  background-color: transparent;
-  font-size: 30px;
-  padding: 0 15px;
-}
+
 
 .ltn__utilize-buttons {
   border-top: 1px solid var(--border-color-1);

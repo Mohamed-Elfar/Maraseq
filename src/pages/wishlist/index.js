@@ -83,7 +83,7 @@ const Wishlist = () => {
                             </Row>) : (<div className="text-center">
                                 <p>No items found in wishlist</p>
                                 <Link
-                                    href="/shop"
+                                    href="/shop/properties"
                                     className="theme-btn-1 btn btn-effect-1"
                                 >
                                     Shop Now
@@ -109,3 +109,5 @@ const Wishlist = () => {
 };
 
 export default Wishlist;
+
+
