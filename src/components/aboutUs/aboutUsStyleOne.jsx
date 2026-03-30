@@ -5,6 +5,8 @@ import Col from "react-bootstrap/Col";
 import { FaPlay } from "react-icons/fa";
 import ModalVideo from "react-modal-video";
 import { useState } from "react";
+import aboutUsLeftImage from "@/assets/images/about/ABOUT-US---574X722-PX.png";
+
 function AboutUsStyleOne({ sectionSpace }) {
   const [isOpen, setOpen] = useState(false);
   return (
@@ -21,7 +23,7 @@ function AboutUsStyleOne({ sectionSpace }) {
           <Row>
             <Col xs={12} lg={6} className="align-self-center">
               <div className="about-us-img-wrap about-img-left">
-                <img src="/img/others/7.png" alt="About Us Image" />
+                <img src={aboutUsLeftImage.src} alt="About Us Image" />
                 <div className="about-us-img-info about-us-img-info-2 about-us-img-info-3">
                   <div className="ltn__video-img ltn__animation-pulse1">
                     <img src="/img/others/8.png" alt="video popup bg image" />
@@ -42,36 +44,36 @@ function AboutUsStyleOne({ sectionSpace }) {
                     About Us
                   </h6>
                   <h1 className="section-title">
-                    The Leading Real Estate Rental Marketplace<span>.</span>
+                    We Shape Clearer Paths for Real Estate Opportunities<span>.</span>
                   </h1>
                   <p>
-                    Over 39,000 people work for us in more than 70 countries all
-                    over the This breadth of global coverage, combined with
-                    specialist services
+                    Maraseq is a real estate investment and marketing company
+                    focused on developing opportunities and creating clear
+                    pathways that help our clients make informed decisions and
+                    achieve sustainable value in the market.
                   </p>
                 </div>
                 <ul className="ltn__list-item-half clearfix">
                   <li>
                     <i className="flaticon-home-2"></i>
-                    Smart Home Design
+                    Smart Real Estate Investment
                   </li>
                   <li>
                     <i className="flaticon-mountain"></i>
-                    Beautiful Scene Around
+                    Professional Real Estate Marketing
                   </li>
                   <li>
                     <i className="flaticon-heart"></i>
-                    Exceptional Lifestyle
+                    Opportunity Development
                   </li>
                   <li>
                     <i className="flaticon-secure"></i>
-                    Complete 24/7 Security
+                    Strategic Partnerships
                   </li>
                 </ul>
                 <div className="ltn__callout bg-overlay-theme-05  mt-30">
                   <p>
-                    Enimad minim veniam quis nostrud exercitation <br />
-                    llamco laboris. Lorem ipsum dolor sit amet
+                    Toward clearer paths... and more confident decisions
                   </p>
                 </div>
                 <div className="btn-wrapper animated">
@@ -79,7 +81,7 @@ function AboutUsStyleOne({ sectionSpace }) {
                     href="/service"
                     className="theme-btn-1 btn btn-effect-1"
                   >
-                    OUR SERVICES
+                    Our Services
                   </Link>
                 </div>
               </div>

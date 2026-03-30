@@ -5,14 +5,11 @@ import { Container, Col, Row } from "react-bootstrap";
 import startImage from "@/assets/images/home/Start.png";
 import exploreImage from "@/assets/images/home/Explore.png";
 import decideImage from "@/assets/images/home/Decide.png";
-import heroSliderImage from "@/assets/images/home/heroSlider.png";
 
 const heroBackgroundByName = {
   "start.png": startImage.src,
-  "Start.png": startImage.src,
   "Explore.png": exploreImage.src,
   "Decide.png": decideImage.src,
-  "heroSlider.png": heroSliderImage.src,
 };
 
 function HeroSectionStyleThree({ data }) {
