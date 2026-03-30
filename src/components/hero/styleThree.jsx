@@ -2,6 +2,18 @@ import Link from "next/link";
 import Slider from "react-slick";
 import { FaHome, FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import { Container, Col, Row } from "react-bootstrap";
+import startImage from "@/assets/images/home/Start.png";
+import exploreImage from "@/assets/images/home/Explore.png";
+import decideImage from "@/assets/images/home/Decide.png";
+import heroSliderImage from "@/assets/images/home/heroSlider.png";
+
+const heroBackgroundByName = {
+  "start.png": startImage.src,
+  "Start.png": startImage.src,
+  "Explore.png": exploreImage.src,
+  "Decide.png": decideImage.src,
+  "heroSlider.png": heroSliderImage.src,
+};
 
 function HeroSectionStyleThree({ data }) {
   const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
@@ -63,12 +75,15 @@ function HeroSectionStyleThree({ data }) {
           className="ltn__slide-one-active slick-slide-arrow-1 slick-slide-dots-1"
         >
           {data.map((item, key) => {
+              const backgroundImage =
+                heroBackgroundByName[item.bgImage] || `/img/slider/${item.bgImage}`;
+
             return (
               <div key={key}>
                 <div
                 className="ltn__slide-item ltn__slide-item-2 ltn__slide-item-3 bg-image bg-overlay-theme-black-60"
                   style={{
-                    backgroundImage: `url("../img/slider/${item.bgImage}")`,
+                      backgroundImage: `url("${backgroundImage}")`,
                   }}
                 >
                   <div

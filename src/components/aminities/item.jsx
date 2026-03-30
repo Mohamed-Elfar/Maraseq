@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const AminitiesItem = ({data}) => {
+const AminitiesItem = ({ data }) => {
   return (
     <>
       <div className="ltn__category-item ltn__category-item-5 text-center">
