@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { FaRegUser, FaTags, FaRegCalendarAlt } from "react-icons/fa";
+import EditableImage from "@/components/cms/EditableImage";
 const BlogItem = ({ baseUrl, data, slug, imageSrc }) => {
   const blogImage = imageSrc || `/img/blog/${data.thumbImg}`;
 
@@ -8,7 +9,11 @@ const BlogItem = ({ baseUrl, data, slug, imageSrc }) => {
       <div className="ltn__blog-item ltn__blog-item-3">
         <div className="ltn__blog-img">
           <Link href={`${baseUrl}/${slug}`}>
-            <img src={blogImage} alt={`${data.title}`} />
+            <EditableImage
+              contentKey={`home.blog.${slug}.image`}
+              value={blogImage}
+              alt={`${data.title}`}
+            />
           </Link>
         </div>
         <div className="ltn__blog-brief">

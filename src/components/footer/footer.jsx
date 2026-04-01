@@ -13,6 +13,7 @@ import {
   FaPhoneAlt,
 } from "react-icons/fa";
 import maraseqEnglishLogo from "@/assets/images/logo/english - vrsion Maraseq logo.svg";
+import EditableText from "@/components/cms/EditableText";
 
 const Footer = function () {
   return (
@@ -34,11 +35,12 @@ const Footer = function () {
                       />
                     </div>
                   </div>
-                  <p>
-                    We develop real estate opportunities and create clear paths
-                    that guide confident decisions, driven by market insight and
-                    value-based partnerships.
-                  </p>
+                  <EditableText
+                    as="p"
+                    multiline
+                    contentKey="footer.about.description"
+                    value="We develop real estate opportunities and create clear paths that guide confident decisions, driven by market insight and value-based partnerships."
+                  />
                   <div className="footer-address">
                     <ul>
                       <li>
@@ -46,7 +48,12 @@ const Footer = function () {
                           <FaMapMarkerAlt />
                         </div>
                         <div className="footer-address-info">
-                          <p>Qutur, Tanta, Gharbia Governorate, Egypt</p>
+                          <EditableText
+                            as="p"
+                            multiline
+                            contentKey="footer.about.address"
+                            value="Qutur, Tanta, Gharbia Governorate, Egypt"
+                          />
                         </div>
                       </li>
                       <li>
@@ -55,7 +62,13 @@ const Footer = function () {
                         </div>
                         <div className="footer-address-info">
                           <p>
-                            <Link href="tel:+201102223231">+201102223231</Link>
+                            <Link href="tel:+201102223231">
+                              <EditableText
+                                as="span"
+                                contentKey="footer.about.phone"
+                                value="+201102223231"
+                              />
+                            </Link>
                           </p>
                         </div>
                       </li>
@@ -66,7 +79,11 @@ const Footer = function () {
                         <div className="footer-address-info">
                           <p>
                             <Link href="mailto:info@maraseqgroup.com">
-                              info@maraseqgroup.com
+                              <EditableText
+                                as="span"
+                                contentKey="footer.about.email"
+                                value="info@maraseqgroup.com"
+                              />
                             </Link>
                           </p>
                         </div>

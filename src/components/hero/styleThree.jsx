@@ -86,7 +86,7 @@ function HeroSectionStyleThree({ data }) {
                   <div
                     className={`ltn__slide-item-inner ${
                       item.variationRight
-                        ? "text-end"
+                        ? "text-right text-end" 
                         : item.variationCenter
                         ? "text-center"
                         : "text-left"

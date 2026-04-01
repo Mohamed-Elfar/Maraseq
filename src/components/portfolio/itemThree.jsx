@@ -1,7 +1,9 @@
 import Link from "next/link";
 import imageSlider from "@/assets/images/home/imageSlider.png";
+import EditableImage from "@/components/cms/EditableImage";
 const PortfolioitemThree = ({ data, baseUrl, slug, imageSrc, variant }) => {
   const isShowcase = variant === "showcase";
+  const resolvedImage = imageSrc || imageSlider.src;
 
   return (
     <div
@@ -13,7 +15,11 @@ const PortfolioitemThree = ({ data, baseUrl, slug, imageSrc, variant }) => {
         href={`${baseUrl}/${slug}`}
         className={isShowcase ? "maraseq-showcase-media" : undefined}
       >
-        <img src={imageSlider.src} alt="Image" />
+        <EditableImage
+          contentKey={`home.showcase.item.${slug}.image`}
+          value={resolvedImage}
+          alt="Image"
+        />
       </Link>
       {isShowcase ? (
         <div className="maraseq-showcase-badge">{data.filter}</div>

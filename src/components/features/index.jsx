@@ -35,10 +35,10 @@ function Feature({
                       item.active ? "active" : ""
                     }`}
                   >
-                    <div className="ltn__feature-icon">
+                    <div className="ltn__feature-icon ">
                       {iconTag ? (
                         <span>
-                          <i className={`${item.icon}`}></i>
+                          <i className={` ${item.icon} `}></i>
                         </span>
                       ) : (
                         <img

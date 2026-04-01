@@ -1,6 +1,6 @@
 import { Fragment, useEffect } from "react";
 import Head from "next/head";
-import { Nunito_Sans,Poppins } from "next/font/google";
+import { Nunito_Sans, Poppins } from "next/font/google";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { wrapper } from "@/store";
@@ -16,6 +16,8 @@ import "yet-another-react-lightbox/styles.css";
 import "yet-another-react-lightbox/plugins/counter.css";
 import "@/assets/sass/style.scss";
 import "@/assets/responsive.css";
+import { EditModeProvider } from "@/context/EditModeContext";
+import EditModeToolbar from "@/components/cms/EditModeToolbar";
 
 const nunito = Nunito_Sans({
   weight: ["200", "300", "400", "600", "700", "800", "900"],
@@ -56,7 +58,10 @@ const MyApp = ({ Component, ...rest }) => {
       `}</style>
       <Provider store={store}>
         <PersistGate persistor={store.__persistor} loading={<Preloader />}>
-          <Component {...props.pageProps} />
+          <EditModeProvider>
+            <Component {...props.pageProps} />
+            <EditModeToolbar />
+          </EditModeProvider>
         </PersistGate>
       </Provider>
     </Fragment>

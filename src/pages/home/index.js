@@ -27,6 +27,8 @@ import portfolioData from "@/data/portfolio";
 import PortfolioitemThree from "@/components/portfolio/itemThree";
 import imageSlider from "@/assets/images/home/imageSlider.png";
 import videoPopupAreaImage from "@/assets/images/home/video-popup-area.png";
+import EditableText from "@/components/cms/EditableText";
+import EditableSection from "@/components/cms/EditableSection";
 
 
 
@@ -305,235 +307,259 @@ function HomeVersionThree(props) {
       </div>
 
       {/* <!-- SLIDER AREA END --> */}
-      <CarDealerSearchForm navMenuClass="d-none" customClasses="" />
+      <EditableSection sectionKey="home.section.search" sectionLabel="Search Form">
+        <CarDealerSearchForm navMenuClass="d-none" customClasses="" />
+      </EditableSection>
       {/* <!-- CAR DEALER FORM AREA END --> */}
 
       {/* <!-- ABOUT US AREA START --> */}
-      <div className="ltn__about-us-area pt-115 pb-100 ">
-        <AboutUsSectionOne />
-      </div>
+      <EditableSection sectionKey="home.section.about" sectionLabel="About Section">
+        <div className="ltn__about-us-area pt-115 pb-100 ">
+          <AboutUsSectionOne />
+        </div>
+      </EditableSection>
       {/* <!-- ABOUT US AREA END --> */}
 
 
 
       {/* <!-- FEATURE AREA START ( Feature - 6) --> */}
-      <Feature
-        servicebtn={true}
-        iconTag={false}
-        data={featureData}
-        classes=""
-        headingClasses="section-subtitle-2"
-        titleSectionData={{
-          sectionClasses: "text-center",
-          subTitle: "Our Services",
-          title: "Our Core Paths",
-        }}
-      />
+      <EditableSection sectionKey="home.section.features" sectionLabel="Features Section">
+        <Feature
+          servicebtn={true}
+          iconTag={true}
+          data={featureData}
+          classes=""
+          headingClasses="section-subtitle-2"
+          titleSectionData={{
+            sectionClasses: "text-center",
+            subTitle: "Our Services",
+            title: "Our Core Paths",
+          }}
+        />
+      </EditableSection>
       {/* <!-- FEATURE AREA END -->*/}
 
       {/* <!-- BANNER AREA START ( Banner - 4 ) --> */}
-      <div className="ltn__banner-area pt-120">
-        <Container>
+      <EditableSection sectionKey="home.section.categories" sectionLabel="Property Categories">
+        <div className="ltn__banner-area pt-120">
+          <Container>
 
-          <Row>
-            <Col xs={12}>
-              <TitleSection
-                sectionClasses="text-center"
-                headingClasses="section-subtitle-2 ltn__secondary-color"
-                titleSectionData={{
-                  subTitle: "Property",
-                  title: "Choose Your Path",
-                }}
-              />
-            </Col>
-          </Row>
+            <Row>
+              <Col xs={12}>
+                <TitleSection
+                  sectionClasses="text-center"
+                  headingClasses="section-subtitle-2 ltn__secondary-color"
+                  titleSectionData={{
+                    subTitle: "Property",
+                    title: "Choose Your Path",
+                  }}
+                />
+              </Col>
+            </Row>
 
 
-          <PropertyCategories />
-        </Container>
-      </div>
+            <PropertyCategories />
+          </Container>
+        </div>
+      </EditableSection>
       {/* <!-- BANNER AREA END --> */}
 
 
       {/* <!-- IMAGE SLIDER AREA START (img-slider-3) --> */}
-      {/* <div className="ltn__img-slider-area">
-        <Slider {...portfolioSettings} className="ltn__image-slider-4-active slick-arrow-1 slick-arrow-1-inner ltn__no-gutter-all">
+      <EditableSection sectionKey="home.section.showcase" sectionLabel="Showcase Slider">
+        <div className="ltn__img-slider-area">
+          <Slider {...portfolioSettings} className="ltn__image-slider-4-active slick-arrow-1 slick-arrow-1-inner ltn__no-gutter-all">
 
-          {
-            portfolios.map((data, key) => {
-              const slug = productSlug(data.title);
-              return (
-                <PortfolioitemThree key={key}
-                  baseUrl="/portfolio"
-                  data={data}
-                  slug={slug} />
-              )
-            })
-          }
+            {
+              portfolios.map((data, key) => {
+                const slug = productSlug(data.title);
+                return (
+                  <PortfolioitemThree key={key}
+                    baseUrl="/portfolio"
+                    data={data}
+                    slug={slug} />
+                )
+              })
+            }
 
-        </Slider>
-      </div> */}
+          </Slider>
+        </div>
+      </EditableSection>
       {/* <!-- IMAGE SLIDER AREA END --> */}
 
 
 
       {/* PRODUCT SLIDER AREA START */}
-      <div className="ltn__product-slider-area ltn__product-gutter pt-115 pb-90 plr--7">
-        <Container>
-          <Row>
-            <Col lg={12}>
-              <TitleSection
-                sectionClasses="text-center"
-                headingClasses="section-subtitle-2"
-                titleSectionData={{
-                  subTitle: "Properties",
-                  title: "Opportunities on the Right Path",
-                }}
-              />
+      <EditableSection sectionKey="home.section.products" sectionLabel="Products Section">
+        <div className="ltn__product-slider-area ltn__product-gutter pt-115 pb-90 plr--7">
+          <Container>
+            <Row>
+              <Col lg={12}>
+                <TitleSection
+                  sectionClasses="text-center"
+                  headingClasses="section-subtitle-2"
+                  titleSectionData={{
+                    subTitle: "Properties",
+                    title: "Opportunities on the Right Path",
+                  }}
+                />
 
-              <div className="featured-filter-tabs text-center mt-20 mb-20">
-                {featuredFilterOptions.map((filterItem) => (
-                  <button
-                    key={filterItem.key}
-                    type="button"
-                    className={`featured-filter-tab ${featuredFilter === filterItem.key ? "active" : ""
-                      }`}
-                    onClick={() => setFeaturedFilter(filterItem.key)}
+                <div className="featured-filter-tabs text-center mt-20 mb-20">
+                  {featuredFilterOptions.map((filterItem) => (
+                    <button
+                      key={filterItem.key}
+                      type="button"
+                      className={`featured-filter-tab ${featuredFilter === filterItem.key ? "active" : ""
+                        }`}
+                      onClick={() => setFeaturedFilter(filterItem.key)}
+                    >
+                      {filterItem.label}
+                    </button>
+                  ))}
+                </div>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col lg={12}>
+                {!!filteredFeaturedProducts?.length ? (
+                  <Slider
+                    {...productCarouselsettings}
+                    className="ltn__product-slider-item-four-active-full-width slick-arrow-1"
                   >
-                    {filterItem.label}
-                  </button>
-                ))}
-              </div>
-            </Col>
-          </Row>
+                    {filteredFeaturedProducts.map((product, key) => {
+                      const slug = productSlug(product.title);
 
-          <Row>
-            <Col lg={12}>
-              {!!filteredFeaturedProducts?.length ? (
-                <Slider
-                  {...productCarouselsettings}
-                  className="ltn__product-slider-item-four-active-full-width slick-arrow-1"
-                >
-                  {filteredFeaturedProducts.map((product, key) => {
-                    const slug = productSlug(product.title);
+                      const discountedPrice = getDiscountPrice(
+                        product.price,
+                        product.discount
+                      ).toFixed(2);
+                      const productPrice = product.price.toFixed(2);
+                      const cartItem = cartItems.find(
+                        (cartItem) => cartItem.id === product.id
+                      );
+                      const wishlistItem = wishlistItems.find(
+                        (wishlistItem) => wishlistItem.id === product.id
+                      );
+                      const compareItem = compareItems.find(
+                        (compareItem) => compareItem.id === product.id
+                      );
 
-                    const discountedPrice = getDiscountPrice(
-                      product.price,
-                      product.discount
-                    ).toFixed(2);
-                    const productPrice = product.price.toFixed(2);
-                    const cartItem = cartItems.find(
-                      (cartItem) => cartItem.id === product.id
-                    );
-                    const wishlistItem = wishlistItems.find(
-                      (wishlistItem) => wishlistItem.id === product.id
-                    );
-                    const compareItem = compareItems.find(
-                      (compareItem) => compareItem.id === product.id
-                    );
-
-                    return (
-                      <ProductItem
-                        key={product.id}
-                        productData={product}
-                        slug={slug}
-                        baseUrl="shop"
-                        discountedPrice={discountedPrice}
-                        productPrice={productPrice}
-                        cartItem={cartItem}
-                        wishlistItem={wishlistItem}
-                        compareItem={compareItem}
-                      />
-                    );
-                  })}
-                </Slider>
-              ) : null}
-            </Col>
-          </Row>
-        </Container>
-      </div>
+                      return (
+                        <ProductItem
+                          key={product.id}
+                          productData={product}
+                          slug={slug}
+                          baseUrl="shop"
+                          discountedPrice={discountedPrice}
+                          productPrice={productPrice}
+                          cartItem={cartItem}
+                          wishlistItem={wishlistItem}
+                          compareItem={compareItem}
+                        />
+                      );
+                    })}
+                  </Slider>
+                ) : null}
+              </Col>
+            </Row>
+          </Container>
+        </div>
+      </EditableSection>
       {/* PRODUCT SLIDER AREA END */}
 
 
       {/* <!-- VIDEO AREA START --> */}
-      <div className="ltn__video-popup-area">
-        <VideoBanner backgroundImage={videoPopupAreaImage.src} />
-      </div>
+      <EditableSection sectionKey="home.section.video" sectionLabel="Video Banner">
+        <div className="ltn__video-popup-area">
+          <VideoBanner backgroundImage={videoPopupAreaImage.src} />
+        </div>
+      </EditableSection>
       {/* <!-- VIDEO AREA END --> */}
 
 
 
       {/* <!-- BRAND LOGO AREA START --> */}
-      <div className="ltn__brand-logo-area ltn__brand-logo-1 section-bg-1 pt-110 pb-110 plr--9">
-        <Container fluid>
-          <Row>
-            <Col xs={12}>
-              <BrandCarouselOne data={brand} />
-            </Col>
-          </Row>
-        </Container>
-      </div>
+      <EditableSection sectionKey="home.section.brands" sectionLabel="Brand Carousel">
+        <div className="ltn__brand-logo-area ltn__brand-logo-1 section-bg-1 pt-110 pb-110 plr--9">
+          <Container fluid>
+            <Row>
+              <Col xs={12}>
+                <BrandCarouselOne data={brand} />
+              </Col>
+            </Row>
+          </Container>
+        </div>
+      </EditableSection>
       {/* <!-- BRAND LOGO AREA END --> */}
 
 
 
       {/* <!-- BLOG AREA START (blog-3) -->  */}
-      <div className="ltn__blog-area pt-120 pb-70">
-        <Container>
-          <Row>
-            <Col lg={12}>
-              <TitleSection
-                sectionClasses="text-center"
-                headingClasses="section-subtitle-2"
-                titleSectionData={{
-                  subTitle: "Market Insights",
-                  title: "Your Real Estate Guide",
-                }}
-              />
-              <p className="text-center mb-40">
-                Insights to help you understand the market and decide with
-                confidence
-              </p>
-            </Col>
-          </Row>
-          <Slider
-            {...blogSettings}
-            className="ltn__blog-slider-one-active slick-arrow-1 ltn__blog-item-3-normal"
-          >
-            {blogData.slice(0, 3).map((data, key) => {
-              const override = marketInsightsCards[key] || {};
-              const cardData = {
-                ...data,
-                ...override,
-              };
-              const slug = productSlug(cardData.title);
-              const imageSrc = newsImages[key % newsImages.length];
-
-              return (
-                <BlogItem
-                  key={key}
-                  baseUrl="blog"
-                  data={cardData}
-                  slug={slug}
-                  imageSrc={imageSrc}
+      <EditableSection sectionKey="home.section.blog" sectionLabel="Blog Section">
+        <div className="ltn__blog-area pt-120 pb-70">
+          <Container>
+            <Row>
+              <Col lg={12}>
+                <TitleSection
+                  sectionClasses="text-center"
+                  headingClasses="section-subtitle-2"
+                  titleSectionData={{
+                    subTitle: "Market Insights",
+                    title: "Your Real Estate Guide",
+                  }}
                 />
-              );
-            })}
-          </Slider>
-        </Container>
-      </div>
+                <EditableText
+                  as="p"
+                  className="text-center mb-40"
+                  editableClassName="text-center mb-40"
+                  multiline
+                  contentKey="home:market-insights:description"
+                  value="Insights to help you understand the market and decide with confidence"
+                />
+              </Col>
+            </Row>
+            <Slider
+              {...blogSettings}
+              className="ltn__blog-slider-one-active slick-arrow-1 ltn__blog-item-3-normal"
+            >
+              {blogData.slice(0, 3).map((data, key) => {
+                const override = marketInsightsCards[key] || {};
+                const cardData = {
+                  ...data,
+                  ...override,
+                };
+                const slug = productSlug(cardData.title);
+                const imageSrc = newsImages[key % newsImages.length];
+
+                return (
+                  <BlogItem
+                    key={key}
+                    baseUrl="blog"
+                    data={cardData}
+                    slug={slug}
+                    imageSrc={imageSrc}
+                  />
+                );
+              })}
+            </Slider>
+          </Container>
+        </div>
+      </EditableSection>
       {/* <!-- BLOG AREA END --> */}
 
       {/* <!-- CALL TO ACTION START (call-to-action-6) --> */}
-      <div className="ltn__call-to-action-area call-to-action-6 before-bg-bottom">
-        <Container>
-          <Row>
-            <Col xs={12}>
-              <CallToAction />
-            </Col>
-          </Row>
-        </Container>
-      </div>
+      <EditableSection sectionKey="home.section.cta" sectionLabel="Call To Action">
+        <div className="ltn__call-to-action-area call-to-action-6 before-bg-bottom">
+          <Container>
+            <Row>
+              <Col xs={12}>
+                <CallToAction />
+              </Col>
+            </Row>
+          </Container>
+        </div>
+      </EditableSection>
       {/* <!-- CALL TO ACTION END --> */}
     </LayoutTwo>
   );

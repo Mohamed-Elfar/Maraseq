@@ -8,6 +8,7 @@ import Counter from "yet-another-react-lightbox/plugins/counter";
 import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import Download from "yet-another-react-lightbox/plugins/download";
+import EditableText from "@/components/cms/EditableText";
 
 function AboutUsStyleTwo({ sectionSpace }) {
   const [index, setIndex] = useState(-1);
@@ -46,10 +47,20 @@ function AboutUsStyleTwo({ sectionSpace }) {
             <Col xs={12} lg={6} className="align-self-center">
               <div className="about-us-info-wrap">
                 <div className="section-title-area ltn__section-title-2--- mb-30">
-                  <h6 className="section-subtitle section-subtitle-2 ltn__secondary-color">
-                    About Us
-                  </h6>
-                  <h1 className="section-title">Today Sells Properties</h1>
+                  <EditableText
+                    as="h6"
+                    className="section-subtitle section-subtitle-2 ltn__secondary-color"
+                    contentKey="service-about:subtitle"
+                    value="About Us"
+                    placeholder="Enter subtitle"
+                  />
+                  <EditableText
+                    as="h1"
+                    className="section-title"
+                    contentKey="service-about:title"
+                    value="Today Sells Properties"
+                    placeholder="Enter title"
+                  />
                   <p>
                     Houzez allow you to design unlimited panels and real estate
                     custom forms to capture leads and keep record of all

@@ -15,6 +15,7 @@ import Feature from "@/components/features";
 import featureData from "@/data/service"
 import TeamItem from "@/components/team";
 import TeamData from '@/data/team';
+import EditableSection from "@/components/cms/EditableSection";
 
 function AboutUs() {
   const agents = getProducts(TeamData, "buying", "featured", 3);
@@ -72,133 +73,147 @@ function AboutUs() {
   return (
     <>
       <LayoutOne topbar={true}>
-        <ShopBreadCrumb
-          title="About Us"
-          sectionPace=""
-          currentSlug="About Us"
-        />
+        <EditableSection sectionKey="about.section.breadcrumb" sectionLabel="About Breadcrumb Section">
+          <ShopBreadCrumb
+            title="About Us"
+            sectionPace=""
+            currentSlug="About Us"
+          />
+        </EditableSection>
 
-        <AboutUsStyleOne sectionSpace="pb-90" />
+        <EditableSection sectionKey="about.section.main" sectionLabel="About Main Section">
+          <AboutUsStyleOne sectionSpace="pb-90" />
+        </EditableSection>
 
-        <Feature
-          classes="section-bg-1"
-          servicebtn={true}
-          iconTag={false}
-          data={featureDataSorted}
-          titleSectionData={{
-            sectionClasses: "text-center",
-            subTitle: "Our Services",
-            title: "Our Main Focus",
-          }}
-        />
-
-
-
-
-        <div className="ltn__team-area pt-115 pb-90">
-          <Container>
-            <Row>
-              <Col lg={12}>
-                <TitleSection
-                  sectionClasses="text-center"
-                  headingClasses="section-subtitle-2"
-                  titleSectionData={{
-                    subTitle: "Team",
-                    title: "Property Agents",
-                  }}
-                />
-              </Col>
-            </Row>
-
-            <Row>
-              {agents.map((data, key) => {
-                const slug = productSlug(data.name);
-                return (
-                  <Col key={key} xs={12} sm={6} lg={4} >
-                    <TeamItem baseUrl="blog" data={data} slug={slug} additionalClassname="" />
-                  </Col>
-                );
-              })}
-            </Row>
+        <EditableSection sectionKey="about.section.services" sectionLabel="About Services Section">
+          <Feature
+            classes="section-bg-1"
+            servicebtn={true}
+            iconTag={false}
+            data={featureDataSorted}
+            titleSectionData={{
+              sectionClasses: "text-center",
+              subTitle: "Our Services",
+              title: "Our Main Focus",
+            }}
+          />
+        </EditableSection>
 
 
-          </Container>
-        </div>
+
+
+        <EditableSection sectionKey="about.section.team" sectionLabel="About Team Section">
+          <div className="ltn__team-area pt-115 pb-90">
+            <Container>
+              <Row>
+                <Col lg={12}>
+                  <TitleSection
+                    sectionClasses="text-center"
+                    headingClasses="section-subtitle-2"
+                    titleSectionData={{
+                      subTitle: "Team",
+                      title: "Property Agents",
+                    }}
+                  />
+                </Col>
+              </Row>
+
+              <Row>
+                {agents.map((data, key) => {
+                  const slug = productSlug(data.name);
+                  return (
+                    <Col key={key} xs={12} sm={6} lg={4} >
+                      <TeamItem baseUrl="blog" data={data} slug={slug} additionalClassname="" />
+                    </Col>
+                  );
+                })}
+              </Row>
+
+
+            </Container>
+          </div>
+        </EditableSection>
 
 
 
         {/* <!-- TESTIMONIAL AREA START (testimonial-7) -->  */}
-        <div
-          className="ltn__testimonial-area bg-image-top pt-115 pb-70"
-          style={{ backgroundImage: `url("../img/bg/20.jpg")` }}
-        >
-          <Container>
-            <Row>
-              <Col lg={12}>
-                <TitleSection
-                  sectionClasses="text-center"
-                  headingClasses="section-subtitle-2"
-                  titleSectionData={{
-                    subTitle: "Our Testimonial",
-                    title: "Clients Feedback",
-                  }}
-                />
-              </Col>
-            </Row>
+        <EditableSection sectionKey="about.section.testimonial" sectionLabel="About Testimonial Section">
+          <div
+            className="ltn__testimonial-area bg-image-top pt-115 pb-70"
+            style={{ backgroundImage: `url("../img/bg/20.jpg")` }}
+          >
+            <Container>
+              <Row>
+                <Col lg={12}>
+                  <TitleSection
+                    sectionClasses="text-center"
+                    headingClasses="section-subtitle-2"
+                    titleSectionData={{
+                      subTitle: "Our Testimonial",
+                      title: "Clients Feedback",
+                    }}
+                  />
+                </Col>
+              </Row>
 
-            <Slider
-              {...testiMonialsettings}
-              className="ltn__testimonial-slider-5-active slick-arrow-1"
-            >
-              {testimonialData.map((data, key) => {
-                return (
-                  <TestimonialCarouselItem key={key} data={data} />
-                );
-              })}
-            </Slider>
-          </Container>
-        </div>
+              <Slider
+                {...testiMonialsettings}
+                className="ltn__testimonial-slider-5-active slick-arrow-1"
+              >
+                {testimonialData.map((data, key) => {
+                  return (
+                    <TestimonialCarouselItem key={key} data={data} />
+                  );
+                })}
+              </Slider>
+            </Container>
+          </div>
+        </EditableSection>
         {/* <!-- TESTIMONIAL AREA END --> */}
 
         {/* <!-- BLOG AREA START (blog-3) -->  */}
-        <div className="ltn__blog-area pb-70">
-          <Container>
-            <Row>
-              <Col lg={12}>
-                <TitleSection
-                  sectionClasses="text-center"
-                  headingClasses="section-subtitle-2"
-                  titleSectionData={{
-                    subTitle: "News & Blogs",
-                    title: "Leatest News Feeds",
-                  }}
-                />
-              </Col>
-            </Row>
-            <Slider
-              {...blogSettings}
-              className="ltn__blog-slider-one-active slick-arrow-1 ltn__blog-item-3-normal"
-            >
-              {blogData.map((data, key) => {
-                const slug = productSlug(data.title);
-                return (
-                  <BlogItem key={key} baseUrl="blog" data={data} slug={slug} />
-                );
-              })}
-            </Slider>
-          </Container>
-        </div>
+        <EditableSection sectionKey="about.section.blog" sectionLabel="About Blog Section">
+          <div className="ltn__blog-area pb-70">
+            <Container>
+              <Row>
+                <Col lg={12}>
+                  <TitleSection
+                    sectionClasses="text-center"
+                    headingClasses="section-subtitle-2"
+                    titleSectionData={{
+                      subTitle: "News & Blogs",
+                      title: "Leatest News Feeds",
+                    }}
+                  />
+                </Col>
+              </Row>
+              <Slider
+                {...blogSettings}
+                className="ltn__blog-slider-one-active slick-arrow-1 ltn__blog-item-3-normal"
+              >
+                {blogData.map((data, key) => {
+                  const slug = productSlug(data.title);
+                  return (
+                    <BlogItem key={key} baseUrl="blog" data={data} slug={slug} />
+                  );
+                })}
+              </Slider>
+            </Container>
+          </div>
+        </EditableSection>
         {/* <!-- BLOG AREA END --> */}
 
-        <div className="ltn__call-to-action-area call-to-action-6 before-bg-bottom">
-          <Container>
-            <Row>
-              <Col xs={12}>
-                <CallToAction />
-              </Col>
-            </Row>
-          </Container>
-        </div>
+        <EditableSection sectionKey="about.section.cta" sectionLabel="About Call To Action Section">
+          <div className="ltn__call-to-action-area call-to-action-6 before-bg-bottom">
+            <Container>
+              <Row>
+                <Col xs={12}>
+                  <CallToAction />
+                </Col>
+              </Row>
+            </Container>
+          </div>
+        </EditableSection>
       </LayoutOne>
     </>
   );
