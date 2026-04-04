@@ -1,18 +1,21 @@
 import Link from "next/link";
-import { FaRegUser, FaTags, FaRegCalendarAlt } from "react-icons/fa";
+import { FaTags, FaRegCalendarAlt } from "react-icons/fa";
 import EditableImage from "@/components/cms/EditableImage";
 const BlogItem = ({ baseUrl, data, slug, imageSrc }) => {
-  const blogImage = imageSrc || `/img/blog/${data.thumbImg}`;
+  const blogImage = imageSrc || data.featured_image || `/img/blog/${data.thumbImg}` || "/img/blog/1.jpg";
 
   return (
     <>
       <div className="ltn__blog-item ltn__blog-item-3">
         <div className="ltn__blog-img">
           <Link href={`${baseUrl}/${slug}`}>
-            <EditableImage
-              contentKey={`home.blog.${slug}.image`}
-              value={blogImage}
-              alt={`${data.title}`}
+            <img
+              src={blogImage}
+              alt={data.title}
+              onError={(e) => {
+                e.target.src = '/img/blog/1.jpg';
+              }}
+              style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
             />
           </Link>
         </div>
@@ -21,15 +24,14 @@ const BlogItem = ({ baseUrl, data, slug, imageSrc }) => {
             <ul>
               <li className="ltn__blog-author">
                 <Link href="#">
-                  <FaRegUser className="me-2" />
-                  by:
-                  {data.admin}
+                  <img src="/img/logo.svg" alt="Maraseq Logo" style={{ width: '16px', height: '16px', marginRight: '5px' }} />
+                  by: Maraseq Team
                 </Link>
               </li>
               <li className="ltn__blog-tags">
                 <Link href="#">
                   <FaTags className="me-2" />
-                  {data.type}
+                  {data.type || 'REAL ESTATE'}
                 </Link>
               </li>
             </ul>
@@ -37,7 +39,9 @@ const BlogItem = ({ baseUrl, data, slug, imageSrc }) => {
           <h3 className="ltn__blog-title">
             <Link href={`${baseUrl}/${slug}`}>{data.title}</Link>
           </h3>
-          {data.shortDescription ? (
+          {data.excerpt ? (
+            <p className="ltn__blog-summary">{data.excerpt}</p>
+          ) : data.shortDescription ? (
             <p className="ltn__blog-summary">{data.shortDescription}</p>
           ) : null}
           <div className="ltn__blog-meta-btn">
@@ -45,7 +49,7 @@ const BlogItem = ({ baseUrl, data, slug, imageSrc }) => {
               <ul>
                 <li className="ltn__blog-date">
                   <FaRegCalendarAlt className="me-2" />
-                  {data.date}
+                  {data.published_at ? new Date(data.published_at).toLocaleDateString() : data.date}
                 </li>
               </ul>
             </div>

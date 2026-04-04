@@ -1,4 +1,5 @@
 import { LayoutOne } from "@/layouts";
+import { useEffect, useMemo, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import {
   FaArrowRight,
@@ -17,8 +18,79 @@ import CallToAction from "@/components/callToAction";
 import Accordion from "react-bootstrap/Accordion";
 import Link from "next/link";
 import CounterUp from "@/components/counterUp";
+import { getFaqs } from "@/lib/supabase";
+
+const FALLBACK_FAQS = [
+  {
+    id: "fallback-1",
+    question: "How do I start my real estate journey with Maraseq?",
+    answer: "Start by defining your goal, and we will guide you to the right path based on your needs.",
+    order_index: 1,
+  },
+  {
+    id: "fallback-2",
+    question: "How do I choose the right property?",
+    answer: "We analyze your needs, budget, and preferred location to offer clear and suitable options.",
+    order_index: 2,
+  },
+  {
+    id: "fallback-3",
+    question: "Do you offer investment opportunities?",
+    answer: "Yes, we provide investment options based on market insights for sustainable returns.",
+    order_index: 3,
+  },
+  {
+    id: "fallback-4",
+    question: "Can I reserve a property remotely?",
+    answer: "Yes, we provide a smooth process to reserve and complete agreements from anywhere.",
+    order_index: 4,
+  },
+  {
+    id: "fallback-5",
+    question: "Is my information secure?",
+    answer: "We are committed to protecting your data and using it only to enhance your experience.",
+    order_index: 5,
+  },
+  {
+    id: "fallback-6",
+    question: "Do you provide consultation before purchase?",
+    answer: "Yes, we help you understand the market before making any decision.",
+    order_index: 6,
+  },
+];
 
 function Faq() {
+  const [faqs, setFaqs] = useState([]);
+  const [loadingFaqs, setLoadingFaqs] = useState(true);
+
+  useEffect(() => {
+    const fetchFaqs = async () => {
+      try {
+        setLoadingFaqs(true);
+        const data = await getFaqs();
+        setFaqs(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.error("Failed to load FAQs:", error);
+      } finally {
+        setLoadingFaqs(false);
+      }
+    };
+
+    fetchFaqs();
+  }, []);
+
+  const visibleFaqs = useMemo(() => {
+    const sourceFaqs = loadingFaqs || faqs.length === 0 ? FALLBACK_FAQS : faqs;
+
+    return [...sourceFaqs]
+      .filter((item) => item?.active !== false)
+      .sort((left, right) => {
+        const leftOrder = Number(left?.order_index ?? left?.order ?? 0);
+        const rightOrder = Number(right?.order_index ?? right?.order ?? 0);
+        return leftOrder - rightOrder;
+      });
+  }, [loadingFaqs, faqs]);
+
   const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
     <button
       {...props}
@@ -74,75 +146,14 @@ function Faq() {
               <Col xs={12} lg={8}>
                 <div className="ltn__faq-inner ltn__faq-inner-2">
                   <Accordion defaultActiveKey="1">
-                    <Accordion.Item eventKey="1">
-                      <Accordion.Header>
-                        How do I start my real estate journey with Maraseq?
-                      </Accordion.Header>
-                      <Accordion.Body>
-                        <p>
-                          Start by defining your goal, and we will guide you to
-                          the right path based on your needs.
-                        </p>
-                      </Accordion.Body>
-                    </Accordion.Item>
-
-                    <Accordion.Item eventKey="2">
-                      <Accordion.Header>
-                        How do I choose the right property?
-                      </Accordion.Header>
-                      <Accordion.Body>
-                        <p>
-                          We analyze your needs, budget, and preferred location
-                          to offer clear and suitable options.
-                        </p>
-                      </Accordion.Body>
-                    </Accordion.Item>
-
-                    <Accordion.Item eventKey="3">
-                      <Accordion.Header>
-                        Do you offer investment opportunities?
-                      </Accordion.Header>
-                      <Accordion.Body>
-                        <p>
-                          Yes, we provide investment options based on market
-                          insights for sustainable returns.
-                        </p>
-                      </Accordion.Body>
-                    </Accordion.Item>
-
-                    <Accordion.Item eventKey="4">
-                      <Accordion.Header>
-                        Can I reserve a property remotely?
-                      </Accordion.Header>
-                      <Accordion.Body>
-                        <p>
-                          Yes, we provide a smooth process to reserve and
-                          complete agreements from anywhere.
-                        </p>
-                      </Accordion.Body>
-                    </Accordion.Item>
-
-                    <Accordion.Item eventKey="5">
-                      <Accordion.Header>Is my information secure?</Accordion.Header>
-                      <Accordion.Body>
-                        <p>
-                          We are committed to protecting your data and using it
-                          only to enhance your experience.
-                        </p>
-                      </Accordion.Body>
-                    </Accordion.Item>
-
-                    <Accordion.Item eventKey="6">
-                      <Accordion.Header>
-                        Do you provide consultation before purchase?
-                      </Accordion.Header>
-                      <Accordion.Body>
-                        <p>
-                          Yes, we help you understand the market before making
-                          any decision.
-                        </p>
-                      </Accordion.Body>
-                    </Accordion.Item>
+                    {visibleFaqs.map((item, index) => (
+                      <Accordion.Item key={item.id || `${item.question}-${index}`} eventKey={String(index + 1)}>
+                        <Accordion.Header>{item.question || "Question"}</Accordion.Header>
+                        <Accordion.Body>
+                          <p>{item.answer || ""}</p>
+                        </Accordion.Body>
+                      </Accordion.Item>
+                    ))}
                   </Accordion>
 
                   <div className="need-support text-center mt-100">

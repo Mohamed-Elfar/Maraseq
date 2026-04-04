@@ -1,65 +1,42 @@
 import { Container, Row, Col, Nav, Tab, Form } from "react-bootstrap";
 import { FaCarAlt, FaUserAlt } from "react-icons/fa";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { getFormOptions } from "@/lib/supabase";
 
-const locationOptions = [
-  "All Locations",
-  "New Cairo",
-  "New Capital",
-  "Sheikh Zayed",
-  "Fifth Settlement",
-  "North Coast",
-  "Cairo",
-  "Giza",
-  "Alexandria",
-  "Qalyubia",
-  "Dakahlia",
-  "Sharqia",
-  "Gharbia",
-  "Monufia",
-  "Beheira",
-  "Kafr El Sheikh",
-  "Damietta",
-  "Port Said",
-  "Ismailia",
-  "Suez",
-  "Fayoum",
-  "Beni Suef",
-  "Minya",
-  "Assiut",
-  "Sohag",
-  "Qena",
-  "Luxor",
-  "Aswan",
-  "Red Sea",
-  "New Valley",
-  "Matrouh",
-  "North Sinai",
-  "South Sinai",
-];
-
-const opportunityTypeOptions = [
-  "All Opportunities",
-  "Apartment",
-  "Villa",
-  "Duplex",
-  "Penthouse",
-  "Office",
-  "Retail",
-  "Land",
-];
-
-const goalOptions = [
-  "All",
-  "Living",
-  "Investment",
-  "Passive Income",
-  "Resale",
-  "Ready",
-  "Under Construction",
-];
+const FALLBACK_LOCATIONS = ["All Locations", "New Cairo", "New Capital", "Sheikh Zayed", "Fifth Settlement", "North Coast"];
+const FALLBACK_PROPERTY_TYPES = ["All Opportunities", "Apartment", "Villa", "Duplex", "Penthouse", "Office"];
+const FALLBACK_OBJECTIVES = ["All", "Living", "Investment", "Passive Income", "Resale", "Ready"];
 
 function CarDealerSearchForm({ navMenuClass, customClasses }) {
+  const [locationOptions, setLocationOptions] = useState(FALLBACK_LOCATIONS);
+  const [opportunityTypeOptions, setOpportunityTypeOptions] = useState(FALLBACK_PROPERTY_TYPES);
+  const [goalOptions, setGoalOptions] = useState(FALLBACK_OBJECTIVES);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchOptions = async () => {
+      try {
+        setLoading(true);
+        const data = await getFormOptions();
+        if (data?.locations) {
+          setLocationOptions(data.locations.map((item) => item.label));
+        }
+        if (data?.propertyTypes) {
+          setOpportunityTypeOptions(data.propertyTypes.map((item) => item.label));
+        }
+        if (data?.objectives) {
+          setGoalOptions(data.objectives.map((item) => item.label));
+        }
+      } catch (error) {
+        console.error("Failed to load form options:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOptions();
+  }, []);
   return (
     <>
       <div

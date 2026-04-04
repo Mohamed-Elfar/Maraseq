@@ -1,15 +1,29 @@
 import Link from "next/link";
 import { FaArrowRight, FaSearch, FaRegEnvelopeOpen } from "react-icons/fa";
-import serviceData from "@/data/service";
 import { LayoutOne } from "@/layouts";
 import { productSlug } from "@/lib/product";
 import { Container, Row, Col } from "react-bootstrap";
 import ShopBreadCrumb from "@/components/breadCrumbs/shop";
 import CallToAction from "@/components/callToAction";
+import { getServices } from "@/lib/supabase";
+
+const resolveImageSrc = (value, folder) => {
+  if (!value) {
+    return ""
+  }
+
+  if (/^(https?:)?\/\//i.test(value) || value.startsWith("/")) {
+    return value
+  }
+
+  return folder ? `/img/${folder}/${value}` : value
+}
 
 function ServiceDetails({ service }) {
-  const firstLetter = service.shortDescription.slice(0, 1);
-  const firstToEnd = service.shortDescription.slice(1);
+  const safeShortDescription = service?.shortDescription || "";
+  const firstLetter = safeShortDescription.slice(0, 1);
+  const firstToEnd = safeShortDescription.slice(1);
+  const captions = service?.captions || {};
 
   return (
     <>
@@ -32,8 +46,17 @@ function ServiceDetails({ service }) {
                 <div className="ltn__page-details-inner ltn__service-details-inner">
                   <div className="ltn__blog-img">
                     <img
-                      src={`/img/service/${service.thumbImage}`}
-                      alt="Image"
+                      src={resolveImageSrc(service.thumbImage, "service")}
+                      alt="Service Image"
+                      style={{
+                        width: "100%",
+                        height: "400px",
+                        objectFit: "cover",
+                        borderRadius: "8px"
+                      }}
+                      onError={(e) => {
+                        e.target.src = "/img/service/21.jpg";
+                      }}
                     />
                   </div>
                   <p className="overflow-hidden">
@@ -44,20 +67,38 @@ function ServiceDetails({ service }) {
                   <Row>
                     <Col xs={12} lg={6}>
                       <img
-                        src={`/img/service/${service.captions.image1}`}
-                        alt="image"
+                        src={resolveImageSrc(captions.image1, "service")}
+                        alt="Detail Image 1"
+                        style={{
+                          width: "100%",
+                          height: "300px",
+                          objectFit: "cover",
+                          borderRadius: "8px"
+                        }}
+                        onError={(e) => {
+                          e.target.src = "/img/service/31.jpg";
+                        }}
                       />
-                      <label>{service.captions.caption}</label>
+                      <label className="mt-2 d-block">{captions.caption || service.title}</label>
                     </Col>
                     <Col xs={12} lg={6}>
                       <img
-                        src={`/img/service/${service.captions.image2}`}
-                        alt="image"
+                        src={resolveImageSrc(captions.image2, "service")}
+                        alt="Detail Image 2"
+                        style={{
+                          width: "100%",
+                          height: "300px",
+                          objectFit: "cover",
+                          borderRadius: "8px"
+                        }}
+                        onError={(e) => {
+                          e.target.src = "/img/service/32.jpg";
+                        }}
                       />
                     </Col>
                   </Row>
-                  <p>{service.captions.captionFullDescription}</p>
-                  <p>{service.captions.captionShortDescription}</p>
+                  <p>{captions.captionFullDescription || service.fullDescription}</p>
+                  <p>{captions.captionShortDescription || service.shortDescription}</p>
                 </div>
               </Col>
               <Col xs={12} lg={4}>
@@ -132,7 +173,19 @@ function ServiceDetails({ service }) {
                   {/* <!-- Banner Widget --> */}
                   <div className="widget ltn__banner-widget">
                     <Link href="/shop/properties">
-                      <img src="/img/banner/banner-1.jpg" alt="Banner Image" />
+                      <img
+                        src={resolveImageSrc(service.img, "service")}
+                        alt="Banner Image"
+                        style={{
+                          width: "100%",
+                          height: "200px",
+                          objectFit: "cover",
+                          borderRadius: "8px"
+                        }}
+                        onError={(e) => {
+                          e.target.src = "/img/banner/banner-1.jpg";
+                        }}
+                      />
                     </Link>
                   </div>
                 </aside>
@@ -159,17 +212,25 @@ function ServiceDetails({ service }) {
 export default ServiceDetails;
 
 export async function getStaticProps({ params }) {
-  // get blog data based on slug
-  const service = serviceData.filter(
-    (single) => productSlug(single.title) === params.slug
-  )[0];
+  const services = await getServices();
+  const service = services.find((single) => productSlug(single.title) === params.slug);
 
-  return { props: { service } };
+  if (!service) {
+    return {
+      notFound: true,
+      revalidate: 60,
+    };
+  }
+
+  return {
+    props: { service },
+    revalidate: 60,
+  };
 }
 
 export async function getStaticPaths() {
-  // get the paths we want to pre render based on blogs
-  const paths = serviceData.map((data) => ({
+  const services = await getServices();
+  const paths = services.map((data) => ({
     params: {
       slug: productSlug(data.title, {
         lower: true, // convert to lower case, defaults to `false`
@@ -177,5 +238,5 @@ export async function getStaticPaths() {
     },
   }));
 
-  return { paths, fallback: false };
+  return { paths, fallback: 'blocking' };
 }

@@ -173,7 +173,7 @@ const BlogItemTwo = ({ blogData, slug, baseUrl }) => {
                   <li className="ltn__blog-author">
                     <Link href="#">
                       <img
-                        src={`/img/blog/${blogData.author.img}`}
+                        src="/img/logo.svg"
                         alt={`${blogData.author.name}`}
                       />
                       By: {blogData.author.name}

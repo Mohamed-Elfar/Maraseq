@@ -1,5 +1,6 @@
 ﻿import Link from "next/link";
 import Slider from "react-slick";
+import { useState, useEffect } from "react";
 import {
   FaStar,
   FaSearch,
@@ -11,15 +12,64 @@ import {
   FaCalendarAlt,
 } from "react-icons/fa";
 import { productSlug, getDiscountPrice } from "@/lib/product";
+import { supabase } from "@/lib/supabase";
 import FollowUs from "@/components/followUs";
 import Tags from "@/components/tags";
 
 const BlogSideBar = ({ popularProducts, topRatedProducts, latestdBlogs }) => {
-  const product = popularProducts[0];
-  const discountedPrice = getDiscountPrice(
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('categories')
+          .select(`
+            id,
+            name,
+            slug,
+            news_items:news(id)
+          `)
+          .eq('type', 'news')
+          .eq('visible', true)
+          .order('order_index', { ascending: true });
+
+        if (error) throw error;
+        
+        // Process the data to get actual news counts
+        const processedData = await Promise.all(
+          (data || []).map(async (category) => {
+            const { count } = await supabase
+              .from('news')
+              .select('*', { count: 'exact' })
+              .eq('category_id', category.id)
+              .eq('visible', true)
+              .eq('published', true);
+            
+            return {
+              ...category,
+              news_count: count || 0
+            };
+          })
+        );
+
+        setCategories(processedData);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  const product = popularProducts && popularProducts.length > 0 ? popularProducts[0] : null;
+  const discountedPrice = product && product.price ? getDiscountPrice(
     product.price,
-    product.discount
-  ).toFixed(2);
+    product.discount || 0
+  ).toFixed(2) : '0.00';
 
   const popular_product = {
     infinite: true,
@@ -141,7 +191,7 @@ const BlogSideBar = ({ popularProducts, topRatedProducts, latestdBlogs }) => {
             Top Rated Product
           </h4>
           <ul>
-            {topRatedProducts.map((product, keys) => {
+            {topRatedProducts && topRatedProducts.map((product, keys) => {
               const slug = productSlug(product.title);
               let key = keys + 1;
               return (
@@ -202,34 +252,30 @@ const BlogSideBar = ({ popularProducts, topRatedProducts, latestdBlogs }) => {
         {/* <!-- Menu Widget (Category) --> */}
         <div className="widget ltn__menu-widget">
           <h4 className="ltn__widget-title ltn__widget-title-border-2">
-            Top Categories
+            News Categories
           </h4>
           <ul>
-            <li>
-              <Link href="#">
-                Apartments <span>(26)</span>
-              </Link>
-            </li>
-            <li>
-              <Link href="#">
-                Picture Stodio <span>(30)</span>
-              </Link>
-            </li>
-            <li>
-              <Link href="#">
-                Office <span>(71)</span>
-              </Link>
-            </li>
-            <li>
-              <Link href="#">
-                Luxary Vilas <span>(56)</span>
-              </Link>
-            </li>
-            <li>
-              <Link href="#">
-                Duplex House <span>(60)</span>
-              </Link>
-            </li>
+            {loading ? (
+              <li>
+                <Link href="#">
+                  Loading... <span></span>
+                </Link>
+              </li>
+            ) : categories.length > 0 ? (
+              categories.map((category) => (
+                <li key={category.id}>
+                  <Link href={`/blog/category/${category.slug || category.id}`}>
+                    {category.name} <span>({category.news_count || 0})</span>
+                  </Link>
+                </li>
+              ))
+            ) : (
+              <li>
+                <Link href="#">
+                  No categories found <span>(0)</span>
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
         {/* <!-- Popular Product Widget --> */}
@@ -244,7 +290,7 @@ const BlogSideBar = ({ popularProducts, topRatedProducts, latestdBlogs }) => {
           >
             {/* <!-- ltn__product-item --> */}
 
-            {popularProducts.map((product, key) => {
+            {popularProducts && popularProducts.map((product, key) => {
               const slug = productSlug(product.title);
               return (
                 <div
@@ -312,7 +358,7 @@ const BlogSideBar = ({ popularProducts, topRatedProducts, latestdBlogs }) => {
             Leatest Blogs
           </h4>
           <ul>
-            {latestdBlogs.map((blog, key) => {
+            {latestdBlogs && latestdBlogs.map((blog, key) => {
               const slug = productSlug(blog.title);
               let imagecount = key + 1;
 

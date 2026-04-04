@@ -1,4 +1,5 @@
 import { Form } from "react-bootstrap";
+import { useState, useEffect } from "react";
 import {
   FaLinkedin,
   FaInstagram,
@@ -14,8 +15,32 @@ import {
   FaPhoneAlt,
   FaArrowDown,
 } from "react-icons/fa";
+import { getContactInfo } from "../../lib/supabase";
 
 const Contact = () => {
+  const [contactInfo, setContactInfo] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const fetchContactInfo = async () => {
+    try {
+      setLoading(true);
+      const data = await getContactInfo();
+      setContactInfo(data);
+    } catch (error) {
+      console.error('Failed to fetch contact info:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchContactInfo();
+    
+    // Refresh data every 30 seconds for real-time updates
+    const interval = setInterval(fetchContactInfo, 30000);
+    
+    return () => clearInterval(interval);
+  }, []);
   return (
     <>
       {/* <!-- CONTACT ADDRESS AREA START --> */}
@@ -29,8 +54,23 @@ const Contact = () => {
                 </div>
                 <h3>Email Address</h3>
                 <p>
-                  info@maraseqgroup.com <br />
-                  support@maraseqgroup.com
+                  {loading ? (
+                    'Loading...'
+                  ) : contactInfo?.emails?.length > 0 ? (
+                    contactInfo.emails
+                      .filter(email => email.visible)
+                      .map(email => (
+                        <span key={email.id}>
+                          {email.value}
+                          <br />
+                        </span>
+                      ))
+                  ) : (
+                    <>
+                      info@maraseqgroup.com <br />
+                      support@maraseqgroup.com
+                    </>
+                  )}
                 </p>
               </div>
             </div>
@@ -41,8 +81,23 @@ const Contact = () => {
                 </div>
                 <h3>Phone Number</h3>
                 <p>
-                 +201102223231 <br />
-                 +20102223232
+                  {loading ? (
+                    'Loading...'
+                  ) : contactInfo?.phones?.length > 0 ? (
+                    contactInfo.phones
+                      .filter(phone => phone.visible)
+                      .map(phone => (
+                        <span key={phone.id}>
+                          {phone.value}
+                          <br />
+                        </span>
+                      ))
+                  ) : (
+                    <>
+                      +201102223231 <br />
+                      +20102223232
+                    </>
+                  )}
                 </p>
               </div>
             </div>
@@ -53,8 +108,23 @@ const Contact = () => {
                 </div>
                 <h3>Office Address</h3>
                 <p>
-                  Qutur, Tanta <br />
-                  Gharbia Governorate, Egypt
+                  {loading ? (
+                    'Loading...'
+                  ) : contactInfo?.addresses?.length > 0 ? (
+                    contactInfo.addresses
+                      .filter(address => address.visible)
+                      .map(address => (
+                        <span key={address.id}>
+                          {address.value}
+                          <br />
+                        </span>
+                      ))
+                  ) : (
+                    <>
+                      Qutur, Tanta <br />
+                      Gharbia Governorate, Egypt
+                    </>
+                  )}
                 </p>
               </div>
             </div>

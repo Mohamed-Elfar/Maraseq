@@ -12,14 +12,14 @@ import blogData from "@/data/blog";
 import CallToAction from "@/components/callToAction";
 import AboutUsStyleOne from "@/components/aboutUs/aboutUsStyleOne";
 import Feature from "@/components/features";
-import featureData from "@/data/service"
 import TeamItem from "@/components/team";
 import TeamData from '@/data/team';
 import EditableSection from "@/components/cms/EditableSection";
+import { getServices } from "@/lib/supabase";
 
-function AboutUs() {
+function AboutUs({ servicesData = [] }) {
   const agents = getProducts(TeamData, "buying", "featured", 3);
-  const featureDataSorted = getProducts(featureData, "buying", "featured", 3);
+  const featureDataSorted = getProducts(servicesData, "buying", "featured", 3);
 
   const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
     <button
@@ -220,3 +220,14 @@ function AboutUs() {
 }
 
 export default AboutUs;
+
+export async function getStaticProps() {
+  const servicesData = await getServices();
+
+  return {
+    props: {
+      servicesData,
+    },
+    revalidate: 60,
+  };
+}

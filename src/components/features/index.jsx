@@ -4,6 +4,19 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import TitleSection from "@/components/titleSection";
 import { productSlug } from "@/lib/product";
+
+const resolveImageSrc = (value) => {
+  if (!value) {
+    return ""
+  }
+
+  if (/^(https?:)?\/\//i.test(value) || value.startsWith("/")) {
+    return value
+  }
+
+  return `/img/icons/icon-img/${value}`
+}
+
 function Feature({
   data,
   iconTag,
@@ -36,13 +49,13 @@ function Feature({
                     }`}
                   >
                     <div className="ltn__feature-icon ">
-                      {iconTag ? (
+                      {iconTag || item.icon ? (
                         <span>
                           <i className={` ${item.icon} `}></i>
                         </span>
                       ) : (
                         <img
-                          src={`/img/icons/icon-img/${item.img}`}
+                          src={resolveImageSrc(item.thumbImage || item.img)}
                           alt={`${item.title}`}
                         />
                       )}

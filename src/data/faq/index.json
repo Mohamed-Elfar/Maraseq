@@ -1,0 +1,50 @@
+[
+  {
+    "id": "1",
+    "question": "How do I start my real estate journey with Maraseq?",
+    "answer": "Start by defining your goal, and we will guide you to the right path based on your needs.",
+    "category": "general",
+    "active": true,
+    "order": 1
+  },
+  {
+    "id": "2", 
+    "question": "How do I choose the right property?",
+    "answer": "We analyze your needs, budget, and preferred location to offer clear and suitable options.",
+    "category": "properties",
+    "active": true,
+    "order": 2
+  },
+  {
+    "id": "3",
+    "question": "Do you offer investment opportunities?",
+    "answer": "Yes, we provide investment options based on market insights for sustainable returns.",
+    "category": "investment",
+    "active": true,
+    "order": 3
+  },
+  {
+    "id": "4",
+    "question": "Can I reserve a property remotely?",
+    "answer": "Yes, we provide a smooth process to reserve and complete agreements from anywhere.",
+    "category": "properties",
+    "active": true,
+    "order": 4
+  },
+  {
+    "id": "5",
+    "question": "Is my information secure?",
+    "answer": "We are committed to protecting your data and using it only to enhance your experience.",
+    "category": "general",
+    "active": true,
+    "order": 5
+  },
+  {
+    "id": "6",
+    "question": "Do you provide consultation before purchase?",
+    "answer": "Yes, we help you understand the market before making any decision.",
+    "category": "consultation",
+    "active": true,
+    "order": 6
+  }
+]

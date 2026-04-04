@@ -10,10 +10,10 @@ import blogData from "@/data/blog";
 import CallToAction from "@/components/callToAction";
 import AboutUsStyletwo from "@/components/aboutUs/aboutUsStyleTwo";
 import Feature from "@/components/features";
-import featureData from "@/data/service"
+import { getServices } from "@/lib/supabase";
 
-function Service() {
-  const services = getProducts(featureData, "buying", "featured", 6);
+function Service({ servicesData = [] }) {
+  const services = getProducts(servicesData, "buying", "featured", 6);
   const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
     <button
       {...props}
@@ -122,3 +122,14 @@ function Service() {
 }
 
 export default Service;
+
+export async function getStaticProps() {
+  const servicesData = await getServices();
+
+  return {
+    props: {
+      servicesData,
+    },
+    revalidate: 60,
+  };
+}

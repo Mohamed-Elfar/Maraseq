@@ -8,7 +8,6 @@ import { getProducts, productSlug, getDiscountPrice } from "@/lib/product";
 import TitleSection from "@/components/titleSection";
 import AboutUsSectionOne from "@/components/aboutUs/aboutUsSectionOne";
 import Feature from "@/components/features";
-import featuresData from "@/data/service";
 import PropertyCategories from "@/components/PropertyCategories";
 import HeroSectionStyleThree from "@/components/hero/styleThree";
 import { useSelector } from "react-redux";
@@ -29,6 +28,7 @@ import imageSlider from "@/assets/images/home/imageSlider.png";
 import videoPopupAreaImage from "@/assets/images/home/video-popup-area.png";
 import EditableText from "@/components/cms/EditableText";
 import EditableSection from "@/components/cms/EditableSection";
+import { getServices } from "@/lib/supabase";
 
 
 
@@ -36,7 +36,7 @@ function HomeVersionThree(props) {
   const [isOpen, setOpen] = useState(false);
   const [featuredFilter, setFeaturedFilter] = useState("all");
   const { products } = useSelector((state) => state.product);
-  const featureData = getProducts(featuresData, "buying", "featured", 3);
+  const featureData = getProducts(props.servicesData || [], "buying", "featured", 3);
   const countryProducts = getProducts(products, "buying", "country", 5);
   const featuredProducts = getProducts(products, "buying", "featured", 5);
   const { data, brand, testimonialData } = props;
@@ -576,13 +576,16 @@ export async function getStaticProps() {
   const data = JSON.parse(await fs.readFile(filePath));
   const brand = JSON.parse(await fs.readFile(brandfilePath));
   const testimonialData = JSON.parse(await fs.readFile(testimonialFilePath));
+  const servicesData = await getServices();
 
   return {
     props: {
       data,
       brand,
-      testimonialData
+      testimonialData,
+      servicesData,
     },
+    revalidate: 60,
   };
 }
 export default HomeVersionThree;

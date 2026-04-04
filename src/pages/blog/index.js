@@ -2,44 +2,81 @@ import { useState, useEffect } from "react";
 import { LayoutOne } from "@/layouts";
 import { Container, Row, Col } from "react-bootstrap";
 import ShopBreadCrumb from "@/components/breadCrumbs/shop";
+import { getNews } from "@/lib/supabase";
 import { productSlug } from "@/lib/product";
-import blogData from "@/data/blog";
 import BlogItem from "@/components/blog";
 import CallToAction from "@/components/callToAction";
 import ReactPaginate from "react-paginate";
 import { FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa";
+import blogData from "@/data/blog";
 
 function BlogPage() {
   const perPageLimit = 6;
-  const [currentItems, setCurrentItems] = useState(blogData);
+  const [newsData, setNewsData] = useState(blogData);
+  const [loading, setLoading] = useState(true);
+  const [currentItems, setCurrentItems] = useState([]);
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
 
   useEffect(() => {
+    const fetchNews = async () => {
+      try {
+        const data = await getNews();
+        // If no news from Supabase, use hardcoded data
+        setNewsData(data && data.length > 0 ? data : blogData);
+      } catch (error) {
+        console.error('Error fetching news:', error);
+        // Fallback to hardcoded data on error
+        setNewsData(blogData);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchNews();
+  }, []);
+
+  useEffect(() => {
     const endOffset = itemOffset + perPageLimit;
-    setCurrentItems(blogData.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(blogData.length / perPageLimit));
-  }, [itemOffset, perPageLimit]);
+    setCurrentItems(newsData.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(newsData.length / perPageLimit));
+  }, [itemOffset, perPageLimit, newsData]);
 
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * perPageLimit) % blogData.length;
+    const newOffset = (event.selected * perPageLimit) % newsData.length;
     setItemOffset(newOffset);
   };
+
+  if (loading) {
+    return (
+      <LayoutOne>
+        <Container>
+          <Row>
+            <Col>
+              <div className="text-center py-5">
+                <h3>Loading news...</h3>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </LayoutOne>
+    );
+  }
 
   return (
     <>
       <LayoutOne topbar={true}>
         <ShopBreadCrumb
-          title="Blog"
+          title="News & Updates"
           sectionPace=""
-          currentSlug="Blog"
+          currentSlug="News"
         />
 
         <div className="ltn__blog-area ltn__blog-item-3-normal mb-100">
           <Container>
             <Row>
               {currentItems.map((data, key) => {
-                const slug = productSlug(data.title);
+                const slug = data.slug || productSlug(data.title);
                 return (
                   <Col xs={12} sm={6} lg={4} key={key}>
                     <BlogItem baseUrl="blog" data={data} slug={slug} />
