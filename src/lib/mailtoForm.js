@@ -1,4 +1,22 @@
 import emailjs from "@emailjs/browser";
+import Swal from "sweetalert2";
+
+const showBrandAlert = ({ icon, title, text }) => {
+    return Swal.fire({
+        icon,
+        title,
+        text,
+        confirmButtonText: "OK",
+        confirmButtonColor: "#1f3c88",
+        background: "#ffffff",
+        color: "#0f172a",
+        customClass: {
+            popup: "maraseq-swal-popup",
+            title: "maraseq-swal-title",
+            confirmButton: "maraseq-swal-confirm",
+        },
+    });
+};
 
 export const submitMailForm = async (event, { to, subject, context } = {}) => {
     event.preventDefault();
@@ -51,7 +69,11 @@ export const submitMailForm = async (event, { to, subject, context } = {}) => {
 
     if (!serviceId || !templateId || !publicKey) {
         console.error("EmailJS is not configured. Set NEXT_PUBLIC_EMAILJS_SERVICE_ID, NEXT_PUBLIC_EMAILJS_TEMPLATE_ID, and NEXT_PUBLIC_EMAILJS_PUBLIC_KEY.");
-        window.alert("Email sending is not configured yet.");
+        await showBrandAlert({
+            icon: "warning",
+            title: "Email Not Configured",
+            text: "Email sending is not configured yet.",
+        });
         return;
     }
 
@@ -79,9 +101,17 @@ export const submitMailForm = async (event, { to, subject, context } = {}) => {
         );
 
         formElement.reset();
-        window.alert("Your message has been sent successfully.");
+        await showBrandAlert({
+            icon: "success",
+            title: "Message Sent",
+            text: "Your message has been sent successfully.",
+        });
     } catch (error) {
         console.error("EmailJS send failed:", error);
-        window.alert("Failed to send your message. Please try again.");
+        await showBrandAlert({
+            icon: "error",
+            title: "Sending Failed",
+            text: "Failed to send your message. Please try again.",
+        });
     }
 };
