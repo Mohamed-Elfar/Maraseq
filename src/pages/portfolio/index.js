@@ -5,14 +5,12 @@ import { getProducts, productSlug } from "@/lib/product";
 import ShopBreadCrumb from "@/components/breadCrumbs/shop";
 import TitleSection from "@/components/titleSection";
 import BlogItem from "@/components/blog";
-import blogData from "@/data/blog";
 import CallToActionstyleTwo from "@/components/callToAction/callToActionstyleTwo";
-import { getPortfolio } from "@/lib/supabase";
+import { getPortfolio, getNews, getBrands } from "@/lib/supabase";
 import Portfolioitem from "@/components/portfolio";
 import Slider from "react-slick";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import CallToAction from "@/components/callToAction";
-import brandLogoData from "@/data/brand-logo";
 import Lightbox from "yet-another-react-lightbox";
 import Counter from "yet-another-react-lightbox/plugins/counter";
 import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
@@ -27,13 +25,16 @@ function Portfolio() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxImages, setLightboxImages] = useState([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [newsData, setNewsData] = useState([]);
+  const [brandsData, setBrandsData] = useState([]);
 
   useEffect(() => {
-    const fetchPortfolioData = async () => {
+    const fetchData = async () => {
       try {
-        const data = await getPortfolio();
+        // Fetch portfolio data
+        const portfolioData = await getPortfolio();
         // Transform data to match expected format and filter out inactive items
-        const transformedData = data
+        const transformedPortfolioData = portfolioData
           .filter(item => item.active !== false) // Filter out inactive items
           .map(item => ({
             ...item,
@@ -42,19 +43,29 @@ function Portfolio() {
             thumbImage: item.thumb_image || '1.jpg',
             img: item.img || item.thumb_image || '1.jpg',
           }));
-        setAllPortfolios(transformedData);
-        setDisplayedPortfolios(transformedData.slice(0, itemsToShow));
+        setAllPortfolios(transformedPortfolioData);
+        setDisplayedPortfolios(transformedPortfolioData.slice(0, itemsToShow));
+
+        // Fetch news data
+        const news = await getNews();
+        setNewsData(news);
+
+        // Fetch brands data
+        const brands = await getBrands();
+        setBrandsData(brands);
       } catch (error) {
-        console.error('Error fetching portfolio:', error);
-        // Fallback to empty array
+        console.error('Error fetching data:', error);
+        // Fallback to empty arrays
         setAllPortfolios([]);
         setDisplayedPortfolios([]);
+        setNewsData([]);
+        setBrandsData([]);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchPortfolioData();
+    fetchData();
   }, []);
 
   const handleLoadMore = () => {
@@ -205,8 +216,9 @@ function Portfolio() {
               {...blogSettings}
               className="ltn__blog-slider-one-active slick-arrow-1 ltn__blog-item-3-normal"
             >
-              {blogData.map((data, key) => {
-                const slug = productSlug(data.title);
+              {newsData.map((data, key) => {
+                // Use the actual slug from the database, not generate from title
+                const slug = data.slug || productSlug(data.title);
                 return (
                   <BlogItem key={key} baseUrl="blog" data={data} slug={slug} />
                 );
@@ -222,12 +234,12 @@ function Portfolio() {
             <Row className="ltn__brand-logo-active">
               <Col xs={12}>
                 <Slider {...LogoSettings}>
-                  {brandLogoData.map((logo, key) => {
+                  {brandsData.map((brand, key) => {
                     return (
                       <div key={key} className="ltn__brand-logo-item">
                         <img
-                          src="/img/ogo.svg"
-                          alt="Brand Logo"
+                          src={`/img/brand-logo/${brand.image}`}
+                          alt={brand.alt_text || 'Brand Logo'}
                         />
                       </div>
                     );

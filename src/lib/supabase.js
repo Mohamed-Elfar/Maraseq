@@ -218,6 +218,23 @@ export const getPortfolio = async () => {
   }
 }
 
+// Brands functions
+export const getBrands = async () => {
+  try {
+    const { data, error } = await supabase
+      .from('brands')
+      .select('*')
+      .eq('visible', true)
+      .order('order_index', { ascending: true })
+
+    if (error) throw error
+    return data
+  } catch (error) {
+    console.error('Error fetching brands:', error)
+    return []
+  }
+}
+
 // Social links functions
 export const getSocialLinks = async () => {
   try {
