@@ -15,6 +15,7 @@ import { productSlug } from "@/lib/product";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import ShopBreadCrumb from "@/components/breadCrumbs/shop";
 import ServiceItemOne from "@/components/service/serviceItemOne";
+import { submitMailForm } from "@/lib/mailtoForm";
 
 function TeamDetails({ team }) {
   return (
@@ -132,7 +133,18 @@ function TeamDetails({ team }) {
                   <div className="ltn__form-box contact-form-box box-shadow white-bg mt-50">
                     <h4 className="title-2">Contact for any Inquiry</h4>
 
-                    <form id="contact-form" action="#" method="post">
+                    <form
+                      id="contact-form"
+                      action="#"
+                      method="post"
+                      onSubmit={(event) =>
+                        submitMailForm(event, {
+                          to: "support@maraseqgroup.com",
+                          subject: "Support Inquiry",
+                          context: "Team Details Inquiry Form",
+                        })
+                      }
+                    >
                       <Row>
                         <Col xs={12} md={6}>
                           <div className="input-item input-item-name ltn__custom-icon">

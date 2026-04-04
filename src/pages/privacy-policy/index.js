@@ -16,6 +16,7 @@ import blogData from "@/data/blog";
 import CallToAction from "@/components/callToAction";
 import CounterUp from "@/components/counterUp";
 import Link from "next/link";
+import { submitMailForm } from "@/lib/mailtoForm";
 
 function PrivacyPolicy() {
     const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
@@ -186,8 +187,17 @@ function PrivacyPolicy() {
                                     <div className="widget ltn__search-widget ltn__newsletter-widget">
                                         <h6 className="ltn__widget-sub-title">{`// subscribe`}</h6>
                                         <h4 className="ltn__widget-title">Get Newsletter</h4>
-                                        <form action="#">
-                                            <input type="text" name="search" placeholder="Search" />
+                                        <form
+                                            action="#"
+                                            onSubmit={(event) =>
+                                                submitMailForm(event, {
+                                                    to: "marketing@maraseqgroup.com",
+                                                    subject: "Newsletter Subscription",
+                                                    context: "Privacy Policy Newsletter Widget",
+                                                })
+                                            }
+                                        >
+                                            <input type="email" name="email" placeholder="Your email" />
                                             <button type="submit">
                                                 <FaSearch />
                                             </button>

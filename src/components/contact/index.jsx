@@ -16,6 +16,7 @@ import {
   FaArrowDown,
 } from "react-icons/fa";
 import { getContactInfo } from "../../lib/supabase";
+import { submitMailForm } from "@/lib/mailtoForm";
 
 const Contact = () => {
   const [contactInfo, setContactInfo] = useState(null);
@@ -140,7 +141,18 @@ const Contact = () => {
             <div className="col-lg-12">
               <div className="ltn__form-box contact-form-box box-shadow white-bg">
                 <h4 className="title-2">Get A Quote</h4>
-                <form id="contact-form" action="#" method="post">
+                <form
+                  id="contact-form"
+                  action="#"
+                  method="post"
+                  onSubmit={(event) =>
+                    submitMailForm(event, {
+                      to: "info@maraseqgroup.com",
+                      subject: "Contact Us Form Submission",
+                      context: "Contact Us - Get A Quote",
+                    })
+                  }
+                >
                   <div className="row">
                     <div className="col-md-6">
                       <div className="input-item input-item-name ltn__custom-icon">

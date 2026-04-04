@@ -14,6 +14,7 @@ import maraseqEnglishLogo from "@/assets/images/logo/english - vrsion Maraseq lo
 import EditableText from "@/components/cms/EditableText";
 import { getSocialLinks } from "@/lib/supabase";
 import { canShowAtPosition } from "@/lib/socialPosition";
+import { submitMailForm } from "@/lib/mailtoForm";
 
 const FALLBACK_SOCIALS = [
   {
@@ -268,7 +269,16 @@ const Footer = function () {
                     email.
                   </p>
                   <div className="footer-newsletter">
-                    <form action="#">
+                    <form
+                      action="#"
+                      onSubmit={(event) =>
+                        submitMailForm(event, {
+                          to: "marketing@maraseqgroup.com",
+                          subject: "Newsletter Subscription",
+                          context: "Footer Newsletter",
+                        })
+                      }
+                    >
                       <input type="email" name="email" placeholder="Email*" />
                       <div className="btn-wrapper">
                         <button className="theme-btn-1 btn" type="submit">

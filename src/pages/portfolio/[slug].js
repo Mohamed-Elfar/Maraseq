@@ -11,6 +11,7 @@ import { productSlug } from "@/lib/product";
 import { Container, Row, Col } from "react-bootstrap";
 import ShopBreadCrumb from "@/components/breadCrumbs/shop";
 import CallToAction from "@/components/callToAction";
+import { submitMailForm } from "@/lib/mailtoForm";
 
 function portfolioDetails({ portfolio }) {
   const firstLetter = portfolio.shortDescription.slice(0, 1);
@@ -165,8 +166,17 @@ function portfolioDetails({ portfolio }) {
                   <div className="widget ltn__search-widget ltn__newsletter-widget">
                     <h6 className="ltn__widget-sub-title">{`// subscribe`}</h6>
                     <h4 className="ltn__widget-title">Get Newsletter</h4>
-                    <form action="#">
-                      <input type="text" name="search" placeholder="Search" />
+                    <form
+                      action="#"
+                      onSubmit={(event) =>
+                        submitMailForm(event, {
+                          to: "marketing@maraseqgroup.com",
+                          subject: "Newsletter Subscription",
+                          context: "Portfolio Details Newsletter Widget",
+                        })
+                      }
+                    >
+                      <input type="email" name="email" placeholder="Your email" />
                       <button type="submit">
                         <FaSearch />
                       </button>

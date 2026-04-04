@@ -1,6 +1,7 @@
 import { Container, Row, Col } from "react-bootstrap";
 import Countdown from "@/components/Countdown/countdown";
 import Link from "next/link";
+import { submitMailForm } from "@/lib/mailtoForm";
 const comingSoon = () => {
 
   return (
@@ -33,7 +34,17 @@ const comingSoon = () => {
                 />
                 <div className="ltn__newsletter-inner mt-50">
                   <h3>Notify me when we launch</h3>
-                  <form action="#" className="ltn__form-box">
+                  <form
+                    action="#"
+                    className="ltn__form-box"
+                    onSubmit={(event) =>
+                      submitMailForm(event, {
+                        to: "marketing@maraseqgroup.com",
+                        subject: "Launch Notification Request",
+                        context: "Coming Soon Newsletter",
+                      })
+                    }
+                  >
                     <input
                       type="email"
                       name="email"

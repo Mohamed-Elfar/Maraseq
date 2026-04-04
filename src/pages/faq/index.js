@@ -19,6 +19,7 @@ import Accordion from "react-bootstrap/Accordion";
 import Link from "next/link";
 import CounterUp from "@/components/counterUp";
 import { getFaqs } from "@/lib/supabase";
+import { submitMailForm } from "@/lib/mailtoForm";
 
 const FALLBACK_FAQS = [
   {
@@ -177,8 +178,17 @@ function Faq() {
                   <div className="widget ltn__search-widget ltn__newsletter-widget">
                     <h6 className="ltn__widget-sub-title">{`// subscribe`}</h6>
                     <h4 className="ltn__widget-title">Get Newsletter</h4>
-                    <form action="#">
-                      <input type="text" name="search" placeholder="Search" />
+                    <form
+                      action="#"
+                      onSubmit={(event) =>
+                        submitMailForm(event, {
+                          to: "marketing@maraseqgroup.com",
+                          subject: "Newsletter Subscription",
+                          context: "FAQ Newsletter Widget",
+                        })
+                      }
+                    >
+                      <input type="email" name="email" placeholder="Your email" />
                       <button type="submit">
                         <FaSearch />
                       </button>

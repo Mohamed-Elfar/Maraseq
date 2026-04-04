@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@hasanm95/cogo-toast": "https://github.com/hasanm95/cogo-toast",
     "@reduxjs/toolkit": "^1.9.1",
     "@supabase/supabase-js": "^2.101.1",

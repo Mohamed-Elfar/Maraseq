@@ -15,6 +15,7 @@ import { productSlug, getDiscountPrice } from "@/lib/product";
 import { supabase } from "@/lib/supabase";
 import FollowUs from "@/components/followUs";
 import Tags from "@/components/tags";
+import { submitMailForm } from "@/lib/mailtoForm";
 
 const BlogSideBar = ({ popularProducts, topRatedProducts, latestdBlogs }) => {
   const [categories, setCategories] = useState([]);
@@ -173,7 +174,16 @@ const BlogSideBar = ({ popularProducts, topRatedProducts, latestdBlogs }) => {
           <h4 className="ltn__widget-title ltn__widget-title-border-2">
             Drop Messege For Book
           </h4>
-          <form action="#">
+          <form
+            action="#"
+            onSubmit={(event) =>
+              submitMailForm(event, {
+                to: "support@maraseqgroup.com",
+                subject: "Support Message",
+                context: "Blog Sidebar Support Form",
+              })
+            }
+          >
             <input type="text" name="yourname" placeholder="Your Name*" />
             <input type="text" name="youremail" placeholder="Your e-Mail*" />
             <textarea

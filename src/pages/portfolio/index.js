@@ -161,7 +161,7 @@ function Portfolio() {
                     return (
                       <div key={key} className="ltn__brand-logo-item">
                         <img
-                          src={`/img/brand-logo/${logo.image}`}
+                          src="/img/ogo.svg"
                           alt="Brand Logo"
                         />
                       </div>
