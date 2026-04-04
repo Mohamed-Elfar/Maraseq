@@ -207,6 +207,7 @@ export const getPortfolio = async () => {
       .from('portfolio')
       .select('*')
       .eq('visible', true)
+      .eq('active', true) // Only fetch active portfolios
       .order('order_index', { ascending: true })
 
     if (error) throw error

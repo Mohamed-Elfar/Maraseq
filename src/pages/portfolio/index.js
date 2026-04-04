@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { LayoutOne } from "@/layouts";
 import { Container, Row, Col } from "react-bootstrap";
 import { getProducts, productSlug } from "@/lib/product";
@@ -7,7 +7,7 @@ import TitleSection from "@/components/titleSection";
 import BlogItem from "@/components/blog";
 import blogData from "@/data/blog";
 import CallToActionstyleTwo from "@/components/callToAction/callToActionstyleTwo";
-import portfolioData from "@/data/portfolio";
+import { getPortfolio } from "@/lib/supabase";
 import Portfolioitem from "@/components/portfolio";
 import Slider from "react-slick";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
@@ -20,7 +20,55 @@ import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import Download from "yet-another-react-lightbox/plugins/download";
 
 function Portfolio() {
-  const portfolios = getProducts(portfolioData, "buying", "featured", 6);
+  const [allPortfolios, setAllPortfolios] = useState([]);
+  const [displayedPortfolios, setDisplayedPortfolios] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [itemsToShow, setItemsToShow] = useState(6);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxImages, setLightboxImages] = useState([]);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    const fetchPortfolioData = async () => {
+      try {
+        const data = await getPortfolio();
+        // Transform data to match expected format and filter out inactive items
+        const transformedData = data
+          .filter(item => item.active !== false) // Filter out inactive items
+          .map(item => ({
+            ...item,
+            shortDescription: item.short_description || item.description || '',
+            fullDescription: item.full_description || item.description || '',
+            thumbImage: item.thumb_image || '1.jpg',
+            img: item.img || item.thumb_image || '1.jpg',
+          }));
+        setAllPortfolios(transformedData);
+        setDisplayedPortfolios(transformedData.slice(0, itemsToShow));
+      } catch (error) {
+        console.error('Error fetching portfolio:', error);
+        // Fallback to empty array
+        setAllPortfolios([]);
+        setDisplayedPortfolios([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPortfolioData();
+  }, []);
+
+  const handleLoadMore = () => {
+    const newItemsToShow = itemsToShow + 6;
+    setItemsToShow(newItemsToShow);
+    setDisplayedPortfolios(allPortfolios.slice(0, newItemsToShow));
+  };
+
+  // Handle portfolio item click - show all images for that specific portfolio
+  const handlePortfolioClick = (images, startIndex = 0) => {
+    setLightboxImages(images);
+    setCurrentImageIndex(startIndex);
+    setLightboxOpen(true);
+  };
   const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
     <button
       {...props}
@@ -70,18 +118,29 @@ function Portfolio() {
 
   const [basicExampleOpen, setBasicExampleOpen] = useState(false);
 
-  const gallerySlides = portfolios.map((img, i) => ({
-    src: `/img/gallery/${img.thumbImage}`,
-    key: i,
-  }));
+  // Handle both local files and Supabase URLs for gallery
+  const getImageSrc = (imagePath) => {
+    if (!imagePath) return '/img/gallery/1.jpg';
+
+    // If it's already a full URL (starts with http), use it directly
+    if (imagePath.startsWith('http')) {
+      return imagePath;
+    }
+
+    // Otherwise, treat it as a local file in the gallery folder
+    return `/img/gallery/${imagePath}`;
+  };
+
+  const gallerySlides = lightboxImages;
   return (
 
 
     <>
 
       <Lightbox
-        open={basicExampleOpen}
-        close={() => setBasicExampleOpen(false)}
+        open={lightboxOpen}
+        close={() => setLightboxOpen(false)}
+        index={currentImageIndex}
         slides={gallerySlides}
         plugins={[Zoom, Counter, Fullscreen, Download]}
       />
@@ -96,7 +155,7 @@ function Portfolio() {
         <div className="ltn__gallery-area mb-120">
           <Container>
             <div className="row ltn__gallery-active ltn__gallery-style-2">
-              {portfolios.map((data, key) => {
+              {displayedPortfolios.map((data, key) => {
                 const slug = productSlug(data.title);
 
                 return (
@@ -106,15 +165,21 @@ function Portfolio() {
                     baseUrl="portfolio"
                     data={data}
                     slug={slug}
+                    onPortfolioClick={handlePortfolioClick}
                   />
                 );
               })}
             </div>
 
             <div className="btn-wrapper text-center">
-              <button className="btn btn-transparent btn-effect-3 btn-border">
-                LOAD MORE +
-              </button>
+              {displayedPortfolios.length < allPortfolios.length && (
+                <button
+                  className="btn btn-transparent btn-effect-3 btn-border"
+                  onClick={handleLoadMore}
+                >
+                  LOAD MORE +
+                </button>
+              )}
             </div>
           </Container>
         </div>
