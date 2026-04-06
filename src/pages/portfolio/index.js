@@ -6,7 +6,7 @@ import ShopBreadCrumb from "@/components/breadCrumbs/shop";
 import TitleSection from "@/components/titleSection";
 import BlogItem from "@/components/blog";
 import CallToActionstyleTwo from "@/components/callToAction/callToActionstyleTwo";
-import { getPortfolio, getNews, getBrands } from "@/lib/supabase";
+import { getPortfolio, getNews } from "@/lib/supabase";
 import Portfolioitem from "@/components/portfolio";
 import Slider from "react-slick";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
@@ -26,7 +26,15 @@ function Portfolio() {
   const [lightboxImages, setLightboxImages] = useState([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [newsData, setNewsData] = useState([]);
-  const [brandsData, setBrandsData] = useState([]);
+
+  // Static brand partners - all using Maraseq logo
+  const brandsData = [
+    { name: 'Brand Partner 1', image: 'logo.svg', alt_text: 'Brand Partner 1' },
+    { name: 'Brand Partner 2', image: 'logo.svg', alt_text: 'Brand Partner 2' },
+    { name: 'Brand Partner 3', image: 'logo.svg', alt_text: 'Brand Partner 3' },
+    { name: 'Brand Partner 4', image: 'logo.svg', alt_text: 'Brand Partner 4' },
+    { name: 'Brand Partner 5', image: 'logo.svg', alt_text: 'Brand Partner 5' },
+  ];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,17 +57,12 @@ function Portfolio() {
         // Fetch news data
         const news = await getNews();
         setNewsData(news);
-
-        // Fetch brands data
-        const brands = await getBrands();
-        setBrandsData(brands);
       } catch (error) {
         console.error('Error fetching data:', error);
         // Fallback to empty arrays
         setAllPortfolios([]);
         setDisplayedPortfolios([]);
         setNewsData([]);
-        setBrandsData([]);
       } finally {
         setLoading(false);
       }
@@ -238,7 +241,7 @@ function Portfolio() {
                     return (
                       <div key={key} className="ltn__brand-logo-item">
                         <img
-                          src={`/img/brand-logo/${brand.image}`}
+                          src={`/img/${brand.image}`}
                           alt={brand.alt_text || 'Brand Logo'}
                         />
                       </div>

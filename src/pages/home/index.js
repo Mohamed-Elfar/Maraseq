@@ -13,7 +13,6 @@ import HeroSectionStyleThree from "@/components/hero/styleThree";
 import { useSelector } from "react-redux";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import ModalVideo from "react-modal-video";
-import blogData from "@/data/blog";
 import BlogItem from "@/components/blog";
 import newsOneImage from "@/assets/images/home/newsOne.png";
 import newsTwoImage from "@/assets/images/home/newsTwo.png";
@@ -28,7 +27,7 @@ import imageSlider from "@/assets/images/home/imageSlider.png";
 import videoPopupAreaImage from "@/assets/images/home/video-popup-area.png";
 import EditableText from "@/components/cms/EditableText";
 import EditableSection from "@/components/cms/EditableSection";
-import { getServices } from "@/lib/supabase";
+import { getServices, getNews } from "@/lib/supabase";
 
 
 
@@ -39,7 +38,8 @@ function HomeVersionThree(props) {
   const featureData = getProducts(props.servicesData || [], "buying", "featured", 3);
   const countryProducts = getProducts(products, "buying", "country", 5);
   const featuredProducts = getProducts(products, "buying", "featured", 5);
-  const { data, brand, testimonialData } = props;
+  const { data, brand, testimonialData, newsData } = props;
+  const blogData = newsData || [];
 
   const { cartItems } = useSelector((state) => state.cart);
   const { wishlistItems } = useSelector((state) => state.wishlist);
@@ -272,24 +272,6 @@ function HomeVersionThree(props) {
     ],
   };
   const newsImages = [newsOneImage.src, newsTwoImage.src];
-  const marketInsightsCards = [
-    {
-      title: "How to choose the right property?",
-      shortDescription: "Key insights to help you find your best path",
-      type: "MARKET INSIGHTS",
-    },
-    {
-      title: "Real estate trends today",
-      shortDescription: "What's shaping investment decisions right now",
-      type: "MARKET INSIGHTS",
-    },
-    {
-      title: "How to invest smartly?",
-      shortDescription:
-        "Clear steps to build a successful investment",
-      type: "MARKET INSIGHTS",
-    },
-  ];
 
   return (
     <LayoutTwo topbar={true}>
@@ -519,30 +501,29 @@ function HomeVersionThree(props) {
                 />
               </Col>
             </Row>
-            <Slider
-              {...blogSettings}
-              className="ltn__blog-slider-one-active slick-arrow-1 ltn__blog-item-3-normal"
-            >
-              {blogData.slice(0, 3).map((data, key) => {
-                const override = marketInsightsCards[key] || {};
-                const cardData = {
-                  ...data,
-                  ...override,
-                };
-                const slug = productSlug(cardData.title);
-                const imageSrc = newsImages[key % newsImages.length];
+            {blogData && blogData.length > 0 ? (
+              <Slider
+                {...blogSettings}
+                className="ltn__blog-slider-one-active slick-arrow-1 ltn__blog-item-3-normal"
+              >
+                {blogData.slice(0, 3).map((data, key) => {
+                  const slug = data.slug || productSlug(data.title);
 
-                return (
-                  <BlogItem
-                    key={key}
-                    baseUrl="blog"
-                    data={cardData}
-                    slug={slug}
-                    imageSrc={imageSrc}
-                  />
-                );
-              })}
-            </Slider>
+                  return (
+                    <BlogItem
+                      key={key}
+                      baseUrl="blog"
+                      data={data}
+                      slug={slug}
+                    />
+                  );
+                })}
+              </Slider>
+            ) : (
+              <div className="text-center py-5">
+                <p className="text-muted">No news articles available yet.</p>
+              </div>
+            )}
           </Container>
         </div>
       </EditableSection>
@@ -577,6 +558,7 @@ export async function getStaticProps() {
   const brand = JSON.parse(await fs.readFile(brandfilePath));
   const testimonialData = JSON.parse(await fs.readFile(testimonialFilePath));
   const servicesData = await getServices();
+  const newsData = await getNews();
 
   return {
     props: {
@@ -584,6 +566,7 @@ export async function getStaticProps() {
       brand,
       testimonialData,
       servicesData,
+      newsData,
     },
     revalidate: 60,
   };

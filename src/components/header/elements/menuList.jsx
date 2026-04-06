@@ -28,10 +28,6 @@ const MenuList = ({ addListing }) => {
           </li>
 
           <li>
-            <Link href="/team">Team</Link>
-          </li>
-
-          <li>
             <Link href="/faq">FAQ</Link>
           </li>
 
