@@ -1,50 +1,37 @@
 import { useState } from "react";
-import Slider from "react-slick";
 import path from "path";
 import fs from "fs/promises";
 import { LayoutTwo } from "@/layouts";
-import { Container, Row, Col, Nav, Tab } from "react-bootstrap";
-import { getProducts, productSlug, getDiscountPrice } from "@/lib/product";
-import TitleSection from "@/components/titleSection";
-import AboutUsSectionOne from "@/components/aboutUs/aboutUsSectionOne";
-import Feature from "@/components/features";
-import PropertyCategories from "@/components/PropertyCategories";
+import { Container, Row, Col } from "react-bootstrap";
+import { getProducts } from "@/lib/product";
 import HeroSectionStyleThree from "@/components/hero/styleThree";
 import { useSelector } from "react-redux";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import ModalVideo from "react-modal-video";
-import BlogItem from "@/components/blog";
-import newsOneImage from "@/assets/images/home/newsOne.png";
-import newsTwoImage from "@/assets/images/home/newsTwo.png";
 import CallToAction from "@/components/callToAction";
-import VideoBanner from "@/components/banner/videoBanner";
-import ProductItem from "@/components/product";
-import CarDealerSearchForm from "@/components/carDealerSearchForm";
-import BrandCarouselOne from "@/components/brandCarousel";
 import portfolioData from "@/data/portfolio";
-import PortfolioitemThree from "@/components/portfolio/itemThree";
-import imageSlider from "@/assets/images/home/imageSlider.png";
-import videoPopupAreaImage from "@/assets/images/home/video-popup-area.png";
-import EditableText from "@/components/cms/EditableText";
 import EditableSection from "@/components/cms/EditableSection";
 import { getServices, getNews } from "@/lib/supabase";
 
-
+// Import section components
+import SearchSection from "./_components/SearchSection";
+import AboutSection from "./_components/AboutSection";
+import FeaturesSection from "./_components/FeaturesSection";
+import CategoriesSection from "./_components/CategoriesSection";
+import ShowcaseSection from "./_components/ShowcaseSection";
+import ProductsSection from "./_components/ProductsSection";
+import VideoSection from "./_components/VideoSection";
+import BrandsSection from "./_components/BrandsSection";
+import BlogSection from "./_components/BlogSection";
 
 function HomeVersionThree(props) {
   const [isOpen, setOpen] = useState(false);
-  const [featuredFilter, setFeaturedFilter] = useState("all");
   const { products } = useSelector((state) => state.product);
-  const featureData = getProducts(props.servicesData || [], "buying", "featured", 3);
-  const countryProducts = getProducts(products, "buying", "country", 5);
-  const featuredProducts = getProducts(products, "buying", "featured", 5);
-  const { data, brand, testimonialData, newsData } = props;
-  const blogData = newsData || [];
+  const { data, brand, newsData } = props;
 
-  const { cartItems } = useSelector((state) => state.cart);
-  const { wishlistItems } = useSelector((state) => state.wishlist);
-  const { compareItems } = useSelector((state) => state.compare);
+  const featureData = getProducts(props.servicesData || [], "buying", "featured", 3);
+  const featuredProducts = getProducts(products, "buying", "featured", 5);
   const portfolios = getProducts(portfolioData, "buying", "carousel", 5);
+  const blogData = newsData || [];
 
   const featuredFilterOptions = [
     { key: "all", label: "All" },
@@ -54,228 +41,8 @@ function HomeVersionThree(props) {
     { key: "under_construction", label: "Under Construction" },
   ];
 
-  const filteredFeaturedProducts = featuredProducts.filter((product) => {
-    if (featuredFilter === "all") return true;
-
-    const opportunityType =
-      product.opportunityType || (product.rent ? "residential" : "investment");
-    const opportunityStage =
-      product.opportunityStage || (product.rent ? "under_construction" : "ready");
-
-    if (featuredFilter === "investment") {
-      return opportunityType === "investment";
-    }
-
-    if (featuredFilter === "residential") {
-      return opportunityType === "residential";
-    }
-
-    if (featuredFilter === "ready") {
-      return opportunityStage === "ready";
-    }
-
-    if (featuredFilter === "under_construction") {
-      return opportunityStage === "under_construction";
-    }
-
-    return true;
-  });
-
-  const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
-    <button
-      {...props}
-      className={
-        "slick-prev slick-arrow" +
-        (currentSlide === 0 ? " slick-disabled" : "")
-      }
-      aria-hidden="true"
-      aria-disabled={currentSlide === 0 ? true : false}
-      type="button"
-    >
-      <FaArrowLeft />
-    </button>
-  );
-  const SlickArrowRight = ({ currentSlide, slideCount, ...props }) => (
-    <button
-      {...props}
-      className={
-        "slick-next slick-arrow" +
-        (currentSlide === slideCount - 1 ? " slick-disabled" : "")
-      }
-      aria-hidden="true"
-      aria-disabled={currentSlide === slideCount - 1 ? true : false}
-      type="button"
-    >
-      <FaArrowRight />
-    </button>
-  );
-
-  const portfolioSettings = {
-    rtl: false,
-    arrows: true,
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 5,
-    slidesToScroll: 1,
-    centerMode: true,
-    centerPadding: '0px',
-    prevArrow: <SlickArrowLeft />,
-    nextArrow: <SlickArrowRight />,
-    responsive: [
-      {
-        breakpoint: 1200,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1
-        }
-      },
-      {
-        breakpoint: 992,
-        settings: {
-          arrows: true,
-          dots: false,
-          slidesToShow: 3,
-          slidesToScroll: 1
-        }
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          arrows: true,
-          dots: false,
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        }
-      },
-      {
-        breakpoint: 580,
-        settings: {
-          arrows: true,
-          dots: false,
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        }
-      }
-    ]
-  };
-
-  const productsettings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    prevArrow: <SlickArrowLeft />,
-    nextArrow: <SlickArrowRight />,
-    responsive: [
-      {
-        breakpoint: 1200,
-        settings: {
-          arrows: false,
-          dots: true
-        }
-      },
-      {
-        breakpoint: 992,
-        settings: {
-          arrows: false,
-          dots: true,
-          slidesToShow: 2,
-          slidesToScroll: 1
-        }
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          arrows: false,
-          dots: true,
-          slidesToShow: 2,
-          slidesToScroll: 1
-        }
-      },
-      {
-        breakpoint: 580,
-        settings: {
-          arrows: false,
-          dots: true,
-          slidesToShow: 1,
-          slidesToScroll: 1
-        }
-      }
-    ]
-  };
-
-
-  const productCarouselsettings = {
-    arrows: true,
-    dots: true,
-    infinite: true,
-    speed: 300,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    prevArrow: <SlickArrowLeft />,
-    nextArrow: <SlickArrowRight />,
-    responsive: [
-      {
-        breakpoint: 992,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1
-        }
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          arrows: false,
-          dots: true,
-          slidesToShow: 2,
-          slidesToScroll: 1
-        }
-      },
-      {
-        breakpoint: 575,
-        settings: {
-          arrows: false,
-          dots: true,
-          slidesToShow: 1,
-          slidesToScroll: 1
-        }
-      }
-    ]
-  };
-
-
-  const blogSettings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    prevArrow: <SlickArrowLeft />,
-    nextArrow: <SlickArrowRight />,
-    responsive: [
-      {
-        breakpoint: 1199,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 575,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
-  };
-  const newsImages = [newsOneImage.src, newsTwoImage.src];
-
   return (
     <LayoutTwo topbar={true}>
-
       <ModalVideo
         channel="youtube"
         autoplay
@@ -283,253 +50,26 @@ function HomeVersionThree(props) {
         videoId="LjCzPp-MK48"
         onClose={() => setOpen(false)}
       />
-      {/* <!-- SLIDER AREA START (slider-11) --> */}
+
+      {/* Hero Section */}
       <div className="ltn__slider-area ltn__slider-3 section-bg-2">
         <HeroSectionStyleThree data={data} />
       </div>
 
-      {/* <!-- SLIDER AREA END --> */}
-      <EditableSection sectionKey="home.section.search" sectionLabel="Search Form">
-        <CarDealerSearchForm navMenuClass="d-none" customClasses="" />
-      </EditableSection>
-      {/* <!-- CAR DEALER FORM AREA END --> */}
+      <SearchSection />
+      <AboutSection />
+      <FeaturesSection featureData={featureData} />
+      <CategoriesSection />
+      <ShowcaseSection portfolios={portfolios} />
+      <ProductsSection
+        featuredProducts={featuredProducts}
+        featuredFilterOptions={featuredFilterOptions}
+      />
+      <VideoSection />
+      <BrandsSection brand={brand} />
+      <BlogSection blogData={blogData} />
 
-      {/* <!-- ABOUT US AREA START --> */}
-      <EditableSection sectionKey="home.section.about" sectionLabel="About Section">
-        <div className="ltn__about-us-area pt-115 pb-100 ">
-          <AboutUsSectionOne />
-        </div>
-      </EditableSection>
-      {/* <!-- ABOUT US AREA END --> */}
-
-
-
-      {/* <!-- FEATURE AREA START ( Feature - 6) --> */}
-      <EditableSection sectionKey="home.section.features" sectionLabel="Features Section">
-        <Feature
-          servicebtn={true}
-          iconTag={true}
-          data={featureData}
-          classes=""
-          headingClasses="section-subtitle-2"
-          titleSectionData={{
-            sectionClasses: "text-center",
-            subTitle: "Our Services",
-            title: "Our Core Paths",
-          }}
-        />
-      </EditableSection>
-      {/* <!-- FEATURE AREA END -->*/}
-
-      {/* <!-- BANNER AREA START ( Banner - 4 ) --> */}
-      <EditableSection sectionKey="home.section.categories" sectionLabel="Property Categories">
-        <div className="ltn__banner-area pt-120">
-          <Container>
-
-            <Row>
-              <Col xs={12}>
-                <TitleSection
-                  sectionClasses="text-center"
-                  headingClasses="section-subtitle-2 ltn__secondary-color"
-                  titleSectionData={{
-                    subTitle: "Property",
-                    title: "Choose Your Path",
-                  }}
-                />
-              </Col>
-            </Row>
-
-
-            <PropertyCategories />
-          </Container>
-        </div>
-      </EditableSection>
-      {/* <!-- BANNER AREA END --> */}
-
-
-      {/* <!-- IMAGE SLIDER AREA START (img-slider-3) --> */}
-      <EditableSection sectionKey="home.section.showcase" sectionLabel="Showcase Slider">
-        <div className="ltn__img-slider-area">
-          <Slider {...portfolioSettings} className="ltn__image-slider-4-active slick-arrow-1 slick-arrow-1-inner ltn__no-gutter-all">
-
-            {
-              portfolios.map((data, key) => {
-                const slug = productSlug(data.title);
-                return (
-                  <PortfolioitemThree key={key}
-                    baseUrl="/portfolio"
-                    data={data}
-                    slug={slug} />
-                )
-              })
-            }
-
-          </Slider>
-        </div>
-      </EditableSection>
-      {/* <!-- IMAGE SLIDER AREA END --> */}
-
-
-
-      {/* PRODUCT SLIDER AREA START */}
-      <EditableSection sectionKey="home.section.products" sectionLabel="Products Section">
-        <div className="ltn__product-slider-area ltn__product-gutter pt-115 pb-90 plr--7">
-          <Container>
-            <Row>
-              <Col lg={12}>
-                <TitleSection
-                  sectionClasses="text-center"
-                  headingClasses="section-subtitle-2"
-                  titleSectionData={{
-                    subTitle: "Properties",
-                    title: "Opportunities on the Right Path",
-                  }}
-                />
-
-                <div className="featured-filter-tabs text-center mt-20 mb-20">
-                  {featuredFilterOptions.map((filterItem) => (
-                    <button
-                      key={filterItem.key}
-                      type="button"
-                      className={`featured-filter-tab ${featuredFilter === filterItem.key ? "active" : ""
-                        }`}
-                      onClick={() => setFeaturedFilter(filterItem.key)}
-                    >
-                      {filterItem.label}
-                    </button>
-                  ))}
-                </div>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col lg={12}>
-                {!!filteredFeaturedProducts?.length ? (
-                  <Slider
-                    {...productCarouselsettings}
-                    className="ltn__product-slider-item-four-active-full-width slick-arrow-1"
-                  >
-                    {filteredFeaturedProducts.map((product, key) => {
-                      const slug = productSlug(product.title);
-
-                      const discountedPrice = getDiscountPrice(
-                        product.price,
-                        product.discount
-                      ).toFixed(2);
-                      const productPrice = product.price.toFixed(2);
-                      const cartItem = cartItems.find(
-                        (cartItem) => cartItem.id === product.id
-                      );
-                      const wishlistItem = wishlistItems.find(
-                        (wishlistItem) => wishlistItem.id === product.id
-                      );
-                      const compareItem = compareItems.find(
-                        (compareItem) => compareItem.id === product.id
-                      );
-
-                      return (
-                        <ProductItem
-                          key={product.id}
-                          productData={product}
-                          slug={slug}
-                          baseUrl="shop"
-                          discountedPrice={discountedPrice}
-                          productPrice={productPrice}
-                          cartItem={cartItem}
-                          wishlistItem={wishlistItem}
-                          compareItem={compareItem}
-                        />
-                      );
-                    })}
-                  </Slider>
-                ) : null}
-              </Col>
-            </Row>
-          </Container>
-        </div>
-      </EditableSection>
-      {/* PRODUCT SLIDER AREA END */}
-
-
-      {/* <!-- VIDEO AREA START --> */}
-      <EditableSection sectionKey="home.section.video" sectionLabel="Video Banner">
-        <div className="ltn__video-popup-area">
-          <VideoBanner backgroundImage={videoPopupAreaImage.src} />
-        </div>
-      </EditableSection>
-      {/* <!-- VIDEO AREA END --> */}
-
-
-
-      {/* <!-- BRAND LOGO AREA START --> */}
-      <EditableSection sectionKey="home.section.brands" sectionLabel="Brand Carousel">
-        <div className="ltn__brand-logo-area ltn__brand-logo-1 section-bg-1 pt-110 pb-110 plr--9">
-          <Container fluid>
-            <Row>
-              <Col xs={12}>
-                <BrandCarouselOne data={brand} />
-              </Col>
-            </Row>
-          </Container>
-        </div>
-      </EditableSection>
-      {/* <!-- BRAND LOGO AREA END --> */}
-
-
-
-      {/* <!-- BLOG AREA START (blog-3) -->  */}
-      <EditableSection sectionKey="home.section.blog" sectionLabel="Blog Section">
-        <div className="ltn__blog-area pt-120 pb-70">
-          <Container>
-            <Row>
-              <Col lg={12}>
-                <TitleSection
-                  sectionClasses="text-center"
-                  headingClasses="section-subtitle-2"
-                  titleSectionData={{
-                    subTitle: "Market Insights",
-                    title: "Your Real Estate Guide",
-                  }}
-                />
-                <EditableText
-                  as="p"
-                  className="text-center mb-40"
-                  editableClassName="text-center mb-40"
-                  multiline
-                  contentKey="home:market-insights:description"
-                  value="Insights to help you understand the market and decide with confidence"
-                />
-              </Col>
-            </Row>
-            {blogData && blogData.length > 0 ? (
-              <Slider
-                {...blogSettings}
-                className="ltn__blog-slider-one-active slick-arrow-1 ltn__blog-item-3-normal"
-              >
-                {blogData.slice(0, 3).map((data, key) => {
-                  const slug = data.slug || productSlug(data.title);
-
-                  return (
-                    <BlogItem
-                      key={key}
-                      baseUrl="blog"
-                      data={data}
-                      slug={slug}
-                    />
-                  );
-                })}
-              </Slider>
-            ) : (
-              <div className="text-center py-5">
-                <p className="text-muted">No news articles available yet.</p>
-              </div>
-            )}
-          </Container>
-        </div>
-      </EditableSection>
-      {/* <!-- BLOG AREA END --> */}
-
-      {/* <!-- CALL TO ACTION START (call-to-action-6) --> */}
+      {/* Call to Action */}
       <EditableSection sectionKey="home.section.cta" sectionLabel="Call To Action">
         <div className="ltn__call-to-action-area call-to-action-6 before-bg-bottom">
           <Container>
@@ -541,7 +81,6 @@ function HomeVersionThree(props) {
           </Container>
         </div>
       </EditableSection>
-      {/* <!-- CALL TO ACTION END --> */}
     </LayoutTwo>
   );
 }
