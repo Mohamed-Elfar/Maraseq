@@ -198,3 +198,8 @@ export const blogSettings = {
     },
   ],
 };
+
+// Default export to satisfy Next.js build (not used as a page)
+export default function SliderSettings() {
+  return null;
+}

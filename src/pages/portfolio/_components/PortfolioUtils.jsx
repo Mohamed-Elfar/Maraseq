@@ -68,3 +68,8 @@ export const getAllPortfolioImages = (portfolio, getImageSrc) => {
     alt: 'Default Image'
   }];
 };
+
+// Default export to satisfy Next.js build (not used as a page)
+export default function PortfolioUtils() {
+  return null;
+}
