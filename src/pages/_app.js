@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { wrapper } from "@/store";
 import { setProducts } from "@/store/slices/product-slice";
-import products from "@/data/products.json";
+import { getProperties } from "@/lib/supabase";
 import Preloader from "@/components/preloader";
 import "animate.css";
 import "slick-carousel/slick/slick.css";
@@ -33,7 +33,39 @@ const Poppin = Poppins({
 const MyApp = ({ Component, ...rest }) => {
   const { store, props } = wrapper.useWrappedStore(rest);
   useEffect(() => {
-    store.dispatch(setProducts(products));
+    // Fetch properties from Supabase database
+    const loadProperties = async () => {
+      const properties = await getProperties();
+
+      // Transform database format to match website format
+      const transformedProperties = properties.map(property => ({
+        id: property.id,
+        title: property.title,
+        description: property.description,
+        price: parseFloat(property.price),
+        discount: 0, // Add discount if needed
+        location: property.location,
+        propertyType: property.property_type,
+        propertyDetails: {
+          bedrooms: property.bedrooms,
+          baths: property.bathrooms,
+          area: property.area
+        },
+        featured: property.featured,
+        status: property.status,
+        images: property.images || [],
+        metaTitle: property.meta_title,
+        metaDescription: property.meta_description,
+        visible: property.visible,
+        orderIndex: property.order_index,
+        createdAt: property.created_at,
+        updatedAt: property.updated_at
+      }));
+
+      store.dispatch(setProducts(transformedProperties));
+    };
+
+    loadProperties();
   }, [store]);
 
   return (
