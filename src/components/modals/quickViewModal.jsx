@@ -1,10 +1,7 @@
 import Link from "next/link";
-import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { getProductCartQuantity } from "@/lib/product";
-import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "@/store/slices/cart-slice";
+import { useDispatch } from "react-redux";
 import {
   addToWishlist,
   deleteFromWishlist,
@@ -37,27 +34,6 @@ const QuickViewModal = ({
   };
 
   const dispatch = useDispatch();
-  const { cartItems } = useSelector((state) => state.cart);
-
-  const [selectedProductColor, setSelectedProductColor] = useState(
-    productData.variation ? productData.variation[0].color : ""
-  );
-  const [selectedProductSize, setSelectedProductSize] = useState(
-    productData.variation ? productData.variation[0].size[0].name : ""
-  );
-  const [productStock, setProductStock] = useState(
-    productData.variation
-      ? productData.variation[0].size[0].stock
-      : productData.stock
-  );
-  const [quantityCount, setQuantityCount] = useState(1);
-
-  const productCartQty = getProductCartQuantity(
-    cartItems,
-    productData,
-    selectedProductColor,
-    selectedProductSize
-  );
 
   return (
     <Modal
@@ -92,10 +68,6 @@ const QuickViewModal = ({
                   <div className="product-price">
                     <div>
                       <span>${discountedprice}</span>
-                      <del>{productprice}</del>
-                      <span className="on-sale">
-                        {productData.discount} % Off
-                      </span>
                     </div>
                     {productData.rating && productData.rating > 0 ? (
                       <div className="product-quickview__rating-wrap">
@@ -116,73 +88,6 @@ const QuickViewModal = ({
 
                   <div className="ltn__product-details-menu-3">
                     <ul>
-                      <li>
-                        <div className="product-quickview__quantity">
-                          <div className="cart-plus-minus">
-                            <button
-                              onClick={() =>
-                                setQuantityCount(
-                                  quantityCount > 1 ? quantityCount - 1 : 1
-                                )
-                              }
-                              className="qtybutton"
-                            >
-                              -
-                            </button>
-                            <input
-                              className="cart-plus-minus-box"
-                              type="text"
-                              value={quantityCount}
-                              readOnly
-                            />
-                          
-                            <button
-                              onClick={() =>
-                                setQuantityCount(
-                                  quantityCount < productStock - productCartQty
-                                    ? quantityCount + 1
-                                    : quantityCount
-                                )
-                              }
-                              className="qtybutton"
-                            >
-                              +
-                            </button>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        {productStock && productStock > 0 ? (
-                          <button
-                            onClick={() =>
-                              dispatch(
-                                addToCart({
-                                  ...productData,
-                                  quantity: quantityCount,
-                                  selectedProductColor: selectedProductColor
-                                    ? selectedProductColor
-                                    : product.selectedProductColor
-                                    ? product.selectedProductColor
-                                    : null,
-                                  selectedProductSize: selectedProductSize
-                                    ? selectedProductSize
-                                    : product.selectedProductSize
-                                    ? product.selectedProductSize
-                                    : null,
-                                })
-                              )
-                            }
-                            disabled={productCartQty >= productStock}
-                            className="btn-addtocart"
-                          >
-                            <FaShoppingBag className="me-2" /> Add To Cart
-                          </button>
-                        ) : (
-                          <button className="btn-addtocart" disabled>
-                            Out of Stock
-                          </button>
-                        )}
-                      </li>
                       <li>
                         <button
                           className="btn-addtocart"

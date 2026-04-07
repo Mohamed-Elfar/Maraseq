@@ -750,14 +750,19 @@ function ProductDetails({ product, latestBlogs, categories }) {
                       {categories && categories.length > 0 ? (
                         categories.slice(0, 5).map((category) => (
                           <li key={category.name}>
-                            <Link href="#">
+                            <Link
+                              href={{
+                                pathname: "/shop/properties",
+                                query: { category: category.name },
+                              }}
+                            >
                               {category.name} <span>({category.property_count})</span>
                             </Link>
                           </li>
                         ))
                       ) : (
                         <li>
-                          <Link href="#">
+                          <Link href="/shop/properties">
                             No categories available
                           </Link>
                         </li>

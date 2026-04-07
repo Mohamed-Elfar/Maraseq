@@ -1,7 +1,12 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { useSelector } from "react-redux";
 import ShopBreadCrumb from "@/components/breadCrumbs/shop";
-import { getSortedProducts, productSlug, getDiscountPrice } from "@/lib/product";
+import {
+  getSortedProducts,
+  productSlug,
+  getDiscountPrice,
+  getIndividualCategories,
+} from "@/lib/product";
 import { LayoutOne } from "@/layouts";
 import {
   FaThLarge,
@@ -16,10 +21,21 @@ import ProductList from "@/components/product/list";
 import Search from "@/components/search";
 import ReactPaginate from "react-paginate";
 import CallToAction from "@/components/callToAction";
+import { useRouter } from "next/router";
+import { formatPropertyStatus } from "@/utils/property-status";
 
 const SEARCH_KEYS = ["title"];
+const PRICE_MIN = 0;
+const PRICE_MAX = 1000000;
+const PRICE_BUCKETS = [
+  { name: "0 - 100,000", min: 0, max: 100000 },
+  { name: "100,001 - 250,000", min: 100001, max: 250000 },
+  { name: "250,001 - 500,000", min: 250001, max: 500000 },
+  { name: "500,001 - 1,000,000", min: 500001, max: 1000000 },
+];
 
 function ShopLeftSideBar() {
+  const router = useRouter();
   const { products } = useSelector((state) => state.product);
   const [sortType, setSortType] = useState("");
   const [sortValue, setSortValue] = useState("");
@@ -30,6 +46,71 @@ function ShopLeftSideBar() {
   const pageLimit = 6;
   const [currentItems, setCurrentItems] = useState(products);
   const [pageCount, setPageCount] = useState(0);
+  const [selectedStatuses, setSelectedStatuses] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedBedBaths, setSelectedBedBaths] = useState([]);
+  const [selectedPriceRanges, setSelectedPriceRanges] = useState([]);
+  const [priceFilterValue, setPriceFilterValue] = useState([PRICE_MIN, PRICE_MAX]);
+  const selectedCategory =
+    typeof router.query.category === "string" ? router.query.category : "";
+
+  const categories = useMemo(() => getIndividualCategories(products), [products]);
+  const statusOptions = useMemo(() => {
+    const statusMap = new Map();
+
+    products.forEach((product) => {
+      const statusValue =
+        product?.propertyDetails?.propertyStatus ?? product?.status;
+      const statusLabel = formatPropertyStatus(statusValue);
+
+      if (!statusLabel) return;
+      statusMap.set(statusLabel, (statusMap.get(statusLabel) || 0) + 1);
+    });
+
+    return Array.from(statusMap.entries()).map(([name, count]) => ({
+      name,
+      count,
+    }));
+  }, [products]);
+
+  const bedBathOptions = useMemo(() => {
+    const bedBathMap = new Map();
+
+    products.forEach((product) => {
+      const bedrooms = product?.propertyDetails?.bedrooms ?? product?.bedrooms;
+      const baths =
+        product?.propertyDetails?.baths ??
+        product?.propertyDetails?.bathrooms ??
+        product?.bathrooms;
+
+      if (bedrooms == null || baths == null) return;
+
+      const label = `${bedrooms} Bed / ${baths} Bath`;
+      bedBathMap.set(label, (bedBathMap.get(label) || 0) + 1);
+    });
+
+    return Array.from(bedBathMap.entries()).map(([name, count]) => ({
+      name,
+      count,
+    }));
+  }, [products]);
+
+  const getProductPrice = (product) => {
+    const numericPrice = Number(product?.price);
+    return Number.isFinite(numericPrice) ? numericPrice : 0;
+  };
+
+  const priceRanges = useMemo(() => {
+    return PRICE_BUCKETS.map((bucket) => ({
+      name: bucket.name,
+      min: bucket.min,
+      max: bucket.max,
+      count: products.filter((product) => {
+        const price = getProductPrice(product);
+        return price >= bucket.min && price <= bucket.max;
+      }).length,
+    }));
+  }, [products]);
 
   const { cartItems } = useSelector((state) => state.cart);
   const { wishlistItems } = useSelector((state) => state.wishlist);
@@ -50,24 +131,146 @@ function ShopLeftSideBar() {
       SEARCH_KEYS.some((key) => item[key].toLowerCase().includes(query))
     );
   }, [query]);
+
   useEffect(() => {
-    let sortedProducts = getSortedProducts(products, sortType, sortValue);
+    if (!selectedCategory) return;
+    setSelectedCategories([selectedCategory]);
+    setOffset(0);
+  }, [selectedCategory]);
+
+  const getProductBedBathLabel = (product) => {
+    const bedrooms = product?.propertyDetails?.bedrooms ?? product?.bedrooms;
+    const baths =
+      product?.propertyDetails?.baths ??
+      product?.propertyDetails?.bathrooms ??
+      product?.bathrooms;
+
+    if (bedrooms == null || baths == null) return "";
+    return `${bedrooms} Bed / ${baths} Bath`;
+  };
+
+  const handleCategoryToggle = (categoryName, isChecked) => {
+    setOffset(0);
+    setSelectedCategories((prev) => {
+      if (isChecked) {
+        return prev.includes(categoryName) ? prev : [...prev, categoryName];
+      }
+
+      return prev.filter((name) => name !== categoryName);
+    });
+  };
+
+  const handleStatusToggle = (statusName, isChecked) => {
+    setOffset(0);
+    setSelectedStatuses((prev) => {
+      if (isChecked) {
+        return prev.includes(statusName) ? prev : [...prev, statusName];
+      }
+
+      return prev.filter((name) => name !== statusName);
+    });
+  };
+
+  const handleBedBathToggle = (bedBathName, isChecked) => {
+    setOffset(0);
+    setSelectedBedBaths((prev) => {
+      if (isChecked) {
+        return prev.includes(bedBathName) ? prev : [...prev, bedBathName];
+      }
+
+      return prev.filter((name) => name !== bedBathName);
+    });
+  };
+
+  const handlePriceRangeToggle = (rangeName, isChecked) => {
+    setOffset(0);
+    setSelectedPriceRanges((prev) => {
+      if (isChecked) {
+        return prev.includes(rangeName) ? prev : [...prev, rangeName];
+      }
+
+      return prev.filter((name) => name !== rangeName);
+    });
+  };
+
+  const handlePriceFilterChange = (rangeValues) => {
+    setOffset(0);
+    setPriceFilterValue(rangeValues);
+  };
+
+  useEffect(() => {
+    let filteredProducts = getSortedProducts(products, sortType, sortValue);
 
     const filterSortedProducts = getSortedProducts(
-      sortedProducts,
+      filteredProducts,
       filterSortType,
       filterSortValue
     );
 
-    sortedProducts = filterSortedProducts;
+    filteredProducts = filterSortedProducts;
 
-    setSortedProducts(sortedProducts);
+    if (
+      selectedStatuses.length > 0 &&
+      selectedStatuses.length < statusOptions.length
+    ) {
+      filteredProducts = filteredProducts.filter((product) => {
+        const statusLabel = formatPropertyStatus(
+          product?.propertyDetails?.propertyStatus ?? product?.status
+        );
 
-    setCurrentItems(sortedProducts.slice(offset, offset + pageLimit));
+        return selectedStatuses.includes(statusLabel);
+      });
+    }
 
-    setCurrentItems(
-      SearchProduct(sortedProducts.slice(offset, offset + pageLimit))
-    );
+    if (
+      selectedCategories.length > 0 &&
+      selectedCategories.length < categories.length
+    ) {
+      filteredProducts = filteredProducts.filter((product) => {
+        if (!product.category) return false;
+        if (Array.isArray(product.category)) {
+          return product.category.some((category) =>
+            selectedCategories.includes(category)
+          );
+        }
+
+        return selectedCategories.includes(product.category);
+      });
+    }
+
+    if (selectedBedBaths.length > 0) {
+      filteredProducts = filteredProducts.filter((product) =>
+        selectedBedBaths.includes(getProductBedBathLabel(product))
+      );
+    }
+
+    if (
+      selectedPriceRanges.length > 0 &&
+      selectedPriceRanges.length < priceRanges.length
+    ) {
+      const selectedBuckets = priceRanges.filter((range) =>
+        selectedPriceRanges.includes(range.name)
+      );
+
+      filteredProducts = filteredProducts.filter((product) => {
+        const price = getProductPrice(product);
+        return selectedBuckets.some(
+          (range) => price >= range.min && price <= range.max
+        );
+      });
+    }
+
+    filteredProducts = filteredProducts.filter((product) => {
+      const price = getProductPrice(product);
+      return price >= priceFilterValue[0] && price <= priceFilterValue[1];
+    });
+
+    const searchedProducts = SearchProduct(filteredProducts);
+    const endOffset = offset + pageLimit;
+
+    setSortedProducts(filteredProducts);
+    setCurrentItems(searchedProducts.slice(offset, endOffset));
+    setPageCount(Math.ceil(searchedProducts.length / pageLimit));
   }, [
     offset,
     products,
@@ -77,16 +280,20 @@ function ShopLeftSideBar() {
     filterSortValue,
     SearchProduct,
     query,
+    selectedStatuses,
+    selectedCategories,
+    selectedBedBaths,
+    selectedPriceRanges,
+    priceFilterValue,
+    statusOptions.length,
+    categories.length,
+    priceRanges,
   ]);
 
-  useEffect(() => {
-    const endOffset = offset + pageLimit;
-    setCurrentItems(products.slice(offset, endOffset));
-    setPageCount(Math.ceil(products.length / pageLimit));
-  }, [offset, pageLimit, products]);
-
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * pageLimit) % products.length;
+    const filteredLength = SearchProduct(sortedProducts).length;
+    const newOffset =
+      filteredLength > 0 ? (event.selected * pageLimit) % filteredLength : 0;
     setOffset(newOffset);
   };
 
@@ -247,7 +454,24 @@ function ShopLeftSideBar() {
               </div>
             </Col>
             <Col xs={12} lg={{ span: 4, order: 0 }}>
-              <SideBar products={products} getSortParams={getSortParams} />
+              <SideBar
+                products={products}
+                getSortParams={getSortParams}
+                statusOptions={statusOptions}
+                selectedStatuses={selectedStatuses}
+                onStatusToggle={handleStatusToggle}
+                categories={categories}
+                selectedCategories={selectedCategories}
+                onCategoryToggle={handleCategoryToggle}
+                bedBaths={bedBathOptions}
+                selectedBedBaths={selectedBedBaths}
+                onBedBathToggle={handleBedBathToggle}
+                priceRanges={priceRanges}
+                selectedPriceRanges={selectedPriceRanges}
+                onPriceRangeToggle={handlePriceRangeToggle}
+                priceFilterValue={priceFilterValue}
+                onPriceFilterChange={handlePriceFilterChange}
+              />
             </Col>
           </Row>
         </Container>

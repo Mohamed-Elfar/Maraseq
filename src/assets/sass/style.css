@@ -15573,7 +15573,9 @@ input.cart-plus-minus-box {
   top: 22px;
   height: 8px;
 }
-
+.ltn__price-filter-widget small{
+  padding: 10px 0 !important;
+}
 .cardealer-track.cardealer-track-0 {
   background: white;
   border-radius: 5px;

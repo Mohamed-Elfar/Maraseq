@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addToCart } from "@/store/slices/cart-slice";
 import {
   addToWishlist,
   deleteFromWishlist,
@@ -21,6 +20,13 @@ const ProductList = ({
   compareItem,
 }) => {
   const badgeText = formatPropertyStatus(productData.propertyDetails?.propertyStatus) || "For Sale";
+  const defaultProductImage = "/img/product-3/1.jpg";
+  const resolvedProductImage = !productData.productImg
+    ? defaultProductImage
+    : productData.productImg.startsWith("http") ||
+        productData.productImg.startsWith("/")
+      ? productData.productImg
+      : `/img/product-3/${productData.productImg}`;
 
   const dispatch = useDispatch();
   const [modalShow, setModalShow] = useState(false);
@@ -35,19 +41,18 @@ const ProductList = ({
       Quick View
     </Tooltip>
   );
-  const addToCartTooltip = (props) => (
-    <Tooltip id="button-tooltip" {...props}>
-     Add To Cart
-    </Tooltip>
-  );
   return (
     <>
       <div className="ltn__product-item ltn__product-item-4 ltn__product-item-5">
         <div className="product-img">
           <Link href={`/${baseUrl}/${slug}`}>
             <img
-              src={productData.productImg?.startsWith('http') ? productData.productImg : `/img/product-3/${productData.productImg || '1.jpg'}`}
+              src={resolvedProductImage}
               alt={`${productData.title}`}
+              onError={(e) => {
+                e.currentTarget.onerror = null;
+                e.currentTarget.src = defaultProductImage;
+              }}
             />
           </Link>
         </div>
@@ -144,19 +149,6 @@ const ProductList = ({
                   }
                 >
                   <i className="flaticon-heart-1"></i>
-                </button>
-
-                  
-                </OverlayTrigger>
-              </li>
-              <li>
-              <OverlayTrigger
-                  placement="right"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={addToCartTooltip}
-                >
-                <button onClick={() => dispatch(addToCart(productData))}>
-                  <i className="flaticon-add"></i>
                 </button>
 
                   

@@ -1,18 +1,21 @@
-import {
-  getIndividualAminities,
-  getIndividualAminitiesList,
-  priceRange,
-  bedBath,
-  getIndividualCategories,
-  setActiveSort,
-} from "@/lib/product";
 import FilterByPrice from "../FilterByPrice";
-const SideBar = ({ products, getSortParams }) => {
-  const aminities = getIndividualAminities(products);
-  const aminitiesList = getIndividualAminitiesList(products);
-  const priceRanges = priceRange(products);
-  const bedBaths = bedBath(products);
-  const categories = getIndividualCategories(products);
+const SideBar = ({
+  statusOptions = [],
+  selectedStatuses = [],
+  onStatusToggle,
+  categories = [],
+  selectedCategories = [],
+  onCategoryToggle,
+  bedBaths = [],
+  selectedBedBaths = [],
+  onBedBathToggle,
+  priceRanges = [],
+  selectedPriceRanges = [],
+  onPriceRangeToggle,
+  priceFilterValue = [0, 1000000],
+  onPriceFilterChange,
+}) => {
+  const formatAmount = (amount) => Number(amount).toLocaleString();
 
   return (
     <>
@@ -24,61 +27,27 @@ const SideBar = ({ products, getSortParams }) => {
         {/* <!-- Advance Information widget --> */}
         <div className="widget ltn__menu-widget">
           <h4 className="ltn__widget-title">Property Type</h4>
-          {aminities.length > 0 ? (
+          {statusOptions.length > 0 ? (
             <>
               <ul>
-                {aminities &&
-                  aminities.map((aminitie, key) => {
+                {statusOptions &&
+                  statusOptions.map((status) => {
                     return (
-                      <li key={key}>
+                      <li key={status.name}>
                         <div>
                           <label className="checkbox-item">
-                            {aminitie.name}
+                            {status.name}
                             <input
-                              onClick={(e) => {
-                                getSortParams("propertyTypes", aminitie.name);
-                                setActiveSort(e);
-                              }}
+                              checked={selectedStatuses.includes(status.name)}
+                              onChange={(e) =>
+                                onStatusToggle?.(status.name, e.target.checked)
+                              }
                               type="checkbox"
                             />
                             <span className="checkmark"></span>
                           </label>
                           <span className="categorey-no">
-                            {/* {products[key < aminities.length ? key : 1].price} */}
-                          </span>
-                        </div>
-                      </li>
-                    );
-                  })}
-              </ul>
-            </>
-          ) : (
-            "No categories found"
-          )}
-
-          <hr />
-          <h4 className="ltn__widget-title">Amenities</h4>
-          {aminitiesList.length > 0 ? (
-            <>
-              <ul>
-                {aminitiesList &&
-                  aminitiesList.map((aminitie, key) => {
-                    return (
-                      <li key={key}>
-                        <div>
-                          <label className="checkbox-item">
-                            {aminitie.name}
-                            <input
-                              onClick={(e) => {
-                                getSortParams("AmenitiesList", aminitie.name);
-                                setActiveSort(e);
-                              }}
-                              type="checkbox"
-                            />
-                            <span className="checkmark"></span>
-                          </label>
-                          <span className="categorey-no">
-                            {/* {products[key < aminities.length ? key : 1].price} */}
+                            ({status.count})
                           </span>
                         </div>
                       </li>
@@ -96,23 +65,23 @@ const SideBar = ({ products, getSortParams }) => {
             <>
               <ul>
                 {priceRanges &&
-                  priceRanges.map((price, key) => {
+                  priceRanges.map((price) => {
                     return (
-                      <li key={key}>
+                      <li key={price.name}>
                         <div>
                           <label className="checkbox-item">
                             {price.name}
                             <input
-                              onClick={(e) => {
-                                getSortParams("AmenitiesList", price.name);
-                                setActiveSort(e);
-                              }}
+                              checked={selectedPriceRanges.includes(price.name)}
+                              onChange={(e) =>
+                                onPriceRangeToggle?.(price.name, e.target.checked)
+                              }
                               type="checkbox"
                             />
                             <span className="checkmark"></span>
                           </label>
                           <span className="categorey-no">
-                            {/* {products[key < aminities.length ? key : 1].price} */}
+                            ({price.count})
                           </span>
                         </div>
                       </li>
@@ -129,8 +98,16 @@ const SideBar = ({ products, getSortParams }) => {
           <div className="ltn__price-filter-widget mt-30">
             <h4 className="ltn__widget-title">Filter by price</h4>
             <div className="price_filter">
-              <FilterByPrice />
+              <FilterByPrice
+                min={0}
+                max={1000000}
+                value={priceFilterValue}
+                onChange={onPriceFilterChange}
+              />
             </div>
+            <small>
+              Price bounds: {formatAmount(0)} - {formatAmount(1000000)}
+            </small>
           </div>
           <hr />
           <h4 className="ltn__widget-title">Bed/bath</h4>
@@ -138,17 +115,17 @@ const SideBar = ({ products, getSortParams }) => {
             <>
               <ul>
                 {bedBaths &&
-                  bedBaths.map((bath, key) => {
+                  bedBaths.map((bath) => {
                     return (
-                      <li key={key}>
+                      <li key={bath.name}>
                         <div>
                           <label className="checkbox-item">
                             {bath.name}
                             <input
-                              onClick={(e) => {
-                                getSortParams("AmenitiesList", bath.name);
-                                setActiveSort(e);
-                              }}
+                              checked={selectedBedBaths.includes(bath.name)}
+                              onChange={(e) =>
+                                onBedBathToggle?.(bath.name, e.target.checked)
+                              }
                               type="checkbox"
                             />
                             <span className="checkmark"></span>
@@ -171,17 +148,20 @@ const SideBar = ({ products, getSortParams }) => {
             <>
               <ul>
                 {categories &&
-                  categories.map((categorie, key) => {
+                  categories.map((categorie) => {
                     return (
-                      <li key={key}>
+                      <li key={categorie.name}>
                         <div>
                           <label className="checkbox-item">
                             {categorie.name}
                             <input
-                              onClick={(e) => {
-                                getSortParams("category", categorie.name);
-                                setActiveSort(e);
-                              }}
+                              checked={selectedCategories.includes(categorie.name)}
+                              onChange={(e) =>
+                                onCategoryToggle?.(
+                                  categorie.name,
+                                  e.target.checked
+                                )
+                              }
                               type="checkbox"
                             />
                             <span className="checkmark"></span>
