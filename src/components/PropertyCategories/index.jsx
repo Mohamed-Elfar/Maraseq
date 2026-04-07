@@ -10,6 +10,21 @@ const DEFAULT_IMAGES = [
   "/img/gallery/9.jpg",
 ];
 
+const resolveImageSrc = (value, fallbackImage) => {
+  const normalizedValue = String(value || "").trim();
+
+  if (!normalizedValue) {
+    return fallbackImage;
+  }
+
+  if (/^(https?:)?\/\//i.test(normalizedValue) || normalizedValue.startsWith("/")) {
+    return normalizedValue;
+  }
+
+  // Support cases where category image is saved as a plain filename.
+  return `/uploads/categories/${normalizedValue}`;
+};
+
 const normalizeCategoryKey = (value) => String(value || "").trim().toLowerCase();
 
 const getCategoryCounts = (products) => {
@@ -44,6 +59,12 @@ const getDisplayCategories = (products, propertyCategories) => {
       .map((category) => ({
         name: category.name,
         description: category.description,
+        image_url:
+          category.image_url ||
+          category.image ||
+          category.featured_image ||
+          category.thumbImage ||
+          "",
         count: counts.get(normalizeCategoryKey(category.name)) || 0,
       }))
       .filter((category) => String(category.name || "").trim())
@@ -54,6 +75,7 @@ const getDisplayCategories = (products, propertyCategories) => {
     .map(([normalizedName, count]) => ({
       name: normalizedName,
       description: "",
+      image_url: null,
       count,
     }))
     .sort((a, b) => b.count - a.count)
@@ -92,7 +114,10 @@ const PropertyCategories = ({ propertyCategories = [] }) => {
             <div
               className="ltn__banner-item ltn__banner-style-4 text-color-white bg-image"
               style={{
-                backgroundImage: `url("${DEFAULT_IMAGES[index]}")`,
+                backgroundImage: `url("${resolveImageSrc(
+                  category.image_url,
+                  DEFAULT_IMAGES[index]
+                )}")`,
               }}
             >
               <div className="ltn__banner-info">
