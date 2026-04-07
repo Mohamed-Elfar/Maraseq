@@ -37,29 +37,63 @@ const MyApp = ({ Component, ...rest }) => {
     const loadProperties = async () => {
       const properties = await getProperties();
 
-      // Transform database format to match website format
+      // Transform database format to match website JSON format
       const transformedProperties = properties.map(property => ({
         id: property.id,
+        carousel: property.carousel || [],
         title: property.title,
-        description: property.description,
-        price: parseFloat(property.price),
-        discount: 0, // Add discount if needed
-        location: property.location,
-        propertyType: property.property_type,
-        propertyDetails: {
+        productImg: property.product_img || property.images?.[0] || '',
+        price: parseFloat(property.price) || 0,
+        priceRange: property.price_range || [],
+        discount: property.discount || 0,
+        country: property.country || false,
+        district: property.district || '',
+        properties: property.properties_count || 0,
+        featured: property.featured || false,
+        new: property.new || false,
+        rent: property.rent || false,
+        photo: property.photo || [],
+        video: property.video || [],
+        bedBath: property.bed_bath || [],
+        ratingCount: property.rating_count || 0,
+        rating: property.rating || 0,
+        saleCount: property.sale_count || 0,
+        category: property.category || [],
+        tag: property.tags || [],
+        date: property.date || property.created_at,
+        comments: property.comments || 0,
+        locantion: property.location || '',
+        pathDescription: property.path_description || '',
+        idealFor: property.ideal_for || '',
+        recommendedLabel: property.recommended_label || '',
+        opportunityType: property.opportunity_type || '',
+        opportunityStage: property.opportunity_stage || '',
+        description: {
+          title: 'Description',
+          fullDescription: property.full_description || property.description || '',
+          shortDescription: property.short_description || property.meta_description || ''
+        },
+        propertyDetails: property.property_details || {
+          propertyId: property.id,
+          area: property.area,
+          propertyStatus: property.status,
+          rooms: 0,
           bedrooms: property.bedrooms,
           baths: property.bathrooms,
-          area: property.area
+          createdYear: new Date(property.created_at).getFullYear()
         },
-        featured: property.featured,
-        status: property.status,
-        images: property.images || [],
-        metaTitle: property.meta_title,
-        metaDescription: property.meta_description,
-        visible: property.visible,
-        orderIndex: property.order_index,
-        createdAt: property.created_at,
-        updatedAt: property.updated_at
+        factsAndFeatures: property.facts_and_features || {},
+        amenities1: property.amenities1 || [],
+        amenities2: property.amenities2 || [],
+        amenities3: property.amenities3 || [],
+        AmenitiesList: property.amenities_list || [],
+        agent: property.agent || {},
+        gallery: property.gallery || {},
+        propertyTypes: property.property_types || [],
+        mapEmbedUrl: property.map_embed_url || null,
+        videoUrl: property.video_url || null,
+        videoPoster: property.video_poster || null,
+        galleryImages: property.gallery_images || []
       }));
 
       store.dispatch(setProducts(transformedProperties));

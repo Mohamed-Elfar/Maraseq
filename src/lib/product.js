@@ -3,7 +3,15 @@ import slugify from "slugify";
 export const getProducts = (products, category, type, limit) => {
   const finalProducts = category
     ? products.filter(
-      (product) => product.category && product.category.filter((single) => single === category)[0]
+      (product) => {
+        if (!product.category) return false;
+        // Handle category as array
+        if (Array.isArray(product.category)) {
+          return product.category.filter((single) => single === category)[0];
+        }
+        // Handle category as string
+        return product.category === category;
+      }
     )
     : products;
 
@@ -113,8 +121,15 @@ export const getSortedProducts = (products, sortType, sortValue) => {
     }
     if (sortType === "category") {
       return products.filter(
-        (product) =>
-          product.category.filter((single) => single === sortValue)[0]
+        (product) => {
+          if (!product.category) return false;
+          // Handle category as array
+          if (Array.isArray(product.category)) {
+            return product.category.filter((single) => single === sortValue)[0];
+          }
+          // Handle category as string
+          return product.category === sortValue;
+        }
       );
     }
     if (sortType === "tag") {
@@ -171,6 +186,7 @@ export const getIndividualCategories = (products) => {
     products.map((product) => {
       return (
         product.category &&
+        Array.isArray(product.category) &&
         product.category.map((single) => {
           return productCategories.push(single);
         })
@@ -211,6 +227,7 @@ export const getIndividualAminities = (products) => {
     products.map((product) => {
       return (
         product.propertyTypes &&
+        Array.isArray(product.propertyTypes) &&
         product.propertyTypes.map((single) => {
           return aminities.push(single);
         })
@@ -250,6 +267,7 @@ export const getIndividualAminitiesList = (products) => {
     products.map((product) => {
       return (
         product.AmenitiesList &&
+        Array.isArray(product.AmenitiesList) &&
         product.AmenitiesList.map((single) => {
           return aminitiesList.push(single);
         })
@@ -291,6 +309,7 @@ export const priceRange = (products) => {
     products.map((product) => {
       return (
         product.priceRange &&
+        Array.isArray(product.priceRange) &&
         product.priceRange.map((single) => {
           return priceRange.push(single);
         })
@@ -332,6 +351,7 @@ export const bedBath = (products) => {
     products.map((product) => {
       return (
         product.bedBath &&
+        Array.isArray(product.bedBath) &&
         product.bedBath.map((single) => {
           return priceRange.push(single);
         })
@@ -372,6 +392,7 @@ export const getIndividualTags = (products) => {
     products.map((product) => {
       return (
         product.tag &&
+        Array.isArray(product.tag) &&
         product.tag.map((single) => {
           return productTags.push(single);
         })

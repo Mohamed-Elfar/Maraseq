@@ -25,20 +25,18 @@ import BreadCrumb from "@/components/breadCrumbs";
 import { LayoutOne } from "@/layouts";
 import { useSelector } from "react-redux";
 import { getProducts, productSlug, getDiscountPrice } from "@/lib/product";
-import products from "@/data/products.json";
+import { getProperties } from "@/lib/supabase";
 import { Container, Row, Col, Nav, Tab } from "react-bootstrap";
 import RelatedProduct from "@/components/product/related-product";
 import FollowUs from "@/components/followUs";
 import Tags from "@/components/tags";
-import blogData from "@/data/blog";
 import CallToAction from "@/components/callToAction";
 
-function ProductDetails({ product }) {
+function ProductDetails({ product, latestBlogs }) {
   const { products } = useSelector((state) => state.product);
   const { cartItems } = useSelector((state) => state.cart);
   const { wishlistItems } = useSelector((state) => state.wishlist);
   const { compareItems } = useSelector((state) => state.compare);
-  const latestdBlogs = getProducts(blogData, "buying", "featured", 4);
 
   const relatedProducts = getProducts(
     products,
@@ -166,16 +164,28 @@ function ProductDetails({ product }) {
 
   const [isOpen, setOpen] = useState(false);
 
+  // Extract YouTube video ID from URL
+  const getYouTubeVideoId = (url) => {
+    if (!url) return null;
+    const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[7].length === 11) ? match[7] : null;
+  };
+
+  const videoId = getYouTubeVideoId(product.videoUrl);
+
   return (
     <>
       <LayoutOne topbar={true}>
-        <ModalVideo
-          channel="youtube"
-          autoplay
-          isOpen={isOpen}
-          videoId="X7R-q9rsrtU"
-          onClose={() => setOpen(false)}
-        />
+        {videoId && (
+          <ModalVideo
+            channel="youtube"
+            autoplay
+            isOpen={isOpen}
+            videoId={videoId}
+            onClose={() => setOpen(false)}
+          />
+        )}
         {/* <!-- BREADCRUMB AREA START --> */}
 
         <BreadCrumb
@@ -308,195 +318,35 @@ function ProductDetails({ product }) {
                     </ul>
                   </div>
 
-                  <h4 className="title-2">Facts and Features</h4>
-                  <div className="property-detail-feature-list clearfix mb-45">
-                    <ul>
-                      <li>
-                        <div className="property-detail-feature-list-item">
-                          <i className="flaticon-double-bed"></i>
-                          <div>
-                            <h6>Living Room</h6>
-                            <small>{product.factsAndFeatures.livingRoom}</small>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div className="property-detail-feature-list-item">
-                          <i className="flaticon-double-bed"></i>
-                          <div>
-                            <h6>Garage</h6>
-                            <small>{product.factsAndFeatures.garage}</small>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div className="property-detail-feature-list-item">
-                          <i className="flaticon-double-bed"></i>
-                          <div>
-                            <h6>Dining Area</h6>
-                            <small>{product.factsAndFeatures.diningArea}</small>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div className="property-detail-feature-list-item">
-                          <i className="flaticon-double-bed"></i>
-                          <div>
-                            <h6>Bedroom</h6>
-                            <small>{product.factsAndFeatures.bedroom}</small>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div className="property-detail-feature-list-item">
-                          <i className="flaticon-double-bed"></i>
-                          <div>
-                            <h6>Bathroom</h6>
-                            <small>{product.factsAndFeatures.bathroom}</small>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div className="property-detail-feature-list-item">
-                          <i className="flaticon-double-bed"></i>
-                          <div>
-                            <h6>Gym Area</h6>
-                            <small>{product.factsAndFeatures.gymArea}</small>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div className="property-detail-feature-list-item">
-                          <i className="flaticon-double-bed"></i>
-                          <div>
-                            <h6>Garden</h6>
-                            <small>{product.factsAndFeatures.garden}</small>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div className="property-detail-feature-list-item">
-                          <i className="flaticon-double-bed"></i>
-                          <div>
-                            <h6>Parking</h6>
-                            <small>{product.factsAndFeatures.parking}</small>
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-
-                  <h4 className="title-2">From Our Gallery</h4>
-                  <div className="ltn__property-details-gallery mb-30">
-                    <div className="row">
-                      <div className="col-md-6">
-                        <Link
-                          href={`/img/others/${product.gallery.img1}`}
-                          data-rel="lightcase:myCollection"
-                        >
-                          <img
-                            className="mb-30"
-                            src={`/img/others/${product.gallery.img1}`}
-                            alt={`${product.title}`}
-                          />
-                        </Link>
-                        <Link
-                          href={`/img/others/${product.gallery.img2}`}
-                          data-rel="lightcase:myCollection"
-                        >
-                          <img
-                            className="mb-30"
-                            src={`/img/others/${product.gallery.img2}`}
-                            alt={`${product.title}`}
-                          />
-                        </Link>
-                      </div>
-                      <div className="col-md-6">
-                        <Link
-                          href={`/img/others/${product.gallery.img3}`}
-                          data-rel="lightcase:myCollection"
-                        >
-                          <img
-                            className="mb-30"
-                            src={`/img/others/${product.gallery.img3}`}
-                            alt={`${product.title}`}
-                          />
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-
-                  <h4 className="title-2 mb-10">Amenities</h4>
-
-                  <div className="property-details-amenities mb-60">
-                    <div className="row">
-                      <div className="col-lg-4 col-md-6">
-                        <div className="ltn__menu-widget">
-                          <ul>
-                            {product.amenities1.map((single, key) => {
-                              return (
-                                <li key={key}>
-                                  <label className="checkbox-item">
-                                    {single}
-                                    <input
-                                      type="checkbox"
-                                      defaultChecked="checked"
-                                    />
-                                    <span className="checkmark"></span>
-                                  </label>
-                                </li>
-                              );
-                            })}
-                          </ul>
+                  {product.galleryImages && product.galleryImages.length > 0 && (
+                    <>
+                      <h4 className="title-2">From Our Gallery</h4>
+                      <div className="ltn__property-details-gallery mb-30">
+                        <div className="row">
+                          {product.galleryImages.map((imageUrl, index) => (
+                            <div key={index} className={index === 0 ? "col-md-6" : index < 3 ? "col-md-6" : "col-md-4"}>
+                              <Link
+                                href={imageUrl}
+                                data-rel="lightcase:myCollection"
+                              >
+                                <img
+                                  className="mb-30"
+                                  src={imageUrl}
+                                  alt={`${product.title} - Gallery ${index + 1}`}
+                                  style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+                                />
+                              </Link>
+                            </div>
+                          ))}
                         </div>
                       </div>
-                      <div className="col-lg-4 col-md-6">
-                        <div className="ltn__menu-widget">
-                          <ul>
-                            {product.amenities2.map((single, key) => {
-                              return (
-                                <li key={key}>
-                                  <label className="checkbox-item">
-                                    {single}
-                                    <input
-                                      type="checkbox"
-                                      defaultChecked="checked"
-                                    />
-                                    <span className="checkmark"></span>
-                                  </label>
-                                </li>
-                              );
-                            })}
-                          </ul>
-                        </div>
-                      </div>
-                      <div className="col-lg-4 col-md-6">
-                        <div className="ltn__menu-widget">
-                          <ul>
-                            {product.amenities3.map((single, key) => {
-                              return (
-                                <li key={key}>
-                                  <label className="checkbox-item">
-                                    {single}
-                                    <input
-                                      type="checkbox"
-                                      defaultChecked="checked"
-                                    />
-                                    <span className="checkmark"></span>
-                                  </label>
-                                </li>
-                              );
-                            })}
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                    </>
+                  )}
 
                   <h4 className="title-2">Location</h4>
                   <div className="property-details-google-map mb-60">
                     <iframe
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27367.521335544432!2d30.974130060919684!3d30.972151866016276!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14f7b3b31ed01575%3A0x2ae50b1962e6af90!2z2YLYt9mI2LHYjCDZhdiv2YrZhtipINmC2LfZiNix2Iwg2YXYsdmD2LIg2YLYt9mI2LHYjCDZhdit2KfZgdi42Kkg2KfZhNi62LHYqNmK2Kk!5e0!3m2!1sar!2seg!4v1773696322276!5m2!1sar!2seg"
+                      src={product.mapEmbedUrl || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27367.521335544432!2d30.974130060919684!3d30.972151866016276!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14f7b3b31ed01575%3A0x2ae50b1962e6af90!2z2YLYt9mI2LHYjCDZhdiv2YrZhtipINmC2LfZiNix2Iwg2YXYsdmD2LIg2YLYt9mI2LHYjCDZhdit2KfZgdi42Kkg2KfZhNi62LHYqNmK2Kk!5e0!3m2!1sar!2seg!4v1773696322276!5m2!1sar!2seg"}
                       width="100%"
                       height="100%"
                       frameBorder="0"
@@ -752,293 +602,27 @@ function ProductDetails({ product }) {
 
                   {/* <!-- APARTMENTS PLAN AREA END --> */}
 
-                  <h4 className="title-2">Property Video</h4>
-                  <div
-                    className="ltn__video-bg-img ltn__video-popup-height-500 bg-overlay-black-50 bg-image mb-60"
-                    style={{ backgroundImage: `url("../../img/others/5.jpg")` }}
-                  >
-                    <button
-                      className="ltn__video-icon-2 ltn__video-icon-2-border---"
-                      onClick={() => setOpen(true)}
-                    >
-                      <FaPlay />
-                    </button>
-                  </div>
-
-                  <div className="ltn__shop-details-tab-content-inner--- ltn__shop-details-tab-inner-2 ltn__product-details-review-inner mb-60">
-                    <h4 className="title-2">Customer Reviews</h4>
-                    <div className="product-ratting">
-                      <ul>
-                        <li>
-                          <a href="#">
-                            <FaStar />
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#">
-                            <FaStar />
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#">
-                            <FaStar />
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#">
-                            <FaStar />
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#">
-                            <FaRegStar />
-                          </a>
-                        </li>
-                        <li className="review-total">
-                          <a href="#"> ( 95 Reviews )</a>
-                        </li>
-                      </ul>
-                    </div>
-                    <hr />
-                    {/* <!-- comment-area --> */}
-                    <div className="ltn__comment-area mb-30">
-                      <div className="ltn__comment-inner">
-                        <ul>
-                          <li>
-                            <div className="ltn__comment-item clearfix">
-                              <div className="ltn__commenter-img">
-                                <img src="/img/testimonial/1.jpg" alt="Image" />
-                              </div>
-                              <div className="ltn__commenter-comment">
-                                <h6>
-                                  <a href="#">Adam Smit</a>
-                                </h6>
-                                <div className="product-ratting">
-                                  <ul>
-                                    <li>
-                                      <a href="#">
-                                        <FaStar />
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="#">
-                                        <FaStar />
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="#">
-                                        <FaStar />
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="#">
-                                        <FaStar />
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="#">
-                                        <FaRegStar />
-                                      </a>
-                                    </li>
-                                  </ul>
-                                </div>
-                                <p>
-                                  Lorem ipsum dolor sit amet, consectetur
-                                  adipisicing elit. Doloribus, omnis fugit
-                                  corporis iste magnam ratione.
-                                </p>
-                                <span className="ltn__comment-reply-btn">
-                                  September 3, 2020
-                                </span>
-                              </div>
-                            </div>
-                          </li>
-                          <li>
-                            <div className="ltn__comment-item clearfix">
-                              <div className="ltn__commenter-img">
-                                <img src="/img/testimonial/3.jpg" alt="Image" />
-                              </div>
-                              <div className="ltn__commenter-comment">
-                                <h6>
-                                  <a href="#">Adam Smit</a>
-                                </h6>
-                                <div className="product-ratting">
-                                  <ul>
-                                    <li>
-                                      <a href="#">
-                                        <FaStar />
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="#">
-                                        <FaStar />
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="#">
-                                        <FaStar />
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="#">
-                                        <FaStar />
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="#">
-                                        <FaRegStar />
-                                      </a>
-                                    </li>
-                                  </ul>
-                                </div>
-                                <p>
-                                  Lorem ipsum dolor sit amet, consectetur
-                                  adipisicing elit. Doloribus, omnis fugit
-                                  corporis iste magnam ratione.
-                                </p>
-                                <span className="ltn__comment-reply-btn">
-                                  September 2, 2020
-                                </span>
-                              </div>
-                            </div>
-                          </li>
-                          <li>
-                            <div className="ltn__comment-item clearfix">
-                              <div className="ltn__commenter-img">
-                                <img src="/img/testimonial/2.jpg" alt="Image" />
-                              </div>
-                              <div className="ltn__commenter-comment">
-                                <h6>
-                                  <a href="#">Adam Smit</a>
-                                </h6>
-                                <div className="product-ratting">
-                                  <ul>
-                                    <li>
-                                      <a href="#">
-                                        <FaStar />
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="#">
-                                        <FaStar />
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="#">
-                                        <FaStar />
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="#">
-                                        <FaStar />
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="#">
-                                        <FaRegStar />
-                                      </a>
-                                    </li>
-                                  </ul>
-                                </div>
-                                <p>
-                                  Lorem ipsum dolor sit amet, consectetur
-                                  adipisicing elit. Doloribus, omnis fugit
-                                  corporis iste magnam ratione.
-                                </p>
-                                <span className="ltn__comment-reply-btn">
-                                  September 2, 2020
-                                </span>
-                              </div>
-                            </div>
-                          </li>
-                        </ul>
+                  {videoId && (
+                    <>
+                      <h4 className="title-2">Property Video</h4>
+                      <div
+                        className="ltn__video-bg-img ltn__video-popup-height-500 bg-overlay-black-50 bg-image mb-60"
+                        style={{
+                          backgroundImage: `url(${product.videoPoster
+                            ? (product.videoPoster.startsWith('http') ? product.videoPoster : `/img/others/${product.videoPoster}`)
+                            : (product.productImg?.startsWith('http') ? product.productImg : `/img/product-3/${product.productImg || '1.jpg'}`)
+                            })`
+                        }}
+                      >
+                        <button
+                          className="ltn__video-icon-2 ltn__video-icon-2-border---"
+                          onClick={() => setOpen(true)}
+                        >
+                          <FaPlay />
+                        </button>
                       </div>
-                    </div>
-                    {/* <!-- comment-reply --> */}
-                    <div className="ltn__comment-reply-area ltn__form-box mb-30">
-                      <form action="#">
-                        <h4>Add a Review</h4>
-                        <div className="mb-30">
-                          <div className="add-a-review">
-                            <h6>Your Ratings:</h6>
-                            <div className="product-ratting">
-                              <ul>
-                                <li>
-                                  <a href="#">
-                                    <FaStar />
-                                  </a>
-                                </li>
-                                <li>
-                                  <a href="#">
-                                    <FaStar />
-                                  </a>
-                                </li>
-                                <li>
-                                  <a href="#">
-                                    <FaStar />
-                                  </a>
-                                </li>
-                                <li>
-                                  <a href="#">
-                                    <FaStar />
-                                  </a>
-                                </li>
-                                <li>
-                                  <a href="#">
-                                    <FaStar />
-                                  </a>
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="input-item input-item-textarea ltn__custom-icon">
-                          <textarea placeholder="Type your comments...."></textarea>
-                          <span className="inline-icon">
-                            <FaPencilAlt />
-                          </span>
-                        </div>
-                        <div className="input-item input-item-name ltn__custom-icon">
-                          <input type="text" placeholder="Type your name...." />
-                          <span className="inline-icon">
-                            <FaUserAlt />
-                          </span>
-                        </div>
-                        <div className="input-item input-item-email ltn__custom-icon">
-                          <input
-                            type="email"
-                            placeholder="Type your email...."
-                          />
-                          <span className="inline-icon">
-                            <FaEnvelope />
-                          </span>
-                        </div>
-                        <div className="input-item input-item-website ltn__custom-icon">
-                          <input
-                            type="text"
-                            name="website"
-                            placeholder="Type your website...."
-                          />
-                          <span className="inline-icon">
-                            <FaGlobe />
-                          </span>
-                        </div>
-                        <label className="mb-0">
-                          <input type="checkbox" name="agree" /> Save my name,
-                          email, and website in this browser for the next time I
-                          comment.
-                        </label>
-                        <div className="btn-wrapper">
-                          <button
-                            className="btn theme-btn-1 btn-effect-1 text-uppercase"
-                            type="submit"
-                          >
-                            Submit
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
+                    </>
+                  )}
 
                   <h4 className="title-2">Related Properties</h4>
                   <Row>
@@ -1079,80 +663,6 @@ function ProductDetails({ product }) {
 
               <Col xs={12} lg={4}>
                 <aside className="sidebar ltn__shop-sidebar ltn__right-sidebar---">
-                  {/* <!-- Author Widget --> */}
-                  <div className="widget ltn__author-widget">
-                    <div className="ltn__author-widget-inner text-center">
-                      <img
-                        src={`/img/team/${product.agent.img}`}
-                        alt={`${product.agent.fullName}`}
-                      />
-                      <h5>{product.agent.fullName}</h5>
-                      <small>{product.agent.designation}</small>
-                      <div className="product-ratting">
-                        <ul>
-                          <li>
-                            <a href="#">
-                              <FaStar />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <FaStar />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <FaStar />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <FaStar />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <FaRegStar />
-                            </a>
-                          </li>
-                          <li className="review-total">
-                            {" "}
-                            <Link href="#">
-                              {" "}
-                              ( {product.agent.raiting} Reviews )
-                            </Link>
-                          </li>
-                        </ul>
-                      </div>
-                      <p>{product.agent.description}</p>
-
-                      <div className="ltn__social-media">
-                        <ul>
-                          <li>
-                            <a href="#" title="Facebook">
-                              <FaFacebookF />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#" title="Twitter">
-                              <FaTwitter />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#" title="Linkedin">
-                              <FaInstagram />
-                            </a>
-                          </li>
-
-                          <li>
-                            <a href="#" title="Youtube">
-                              <FaDribbble />
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
                   {/* <!-- Search Widget --> */}
                   <div className="widget ltn__search-widget">
                     <h4 className="ltn__widget-title ltn__widget-title-border-2">
@@ -1372,12 +882,17 @@ function ProductDetails({ product }) {
                   {/* <!-- Popular Post Widget --> */}
                   <div className="widget ltn__popular-post-widget">
                     <h4 className="ltn__widget-title ltn__widget-title-border-2">
-                      Leatest Blogs
+                      Latest Blogs
                     </h4>
                     <ul>
-                      {latestdBlogs.map((blog, key) => {
+                      {latestBlogs && latestBlogs.map((blog, key) => {
                         const slug = productSlug(blog.title);
-                        let imagecount = key + 1;
+                        const blogImage = blog.featured_image || `/img/team/${key + 1}.jpg`;
+                        const formattedDate = new Date(blog.created_at).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric'
+                        });
 
                         return (
                           <li key={key}>
@@ -1385,8 +900,8 @@ function ProductDetails({ product }) {
                               <div className="popular-post-widget-img">
                                 <Link href={`/blog/${slug}`}>
                                   <img
-                                    src={`/img/team/${imagecount}.jpg`}
-                                    alt="#"
+                                    src={blogImage}
+                                    alt={blog.title}
                                   />
                                 </Link>
                               </div>
@@ -1403,7 +918,7 @@ function ProductDetails({ product }) {
                                         <span>
                                           <FaCalendarAlt />
                                         </span>
-                                        <span>{blog.date}</span>
+                                        <span>{formattedDate}</span>
                                       </Link>
                                     </li>
                                   </ul>
@@ -1417,10 +932,6 @@ function ProductDetails({ product }) {
                   </div>
 
                   <FollowUs title="Follow Us" />
-
-                  {/* <!-- Tagcloud Widget --> */}
-
-                  <Tags title="Popular Tags" />
                 </aside>
               </Col>
             </Row>
@@ -1448,19 +959,99 @@ function ProductDetails({ product }) {
 export default ProductDetails;
 
 export async function getStaticProps({ params }) {
-  // get product data based on slug
-  const product = products.filter(
-    (single) => productSlug(single.title) === params.slug
-  )[0];
+  // get product data based on slug from Supabase
+  const properties = await getProperties();
 
-  return { props: { product } };
+  // Fetch latest blogs from Supabase
+  const { createClient } = require('@supabase/supabase-js');
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  );
+
+  const { data: latestBlogs } = await supabase
+    .from('news')
+    .select('id, title, featured_image, created_at')
+    .order('created_at', { ascending: false })
+    .limit(4);
+
+  // Transform database format to match website format
+  const transformedProperties = properties.map(property => ({
+    id: property.id,
+    carousel: property.carousel || [],
+    title: property.title,
+    productImg: property.product_img || property.images?.[0] || '',
+    price: parseFloat(property.price) || 0,
+    priceRange: property.price_range || [],
+    discount: property.discount || 0,
+    country: property.country || false,
+    district: property.district || '',
+    properties: property.properties_count || 0,
+    featured: property.featured || false,
+    new: property.new || false,
+    rent: property.rent || false,
+    photo: property.photo || [],
+    video: property.video || [],
+    bedBath: property.bed_bath || [],
+    ratingCount: property.rating_count || 0,
+    rating: property.rating || 0,
+    saleCount: property.sale_count || 0,
+    category: property.category || [],
+    tag: property.tags || [],
+    date: property.date || property.created_at,
+    comments: property.comments || 0,
+    locantion: property.location || '',
+    pathDescription: property.path_description || '',
+    idealFor: property.ideal_for || '',
+    recommendedLabel: property.recommended_label || '',
+    opportunityType: property.opportunity_type || '',
+    opportunityStage: property.opportunity_stage || '',
+    description: {
+      title: 'Description',
+      fullDescription: property.full_description || property.description || '',
+      shortDescription: property.short_description || property.meta_description || ''
+    },
+    propertyDetails: property.property_details || {
+      propertyId: property.id,
+      area: property.area,
+      propertyStatus: property.status,
+      rooms: 0,
+      bedrooms: property.bedrooms,
+      baths: property.bathrooms,
+      createdYear: new Date(property.created_at).getFullYear()
+    },
+    factsAndFeatures: property.facts_and_features || {},
+    amenities1: property.amenities1 || [],
+    amenities2: property.amenities2 || [],
+    amenities3: property.amenities3 || [],
+    AmenitiesList: property.amenities_list || [],
+    agent: property.agent || {},
+    gallery: property.gallery || {},
+    propertyTypes: property.property_types || [],
+    mapEmbedUrl: property.map_embed_url || null,
+    videoUrl: property.video_url || null,
+    videoPoster: property.video_poster || null,
+    galleryImages: property.gallery_images || []
+  }));
+
+  const product = transformedProperties.find(
+    (single) => productSlug(single.title) === params.slug
+  );
+
+  if (!product) {
+    return { notFound: true };
+  }
+
+  return { props: { product, latestBlogs }, revalidate: 60 };
 }
 
 export async function getStaticPaths() {
-  // get the paths we want to pre render based on products
-  const paths = products.map((product) => ({
-    params: { slug: productSlug(product.title) },
+  // get the paths we want to pre render based on products from Supabase
+  const properties = await getProperties();
+
+  const paths = properties.map((property) => ({
+    params: { slug: productSlug(property.title) },
   }));
 
-  return { paths, fallback: false };
+  return { paths, fallback: 'blocking' };
 }

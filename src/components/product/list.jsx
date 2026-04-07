@@ -19,12 +19,24 @@ const ProductList = ({
   wishlistItem,
   compareItem,
 }) => {
-  let badgeText = "";
+  let badgeText = "For Sale";
 
-  if (productData.rent) {
-    badgeText = "For Rent";
-  } else {
-    badgeText = "For Sale";
+  // Determine badge from category array - works with any category name
+  if (productData.category) {
+    if (Array.isArray(productData.category)) {
+      // Check if any category contains "rent" keyword
+      const hasRent = productData.category.some(cat => 
+        cat && cat.toLowerCase().includes("rent")
+      );
+      if (hasRent) {
+        badgeText = "For Rent";
+      }
+    } else if (typeof productData.category === 'string') {
+      // Handle string category
+      if (productData.category.toLowerCase().includes("rent")) {
+        badgeText = "For Rent";
+      }
+    }
   }
   const dispatch = useDispatch();
   const [modalShow, setModalShow] = useState(false);
@@ -50,7 +62,7 @@ const ProductList = ({
         <div className="product-img">
           <Link href={`/${baseUrl}/${slug}`}>
             <img
-              src={`/img/product-3/${productData.productImg}`}
+              src={productData.productImg?.startsWith('http') ? productData.productImg : `/img/product-3/${productData.productImg || '1.jpg'}`}
               alt={`${productData.title}`}
             />
           </Link>
