@@ -1,10 +1,9 @@
 import { Container, Row, Col } from "react-bootstrap";
 import EditableSection from "@/components/cms/EditableSection";
-import EditableText from "@/components/cms/EditableText";
 import TitleSection from "@/components/titleSection";
 import PropertyCategories from "@/components/PropertyCategories";
 
-const CategoriesSection = () => {
+const CategoriesSection = ({ propertyCategories = [] }) => {
   return (
     <EditableSection sectionKey="home.section.categories" sectionLabel="Property Categories">
       <div className="ltn__banner-area pt-120">
@@ -21,7 +20,7 @@ const CategoriesSection = () => {
               />
             </Col>
           </Row>
-          <PropertyCategories />
+          <PropertyCategories propertyCategories={propertyCategories} />
         </Container>
       </div>
     </EditableSection>

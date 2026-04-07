@@ -10,7 +10,7 @@ import ModalVideo from "react-modal-video";
 import CallToAction from "@/components/callToAction";
 import portfolioData from "@/data/portfolio";
 import EditableSection from "@/components/cms/EditableSection";
-import { getServices, getNews } from "@/lib/supabase";
+import { getServices, getNews, getCategories } from "@/lib/supabase";
 
 // Import section components
 import SearchSection from "./_components/SearchSection";
@@ -26,7 +26,7 @@ import BlogSection from "./_components/BlogSection";
 function HomeVersionThree(props) {
   const [isOpen, setOpen] = useState(false);
   const { products } = useSelector((state) => state.product);
-  const { data, brand, newsData } = props;
+  const { data, brand, newsData, propertyCategories } = props;
 
   const featureData = getProducts(props.servicesData || [], "buying", "featured", 3);
   const featuredProducts = getProducts(products, "buying", "featured", 5);
@@ -59,7 +59,7 @@ function HomeVersionThree(props) {
       <SearchSection />
       <AboutSection />
       <FeaturesSection featureData={featureData} />
-      <CategoriesSection />
+      <CategoriesSection propertyCategories={propertyCategories} />
       <ShowcaseSection portfolios={portfolios} />
       <ProductsSection
         featuredProducts={featuredProducts}
@@ -98,6 +98,7 @@ export async function getStaticProps() {
   const testimonialData = JSON.parse(await fs.readFile(testimonialFilePath));
   const servicesData = await getServices();
   const newsData = await getNews();
+  const propertyCategories = await getCategories("properties");
 
   return {
     props: {
@@ -106,6 +107,7 @@ export async function getStaticProps() {
       testimonialData,
       servicesData,
       newsData,
+      propertyCategories,
     },
     revalidate: 60,
   };

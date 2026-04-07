@@ -1,90 +1,117 @@
 import Link from "next/link";
 import { Col, Row } from "react-bootstrap";
+import { useSelector } from "react-redux";
 
-const PropertyCategories = () => {
+const DEFAULT_IMAGES = [
+  "/img/gallery/2.jpg",
+  "/img/gallery/3.jpg",
+  "/img/gallery/7.jpg",
+  "/img/gallery/8.jpg",
+  "/img/gallery/9.jpg",
+];
+
+const normalizeCategoryKey = (value) => String(value || "").trim().toLowerCase();
+
+const getCategoryCounts = (products) => {
+  const counts = new Map();
+
+  (products || []).forEach((product) => {
+    const categoryValue = product?.category;
+    if (!categoryValue) return;
+
+    if (Array.isArray(categoryValue)) {
+      categoryValue.forEach((category) => {
+        const normalizedKey = normalizeCategoryKey(category);
+        if (!normalizedKey) return;
+        counts.set(normalizedKey, (counts.get(normalizedKey) || 0) + 1);
+      });
+      return;
+    }
+
+    const normalizedKey = normalizeCategoryKey(categoryValue);
+    if (!normalizedKey) return;
+    counts.set(normalizedKey, (counts.get(normalizedKey) || 0) + 1);
+  });
+
+  return counts;
+};
+
+const getDisplayCategories = (products, propertyCategories) => {
+  const counts = getCategoryCounts(products);
+
+  if (Array.isArray(propertyCategories) && propertyCategories.length > 0) {
+    return propertyCategories
+      .map((category) => ({
+        name: category.name,
+        description: category.description,
+        count: counts.get(normalizeCategoryKey(category.name)) || 0,
+      }))
+      .filter((category) => String(category.name || "").trim())
+      .slice(0, 5);
+  }
+
+  return Array.from(counts.entries())
+    .map(([normalizedName, count]) => ({
+      name: normalizedName,
+      description: "",
+      count,
+    }))
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 5);
+};
+
+const getCategoryDescription = (description) => {
+  const normalizedDescription = String(description || "").trim();
+  return normalizedDescription || "Explore opportunities in this category";
+};
+
+const formatCategoryLabel = (name) =>
+  String(name || "")
+    .replace(/[_-]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+
+const PropertyCategories = ({ propertyCategories = [] }) => {
+  const { products } = useSelector((state) => state.product);
+  const categories = getDisplayCategories(products, propertyCategories);
+
+  const columnClasses = [
+    { xs: 12, md: 6, lg: 8 },
+    { xs: 12, md: 6, lg: 4 },
+    { xs: 12, md: 6, lg: 4 },
+    { xs: 12, md: 6, lg: 4 },
+    { xs: 12, md: 6, lg: 4 },
+  ];
+
   return (
     <>
       <Row>
-        <Col xs={12} md={6} lg={8}>
-          <div
-            className="ltn__banner-item ltn__banner-style-4 text-color-white bg-image"
-            style={{
-              backgroundImage: `url("/img/gallery/2.jpg")`,
-            }}
-          >
-            <div className="ltn__banner-info">
-              <h3>
-                <Link href="/shop/properties"> Apartments Path </Link>
-              </h3>
-              <p>Flexible options for modern living</p>
-              <mark> 13 Listings</mark>
+        {categories.map((category, index) => (
+          <Col key={category.name} {...columnClasses[index]}>
+            <div
+              className="ltn__banner-item ltn__banner-style-4 text-color-white bg-image"
+              style={{
+                backgroundImage: `url("${DEFAULT_IMAGES[index]}")`,
+              }}
+            >
+              <div className="ltn__banner-info">
+                <h3>
+                  <Link
+                    href={{
+                      pathname: "/shop/properties",
+                      query: { category: category.name },
+                    }}
+                  >
+                    {formatCategoryLabel(category.name)} Path
+                  </Link>
+                </h3>
+                <p>{getCategoryDescription(category.description)}</p>
+                <mark>{category.count} Listings</mark>
+              </div>
             </div>
-          </div>
-        </Col>
-        <Col xs={12} md={6} lg={4}>
-          <div
-            className="ltn__banner-item ltn__banner-style-4 text-color-white bg-image"
-            style={{
-              backgroundImage: `url("/img/gallery/3.jpg")`,
-            }}
-          >
-            <div className="ltn__banner-info">
-              <h3>
-                <Link href="/shop/properties"> Compound Path </Link>
-              </h3>
-              <p>Integrated communities with balanced living</p>
-              <mark> 13 Listings</mark>
-            </div>
-          </div>
-        </Col>
-        <Col xs={12} md={6} lg={4}>
-          <div
-            className="ltn__banner-item ltn__banner-style-4 text-color-white bg-image"
-            style={{
-              backgroundImage: `url("/img/gallery/7.jpg")`,
-            }}
-          >
-            <div className="ltn__banner-info">
-              <h3>
-                <Link href="/shop/properties"> Houses Path </Link>
-              </h3>
-              <p>More space, more privacy</p>
-              <mark> 13 Listings</mark>
-            </div>
-          </div>
-        </Col>
-        <Col xs={12} md={6} lg={4}>
-          <div
-            className="ltn__banner-item ltn__banner-style-4 text-color-white bg-image"
-            style={{
-              backgroundImage: `url("/img/gallery/8.jpg")`,
-            }}
-          >
-            <div className="ltn__banner-info">
-              <h3>
-                <Link href="/shop/properties"> Retail Path </Link>
-              </h3>
-              <p>Strategic locations for business growth</p>
-              <mark> 13 Listings</mark>
-            </div>
-          </div>
-        </Col>
-        <Col xs={12} md={6} lg={4}>
-          <div
-            className="ltn__banner-item ltn__banner-style-4 text-color-white bg-image"
-            style={{
-              backgroundImage: `url("/img/gallery/9.jpg")`,
-            }}
-          >
-            <div className="ltn__banner-info">
-              <h3>
-                <Link href="/shop/properties"> Villas Path </Link>
-              </h3>
-              <p>Luxury living with refined details</p>
-              <mark> 13 Listings</mark>
-            </div>
-          </div>
-        </Col>
+          </Col>
+        ))}
       </Row>
     </>
   );
