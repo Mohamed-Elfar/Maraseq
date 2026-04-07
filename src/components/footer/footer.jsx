@@ -176,6 +176,7 @@ const Footer = function () {
                       </li>
                     </ul>
                   </div>
+
                   <div className="ltn__social-media mt-20">
                     <ul>
                       {visibleSocialLinks.map((link) => {
@@ -235,6 +236,9 @@ const Footer = function () {
                       </li>
                       <li>
                         <Link href="/terms-and-conditions">Terms & Conditions</Link>
+                      </li>
+                      <li>
+                        <Link href="/compare">Compare</Link>
                       </li>
                       <li>
                         <Link href="/about">Promotional Offers</Link>

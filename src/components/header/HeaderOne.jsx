@@ -64,6 +64,7 @@ const HeaderStyleOne = function ({ SetToggleClassName, topbar }) {
   };
 
   const { products } = useSelector((state) => state.product);
+  const { compareItems } = useSelector((state) => state.compare);
   const [currentItems, setCurrentItems] = useState([]);
 
   const [query, setQuery] = useState("");
