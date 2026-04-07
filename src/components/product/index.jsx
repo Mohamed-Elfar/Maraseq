@@ -11,6 +11,7 @@ import {
 
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
+import { formatPropertyStatus } from "@/utils/property-status";
 
 const ProductItem = ({
   productData,
@@ -22,30 +23,7 @@ const ProductItem = ({
   wishlistItem,
   compareItem,
 }) => {
-  let badgeText = "For Sale";
-
-  // Determine badge from category array - works with any category name
-  if (productData.category) {
-    if (Array.isArray(productData.category)) {
-      // Check if any category contains "rent" keyword
-      const hasRent = productData.category.some(cat => 
-        cat && cat.toLowerCase().includes("rent")
-      );
-      if (hasRent) {
-        badgeText = "For Rent";
-      }
-    } else if (typeof productData.category === 'string') {
-      // Handle string category
-      if (productData.category.toLowerCase().includes("rent")) {
-        badgeText = "For Rent";
-      }
-    }
-  }
-  
-  // Override with Investment badge if featured
-  if (productData.featured) {
-    badgeText = "Investment";
-  }
+  const badgeText = formatPropertyStatus(productData.propertyDetails?.propertyStatus) || "For Sale";
 
   const recommendedLabel = productData.recommendedLabel || "Recommended";
   const pathDescription =

@@ -31,8 +31,9 @@ import RelatedProduct from "@/components/product/related-product";
 import FollowUs from "@/components/followUs";
 import Tags from "@/components/tags";
 import CallToAction from "@/components/callToAction";
+import { formatPropertyStatus } from "@/utils/property-status";
 
-function ProductDetails({ product, latestBlogs }) {
+function ProductDetails({ product, latestBlogs, categories }) {
   const { products } = useSelector((state) => state.product);
   const { cartItems } = useSelector((state) => state.cart);
   const { wishlistItems } = useSelector((state) => state.wishlist);
@@ -228,35 +229,17 @@ function ProductDetails({ product, latestBlogs }) {
                 <div className="ltn__shop-details-inner ltn__page-details-inner mb-60">
                   <div className="ltn__blog-meta">
                     <ul>
-                      {
-                        (product.featured ? (
-                          <li className="ltn__blog-category">
-                            <Link href="#">Featured</Link>
-                          </li>
-                        ) : (
-                          ""
-                        ),
-                          product.rent ? (
-                            <li className="ltn__blog-category">
-                              <Link className="bg-orange" href="#">
-                                For Rent
-                              </Link>
-                            </li>
-                          ) : (
-                            ""
-                          ))
-                      }
+                      {product.propertyDetails?.propertyStatus && (
+                        <li className="ltn__blog-category">
+                          <Link className="bg-orange" href="#">
+                            {formatPropertyStatus(product.propertyDetails.propertyStatus)}
+                          </Link>
+                        </li>
+                      )}
 
                       <li className="ltn__blog-date">
                         <i className="far fa-calendar-alt"></i>
                         {product.date}
-                      </li>
-                      <li>
-                        <a href="#">
-                          <i className="far fa-comments"></i>
-                          {product.comments}
-                          Comments
-                        </a>
                       </li>
                     </ul>
                   </div>
@@ -275,20 +258,20 @@ function ProductDetails({ product, latestBlogs }) {
                   <div className="property-detail-info-list section-bg-1 clearfix mb-60">
                     <ul>
                       <li>
-                        <label>Property ID:</label>{" "}
-                        <span>{product.propertyDetails.propertyId}</span>
-                      </li>
-                      <li>
-                        <label>Home Area: </label>{" "}
+                        <label>Home Area:</label>{" "}
                         <span>{product.propertyDetails.area} sqft</span>
                       </li>
                       <li>
-                        <label>Rooms:</label>{" "}
-                        <span>{product.propertyDetails.rooms}</span>
+                        <label>Beds:</label>{" "}
+                        <span>{product.propertyDetails.bedrooms}</span>
                       </li>
                       <li>
                         <label>Baths:</label>{" "}
                         <span>{product.propertyDetails.baths}</span>
+                      </li>
+                      <li>
+                        <label>Rooms:</label>{" "}
+                        <span>{product.propertyDetails.rooms || 0}</span>
                       </li>
                       <li>
                         <label>Year built:</label>{" "}
@@ -297,23 +280,13 @@ function ProductDetails({ product, latestBlogs }) {
                     </ul>
                     <ul>
                       <li>
-                        <label>Lot Area:</label>{" "}
-                        <span>{product.propertyDetails.propertyId}</span>
-                      </li>
-                      <li>
-                        <label>Lot dimensions:</label>{" "}
-                        <span>{product.propertyDetails.area} sqft</span>
-                      </li>
-                      <li>
-                        <label>Beds:</label>{" "}
-                        <span>{product.propertyDetails.bedrooms}</span>
-                      </li>
-                      <li>
-                        <label>Price:</label> <span>{product.price}</span>
+                        <label>Price:</label> <span>${product.price}</span>
                       </li>
                       <li>
                         <label>Property Status:</label>{" "}
-                        <span>{product.propertyDetails.propertyStatus}</span>
+                        <span>
+                          {formatPropertyStatus(product.propertyDetails.propertyStatus)}
+                        </span>
                       </li>
                     </ul>
                   </div>
@@ -774,31 +747,21 @@ function ProductDetails({ product, latestBlogs }) {
                       Top Categories
                     </h4>
                     <ul>
-                      <li>
-                        <Link href="#">
-                          Apartments <span>(26)</span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="#">
-                          Picture Stodio <span>(30)</span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="#">
-                          Office <span>(71)</span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="#">
-                          Luxary Vilas <span>(56)</span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="#">
-                          Duplex House <span>(60)</span>
-                        </Link>
-                      </li>
+                      {categories && categories.length > 0 ? (
+                        categories.slice(0, 5).map((category) => (
+                          <li key={category.name}>
+                            <Link href="#">
+                              {category.name} <span>({category.property_count})</span>
+                            </Link>
+                          </li>
+                        ))
+                      ) : (
+                        <li>
+                          <Link href="#">
+                            No categories available
+                          </Link>
+                        </li>
+                      )}
                     </ul>
                   </div>
                   {/* <!-- Popular Product Widget --> */}
@@ -975,6 +938,11 @@ export async function getStaticProps({ params }) {
     .order('created_at', { ascending: false })
     .limit(4);
 
+  // Fetch categories with property counts
+  const { data: categoriesData } = await supabase.rpc('get_category_counts');
+
+  const categories = categoriesData || [];
+
   // Transform database format to match website format
   const transformedProperties = properties.map(property => ({
     id: property.id,
@@ -1011,14 +979,15 @@ export async function getStaticProps({ params }) {
       fullDescription: property.full_description || property.description || '',
       shortDescription: property.short_description || property.meta_description || ''
     },
-    propertyDetails: property.property_details || {
+    propertyDetails: {
       propertyId: property.id,
       area: property.area,
       propertyStatus: property.status,
-      rooms: 0,
+      rooms: property.rooms || 0,
       bedrooms: property.bedrooms,
       baths: property.bathrooms,
-      createdYear: new Date(property.created_at).getFullYear()
+      createdYear: property.year_built || new Date(property.created_at).getFullYear(),
+      ...(property.property_details || {})
     },
     factsAndFeatures: property.facts_and_features || {},
     amenities1: property.amenities1 || [],
@@ -1042,7 +1011,7 @@ export async function getStaticProps({ params }) {
     return { notFound: true };
   }
 
-  return { props: { product, latestBlogs }, revalidate: 60 };
+  return { props: { product, latestBlogs, categories }, revalidate: 1 };
 }
 
 export async function getStaticPaths() {

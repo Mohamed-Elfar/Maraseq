@@ -9,6 +9,7 @@ import {
 import QuickViewtModal from "@/components/modals/quickViewModal";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
+import { formatPropertyStatus } from "@/utils/property-status";
 const ProductList = ({
   productData,
   slug,
@@ -19,25 +20,8 @@ const ProductList = ({
   wishlistItem,
   compareItem,
 }) => {
-  let badgeText = "For Sale";
+  const badgeText = formatPropertyStatus(productData.propertyDetails?.propertyStatus) || "For Sale";
 
-  // Determine badge from category array - works with any category name
-  if (productData.category) {
-    if (Array.isArray(productData.category)) {
-      // Check if any category contains "rent" keyword
-      const hasRent = productData.category.some(cat => 
-        cat && cat.toLowerCase().includes("rent")
-      );
-      if (hasRent) {
-        badgeText = "For Rent";
-      }
-    } else if (typeof productData.category === 'string') {
-      // Handle string category
-      if (productData.category.toLowerCase().includes("rent")) {
-        badgeText = "For Rent";
-      }
-    }
-  }
   const dispatch = useDispatch();
   const [modalShow, setModalShow] = useState(false);
 

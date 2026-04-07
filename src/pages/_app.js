@@ -33,8 +33,9 @@ const Poppin = Poppins({
 const MyApp = ({ Component, ...rest }) => {
   const { store, props } = wrapper.useWrappedStore(rest);
   useEffect(() => {
-    // Fetch properties from Supabase database
+    // Fetch properties from Supabase database on every mount
     const loadProperties = async () => {
+      console.log('Fetching fresh properties from Supabase...');
       const properties = await getProperties();
 
       // Transform database format to match website JSON format
@@ -73,14 +74,15 @@ const MyApp = ({ Component, ...rest }) => {
           fullDescription: property.full_description || property.description || '',
           shortDescription: property.short_description || property.meta_description || ''
         },
-        propertyDetails: property.property_details || {
+        propertyDetails: {
           propertyId: property.id,
           area: property.area,
           propertyStatus: property.status,
-          rooms: 0,
+          rooms: property.rooms || 0,
           bedrooms: property.bedrooms,
           baths: property.bathrooms,
-          createdYear: new Date(property.created_at).getFullYear()
+          createdYear: property.year_built || new Date(property.created_at).getFullYear(),
+          ...(property.property_details || {})
         },
         factsAndFeatures: property.facts_and_features || {},
         amenities1: property.amenities1 || [],
