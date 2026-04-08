@@ -49,10 +49,13 @@ function ShopLeftSideBar() {
   const [selectedStatuses, setSelectedStatuses] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedBedBaths, setSelectedBedBaths] = useState([]);
+  const [selectedLocation, setSelectedLocation] = useState("");
   const [selectedPriceRanges, setSelectedPriceRanges] = useState([]);
   const [priceFilterValue, setPriceFilterValue] = useState([PRICE_MIN, PRICE_MAX]);
   const selectedCategory =
     typeof router.query.category === "string" ? router.query.category : "";
+  const selectedLocationQuery =
+    typeof router.query.location === "string" ? router.query.location : "";
 
   const categories = useMemo(() => getIndividualCategories(products), [products]);
   const statusOptions = useMemo(() => {
@@ -137,6 +140,12 @@ function ShopLeftSideBar() {
     setSelectedCategories([selectedCategory]);
     setOffset(0);
   }, [selectedCategory]);
+
+  useEffect(() => {
+    if (!selectedLocationQuery) return;
+    setSelectedLocation(selectedLocationQuery);
+    setOffset(0);
+  }, [selectedLocationQuery]);
 
   const getProductBedBathLabel = (product) => {
     const bedrooms = product?.propertyDetails?.bedrooms ?? product?.bedrooms;
@@ -244,6 +253,13 @@ function ShopLeftSideBar() {
       );
     }
 
+    if (selectedLocation) {
+      const normalizedLocation = selectedLocation.trim().toLowerCase();
+      filteredProducts = filteredProducts.filter((product) =>
+        String(product?.locantion || "").toLowerCase().includes(normalizedLocation)
+      );
+    }
+
     if (
       selectedPriceRanges.length > 0 &&
       selectedPriceRanges.length < priceRanges.length
@@ -283,6 +299,7 @@ function ShopLeftSideBar() {
     selectedStatuses,
     selectedCategories,
     selectedBedBaths,
+    selectedLocation,
     selectedPriceRanges,
     priceFilterValue,
     statusOptions.length,

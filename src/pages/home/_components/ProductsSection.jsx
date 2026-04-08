@@ -6,6 +6,7 @@ import EditableSection from "@/components/cms/EditableSection";
 import TitleSection from "@/components/titleSection";
 import ProductItem from "@/components/product";
 import { productCarouselsettings } from "./SliderSettings";
+import { productSlug } from "@/lib/product";
 
 const ProductsSection = ({ featuredProducts, featuredFilterOptions }) => {
   const [featuredFilter, setFeaturedFilter] = useState("all");
@@ -13,9 +14,20 @@ const ProductsSection = ({ featuredProducts, featuredFilterOptions }) => {
   const { wishlistItems } = useSelector((state) => state.wishlist);
   const { compareItems } = useSelector((state) => state.compare);
 
+  // Debug: Log products and their objectives
+  console.log('Featured products:', featuredProducts.map(p => ({ id: p.id, title: p.title, objective: p.objective })));
+  console.log('Current filter:', featuredFilter);
+
   const filteredFeaturedProducts = featuredProducts.filter((product) => {
     if (featuredFilter === "all") return true;
 
+    // Check for objective filters first
+    if (product.objective && product.objective === featuredFilter) {
+      console.log(`Product ${product.title} matches filter ${featuredFilter} (objective: ${product.objective})`);
+      return true;
+    }
+
+    // Legacy filtering for opportunity type and stage (fallback)
     const opportunityType =
       product.opportunityType || (product.rent ? "residential" : "investment");
     const opportunityStage =
@@ -37,7 +49,15 @@ const ProductsSection = ({ featuredProducts, featuredFilterOptions }) => {
       return opportunityStage === "under_construction";
     }
 
-    return true;
+    return false;
+  });
+
+  // Debug: Log filtering results
+  console.log('Filtering results:', {
+    filter: featuredFilter,
+    inputCount: featuredProducts.length,
+    outputCount: filteredFeaturedProducts.length,
+    outputProducts: filteredFeaturedProducts.map(p => ({ id: p.id, title: p.title, objective: p.objective }))
   });
 
   return (
@@ -87,6 +107,8 @@ const ProductsSection = ({ featuredProducts, featuredFilterOptions }) => {
                           <ProductItem
                             key={key}
                             productData={product}
+                            slug={productSlug(product.title)}
+                            baseUrl="shop"
                             discountedPrice={discountedPrice}
                             cartItem={cartItems.find(item => item.id === product.id)}
                             wishlistItem={wishlistItems.find(item => item.id === product.id)}

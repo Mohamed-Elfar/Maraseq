@@ -10,7 +10,7 @@ import ModalVideo from "react-modal-video";
 import CallToAction from "@/components/callToAction";
 import portfolioData from "@/data/portfolio";
 import EditableSection from "@/components/cms/EditableSection";
-import { getServices, getNews, getCategories } from "@/lib/supabase";
+import { getServices, getNews, getCategories, getFormOptions } from "@/lib/supabase";
 
 // Import section components
 import SearchSection from "./_components/SearchSection";
@@ -26,19 +26,46 @@ import BlogSection from "./_components/BlogSection";
 function HomeVersionThree(props) {
   const [isOpen, setOpen] = useState(false);
   const { products } = useSelector((state) => state.product);
-  const { data, brand, newsData, propertyCategories } = props;
+  const { data, brand, newsData, propertyCategories, objectives } = props;
+
+  // Debug: Log Redux store state and props
+  console.log('=== HOME PAGE DEBUG ===');
+  console.log('Redux store products count:', products?.length || 0);
+  console.log('Redux products with featured field:', products?.map(p => ({
+    id: p.id,
+    title: p.title,
+    featured: p.featured,
+    objective: p.objective,
+    featuredType: typeof p.featured
+  })));
+  console.log('Home page props:', {
+    productsCount: products?.length || 0,
+    objectivesCount: objectives?.length || 0,
+    objectives: objectives?.map(o => ({ value: o.value, label: o.label }))
+  });
 
   const featureData = getProducts(props.servicesData || [], "buying", "featured", 3);
-  const featuredProducts = getProducts(products, "buying", "featured", 5);
+  // Temporarily show all properties instead of just featured to test display
+  const featuredProducts = getProducts(products, null, null, 5); // Changed category to null and type to null
   const portfolios = getProducts(portfolioData, "buying", "carousel", 5);
   const blogData = newsData || [];
 
+  // Debug: Log product processing
+  console.log('Product processing:', {
+    totalProducts: products?.length || 0,
+    featuredProducts: featuredProducts?.length || 0,
+    featuredProductsDetails: featuredProducts?.map(p => ({ id: p.id, title: p.title, objective: p.objective, featured: p.featured }))
+  });
+
+  // Create dynamic filter options from objectives
   const featuredFilterOptions = [
     { key: "all", label: "All" },
-    { key: "investment", label: "Investment" },
-    { key: "residential", label: "Residential" },
-    { key: "ready", label: "Ready" },
-    { key: "under_construction", label: "Under Construction" },
+    ...(objectives || [])
+      .filter(obj => obj.value !== 'all') // Exclude 'all' from objectives to avoid duplication
+      .map(obj => ({
+        key: obj.value,
+        label: obj.label
+      }))
   ];
 
   return (
@@ -99,6 +126,7 @@ export async function getStaticProps() {
   const servicesData = await getServices();
   const newsData = await getNews();
   const propertyCategories = await getCategories("properties");
+  const objectives = await getFormOptions("objectives");
 
   return {
     props: {
@@ -108,6 +136,7 @@ export async function getStaticProps() {
       servicesData,
       newsData,
       propertyCategories,
+      objectives,
     },
     revalidate: 60,
   };

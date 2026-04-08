@@ -2,7 +2,7 @@ import { Container, Row, Col, Nav, Tab, Form } from "react-bootstrap";
 import { FaCarAlt, FaUserAlt } from "react-icons/fa";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { getFormOptions } from "@/lib/supabase";
+import { getCategories, getFormOptions } from "@/lib/supabase";
 
 const FALLBACK_LOCATIONS = ["All Locations", "New Cairo", "New Capital", "Sheikh Zayed", "Fifth Settlement", "North Coast"];
 const FALLBACK_PROPERTY_TYPES = ["All Opportunities", "Apartment", "Villa", "Duplex", "Penthouse", "Office"];
@@ -12,6 +12,8 @@ function CarDealerSearchForm({ navMenuClass, customClasses }) {
   const [locationOptions, setLocationOptions] = useState(FALLBACK_LOCATIONS);
   const [opportunityTypeOptions, setOpportunityTypeOptions] = useState(FALLBACK_PROPERTY_TYPES);
   const [goalOptions, setGoalOptions] = useState(FALLBACK_OBJECTIVES);
+  const [selectedLocation, setSelectedLocation] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -19,10 +21,14 @@ function CarDealerSearchForm({ navMenuClass, customClasses }) {
       try {
         setLoading(true);
         const data = await getFormOptions();
+        const propertyCategories = await getCategories("properties");
+
         if (data?.locations) {
           setLocationOptions(data.locations.map((item) => item.label));
         }
-        if (data?.propertyTypes) {
+        if (Array.isArray(propertyCategories) && propertyCategories.length > 0) {
+          setOpportunityTypeOptions(propertyCategories.map((item) => item.name));
+        } else if (data?.propertyTypes) {
           setOpportunityTypeOptions(data.propertyTypes.map((item) => item.label));
         }
         if (data?.objectives) {
@@ -80,8 +86,12 @@ function CarDealerSearchForm({ navMenuClass, customClasses }) {
                               lg={3}
                               className="ltn__car-dealer-form-item"
                             >
-                              <Form.Select className="nice-select">
-                                <option>Choose your location</option>
+                              <Form.Select
+                                className="nice-select"
+                                value={selectedLocation}
+                                onChange={(e) => setSelectedLocation(e.target.value)}
+                              >
+                                <option value="">Choose your location</option>
                                 {locationOptions.map((option) => (
                                   <option key={option} value={option}>
                                     {option}
@@ -95,8 +105,12 @@ function CarDealerSearchForm({ navMenuClass, customClasses }) {
                               lg={3}
                               className="ltn__car-dealer-form-item"
                             >
-                              <Form.Select className="nice-select">
-                                <option>Select property type</option>
+                              <Form.Select
+                                className="nice-select"
+                                value={selectedCategory}
+                                onChange={(e) => setSelectedCategory(e.target.value)}
+                              >
+                                <option value="">Select property type</option>
                                 {opportunityTypeOptions.map((option) => (
                                   <option key={option} value={option}>
                                     {option}
@@ -111,7 +125,7 @@ function CarDealerSearchForm({ navMenuClass, customClasses }) {
                               className="ltn__car-dealer-form-item"
                             >
                               <Form.Select className="nice-select">
-                                <option>Set your objective</option>
+                                <option value="">Set your objective</option>
                                 {goalOptions.map((option) => (
                                   <option key={option} value={option}>
                                     {option}
@@ -127,7 +141,17 @@ function CarDealerSearchForm({ navMenuClass, customClasses }) {
                             >
                               <div className="btn-wrapper text-center mt-0">
                                 <Link
-                                  href="/shop/properties"
+                                  href={{
+                                    pathname: "/shop/properties",
+                                    query: {
+                                      ...(selectedLocation && !/^all\b/i.test(selectedLocation)
+                                        ? { location: selectedLocation }
+                                        : {}),
+                                      ...(selectedCategory && !/^all\b/i.test(selectedCategory)
+                                        ? { category: selectedCategory }
+                                        : {}),
+                                    },
+                                  }}
                                   className="btn theme-btn-1 btn-effect-1 text-uppercase"
                                 >
                                   Start Your Path
@@ -152,7 +176,7 @@ function CarDealerSearchForm({ navMenuClass, customClasses }) {
                               className="ltn__car-dealer-form-item"
                             >
                               <Form.Select className="nice-select">
-                                <option>Choose your location</option>
+                                <option value="">Choose your location</option>
                                 {locationOptions.map((option) => (
                                   <option key={option} value={option}>
                                     {option}
@@ -167,7 +191,7 @@ function CarDealerSearchForm({ navMenuClass, customClasses }) {
                               className="ltn__car-dealer-form-item"
                             >
                               <Form.Select className="nice-select">
-                                <option>Select property type</option>
+                                <option value="">Select property type</option>
                                 {opportunityTypeOptions.map((option) => (
                                   <option key={option} value={option}>
                                     {option}
@@ -182,7 +206,7 @@ function CarDealerSearchForm({ navMenuClass, customClasses }) {
                               className="ltn__car-dealer-form-item"
                             >
                               <Form.Select className="nice-select">
-                                <option>Set your objective</option>
+                                <option value="">Set your objective</option>
                                 {goalOptions.map((option) => (
                                   <option key={option} value={option}>
                                     {option}

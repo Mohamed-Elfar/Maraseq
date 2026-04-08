@@ -35,6 +35,22 @@ const ProductItem = ({
   const pathDescription =
     productData.pathDescription || "Designed for your investment path";
   const idealForText = productData.idealFor || "Ideal for long-term investment";
+  
+  // Format objective for display
+  const getObjectiveLabel = (objective) => {
+    const objectiveLabels = {
+      'all': 'All',
+      'living': 'Living',
+      'investment': 'Investment',
+      'passive_income': 'Passive Income',
+      'resale': 'Resale',
+      'ready': 'Ready',
+      'under_construction': 'Under Construction'
+    };
+    return objectiveLabels[objective] || objective || '';
+  };
+  
+  const objectiveLabel = getObjectiveLabel(productData.objective);
 
   const dispatch = useDispatch();
 
@@ -78,6 +94,9 @@ const ProductItem = ({
               >
                 {badgeText}
               </li>
+              {objectiveLabel && (
+                <li className="objective-badge bg-blue">{objectiveLabel}</li>
+              )}
               <li className="recommended-badge">{recommendedLabel}</li>
             </ul>
           </div>
@@ -160,22 +179,6 @@ const ProductItem = ({
           </div>
         </div>
         <div className="product-info-bottom">
-          <div className="real-estate-agent">
-            <div className="agent-img">
-              <Link href="/team-details">
-                <img
-                  src={`/img/blog/${productData.agent.img}`}
-                  alt={`${productData.agent.fullName}`}
-                />
-              </Link>
-            </div>
-            <div className="agent-brief">
-              <h6>
-                <Link href="/team-details">{productData.agent.firstName}</Link>
-              </h6>
-              <small>{productData.agent.type}</small>
-            </div>
-          </div>
           <div className="product-hover-action">
             <ul>
               <li>

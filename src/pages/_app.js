@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { wrapper } from "@/store";
 import { setProducts } from "@/store/slices/product-slice";
-import { getProperties } from "@/lib/supabase";
+import { getProperties, supabase } from "@/lib/supabase";
 import Preloader from "@/components/preloader";
 import "animate.css";
 import "slick-carousel/slick/slick.css";
@@ -36,7 +36,26 @@ const MyApp = ({ Component, ...rest }) => {
     // Fetch properties from Supabase database on every mount
     const loadProperties = async () => {
       console.log('Fetching fresh properties from Supabase...');
+
+      // Test Supabase connection first
+      try {
+        const { data: testConnection, error: connectionError } = await supabase
+          .from('properties')
+          .select('count')
+          .eq('visible', true);
+
+        if (connectionError) {
+          console.error('Supabase connection error:', connectionError);
+          return;
+        }
+        console.log('Supabase connection successful. Properties count:', testConnection?.[0]?.count || 0);
+      } catch (error) {
+        console.error('Supabase test failed:', error);
+        return;
+      }
+
       const properties = await getProperties();
+      console.log('Raw properties from database:', properties.map(p => ({ id: p.id, title: p.title, featured: p.featured, objective: p.objective })));
 
       // Transform database format to match website JSON format
       const transformedProperties = properties.map(property => ({
@@ -69,6 +88,7 @@ const MyApp = ({ Component, ...rest }) => {
         recommendedLabel: property.recommended_label || '',
         opportunityType: property.opportunity_type || '',
         opportunityStage: property.opportunity_stage || '',
+        objective: property.objective || '',
         description: {
           title: 'Description',
           fullDescription: property.full_description || property.description || '',
@@ -98,7 +118,47 @@ const MyApp = ({ Component, ...rest }) => {
         galleryImages: property.gallery_images || []
       }));
 
-      store.dispatch(setProducts(transformedProperties));
+      console.log('Transformed properties:', transformedProperties.map(p => ({ id: p.id, title: p.title, featured: p.featured, objective: p.objective })));
+      console.log('Dispatching', transformedProperties.length, 'properties to Redux store');
+
+      // If no properties from database, add test data
+      if (transformedProperties.length === 0) {
+        console.log('No properties from database, adding test data...');
+        const testProperties = [
+          {
+            id: 'test-1',
+            title: 'Test Property 1',
+            featured: true,
+            objective: 'investment',
+            price: 500000,
+            productImg: '/img/product-3/1.jpg',
+            category: ['residential'],
+            propertyDetails: {
+              bedrooms: 3,
+              baths: 2,
+              area: '2000'
+            }
+          },
+          {
+            id: 'test-2',
+            title: 'Test Property 2',
+            featured: true,
+            objective: 'living',
+            price: 300000,
+            productImg: '/img/product-3/2.jpg',
+            category: ['residential'],
+            propertyDetails: {
+              bedrooms: 2,
+              baths: 2,
+              area: '1500'
+            }
+          }
+        ];
+        console.log('Adding test properties:', testProperties);
+        store.dispatch(setProducts(testProperties));
+      } else {
+        store.dispatch(setProducts(transformedProperties));
+      }
     };
 
     loadProperties();

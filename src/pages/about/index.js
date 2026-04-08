@@ -8,17 +8,13 @@ import ShopBreadCrumb from "@/components/breadCrumbs/shop";
 import TestimonialCarouselItem from "@/components/testimonialCarousel";
 import testimonialData from "@/data/testimonial";
 import BlogItem from "@/components/blog";
-import blogData from "@/data/blog";
 import CallToAction from "@/components/callToAction";
 import AboutUsStyleOne from "@/components/aboutUs/aboutUsStyleOne";
 import Feature from "@/components/features";
-import TeamItem from "@/components/team";
-import TeamData from '@/data/team';
 import EditableSection from "@/components/cms/EditableSection";
-import { getServices } from "@/lib/supabase";
+import { getServices, getNews } from "@/lib/supabase";
 
-function AboutUs({ servicesData = [] }) {
-  const agents = getProducts(TeamData, "buying", "featured", 3);
+function AboutUs({ servicesData = [], newsData = [] }) {
   const featureDataSorted = getProducts(servicesData, "buying", "featured", 3);
 
   const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
@@ -98,41 +94,7 @@ function AboutUs({ servicesData = [] }) {
             }}
           />
         </EditableSection>
-
-
-
-
-        <EditableSection sectionKey="about.section.team" sectionLabel="About Team Section">
-          <div className="ltn__team-area pt-115 pb-90">
-            <Container>
-              <Row>
-                <Col lg={12}>
-                  <TitleSection
-                    sectionClasses="text-center"
-                    headingClasses="section-subtitle-2"
-                    titleSectionData={{
-                      subTitle: "Team",
-                      title: "Property Agents",
-                    }}
-                  />
-                </Col>
-              </Row>
-
-              <Row>
-                {agents.map((data, key) => {
-                  const slug = productSlug(data.name);
-                  return (
-                    <Col key={key} xs={12} sm={6} lg={4} >
-                      <TeamItem baseUrl="blog" data={data} slug={slug} additionalClassname="" />
-                    </Col>
-                  );
-                })}
-              </Row>
-
-
-            </Container>
-          </div>
-        </EditableSection>
+        {/* Team section hidden for now */}
 
 
 
@@ -191,7 +153,7 @@ function AboutUs({ servicesData = [] }) {
                 {...blogSettings}
                 className="ltn__blog-slider-one-active slick-arrow-1 ltn__blog-item-3-normal"
               >
-                {blogData.map((data, key) => {
+                {newsData.map((data, key) => {
                   const slug = productSlug(data.title);
                   return (
                     <BlogItem key={key} baseUrl="blog" data={data} slug={slug} />
@@ -223,10 +185,12 @@ export default AboutUs;
 
 export async function getStaticProps() {
   const servicesData = await getServices();
+  const newsData = await getNews();
 
   return {
     props: {
       servicesData,
+      newsData,
     },
     revalidate: 60,
   };
