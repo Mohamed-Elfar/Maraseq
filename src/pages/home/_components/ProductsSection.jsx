@@ -14,16 +14,12 @@ const ProductsSection = ({ featuredProducts, featuredFilterOptions }) => {
   const { wishlistItems } = useSelector((state) => state.wishlist);
   const { compareItems } = useSelector((state) => state.compare);
 
-  // Debug: Log products and their objectives
-  console.log('Featured products:', featuredProducts.map(p => ({ id: p.id, title: p.title, objective: p.objective })));
-  console.log('Current filter:', featuredFilter);
 
   const filteredFeaturedProducts = featuredProducts.filter((product) => {
     if (featuredFilter === "all") return true;
 
     // Check for objective filters first
     if (product.objective && product.objective === featuredFilter) {
-      console.log(`Product ${product.title} matches filter ${featuredFilter} (objective: ${product.objective})`);
       return true;
     }
 
@@ -52,13 +48,6 @@ const ProductsSection = ({ featuredProducts, featuredFilterOptions }) => {
     return false;
   });
 
-  // Debug: Log filtering results
-  console.log('Filtering results:', {
-    filter: featuredFilter,
-    inputCount: featuredProducts.length,
-    outputCount: filteredFeaturedProducts.length,
-    outputProducts: filteredFeaturedProducts.map(p => ({ id: p.id, title: p.title, objective: p.objective }))
-  });
 
   return (
     <EditableSection sectionKey="home.section.products" sectionLabel="Products Section">

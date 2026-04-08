@@ -28,34 +28,12 @@ function HomeVersionThree(props) {
   const { products } = useSelector((state) => state.product);
   const { data, brand, newsData, propertyCategories, objectives } = props;
 
-  // Debug: Log Redux store state and props
-  console.log('=== HOME PAGE DEBUG ===');
-  console.log('Redux store products count:', products?.length || 0);
-  console.log('Redux products with featured field:', products?.map(p => ({
-    id: p.id,
-    title: p.title,
-    featured: p.featured,
-    objective: p.objective,
-    featuredType: typeof p.featured
-  })));
-  console.log('Home page props:', {
-    productsCount: products?.length || 0,
-    objectivesCount: objectives?.length || 0,
-    objectives: objectives?.map(o => ({ value: o.value, label: o.label }))
-  });
-
   const featureData = getProducts(props.servicesData || [], "buying", "featured", 3);
   // Temporarily show all properties instead of just featured to test display
   const featuredProducts = getProducts(products, null, null, 5); // Changed category to null and type to null
   const portfolios = getProducts(portfolioData, "buying", "carousel", 5);
   const blogData = newsData || [];
 
-  // Debug: Log product processing
-  console.log('Product processing:', {
-    totalProducts: products?.length || 0,
-    featuredProducts: featuredProducts?.length || 0,
-    featuredProductsDetails: featuredProducts?.map(p => ({ id: p.id, title: p.title, objective: p.objective, featured: p.featured }))
-  });
 
   // Create dynamic filter options from objectives
   const featuredFilterOptions = [

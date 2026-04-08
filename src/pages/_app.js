@@ -35,8 +35,6 @@ const MyApp = ({ Component, ...rest }) => {
   useEffect(() => {
     // Fetch properties from Supabase database on every mount
     const loadProperties = async () => {
-      console.log('Fetching fresh properties from Supabase...');
-
       // Test Supabase connection first
       try {
         const { data: testConnection, error: connectionError } = await supabase
@@ -45,17 +43,13 @@ const MyApp = ({ Component, ...rest }) => {
           .eq('visible', true);
 
         if (connectionError) {
-          console.error('Supabase connection error:', connectionError);
           return;
         }
-        console.log('Supabase connection successful. Properties count:', testConnection?.[0]?.count || 0);
       } catch (error) {
-        console.error('Supabase test failed:', error);
         return;
       }
 
       const properties = await getProperties();
-      console.log('Raw properties from database:', properties.map(p => ({ id: p.id, title: p.title, featured: p.featured, objective: p.objective })));
 
       // Transform database format to match website JSON format
       const transformedProperties = properties.map(property => ({
@@ -118,12 +112,9 @@ const MyApp = ({ Component, ...rest }) => {
         galleryImages: property.gallery_images || []
       }));
 
-      console.log('Transformed properties:', transformedProperties.map(p => ({ id: p.id, title: p.title, featured: p.featured, objective: p.objective })));
-      console.log('Dispatching', transformedProperties.length, 'properties to Redux store');
 
       // If no properties from database, add test data
       if (transformedProperties.length === 0) {
-        console.log('No properties from database, adding test data...');
         const testProperties = [
           {
             id: 'test-1',
@@ -154,7 +145,6 @@ const MyApp = ({ Component, ...rest }) => {
             }
           }
         ];
-        console.log('Adding test properties:', testProperties);
         store.dispatch(setProducts(testProperties));
       } else {
         store.dispatch(setProducts(transformedProperties));

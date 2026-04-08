@@ -6,14 +6,12 @@ export default async function handler(req, res) {
 
   try {
     if (method === 'GET') {
-      console.log('API GET - Method: GET, Type:', type);
 
       // Fetch items based on type
       let tableName, selectQuery;
 
       switch (type) {
         case 'news':
-          console.log('API GET - Processing news type');
           tableName = 'news';
           selectQuery = `
             *,
@@ -54,18 +52,15 @@ export default async function handler(req, res) {
 
       const { data, error } = await queryBuilder;
 
-      console.log('API GET - Database query result:', { data, error });
 
       if (error) throw error;
 
       // Transform data to match dashboard expectations
       let transformedData = data || [];
-      console.log('API GET - About to transform data, type:', type, 'data length:', data?.length);
 
       if (type === 'news') {
         transformedData = data.map(item => {
           // Debug logging for individual item
-          console.log('News API GET - Processing item:', item);
 
           const transformed = {
             ...item,
@@ -82,12 +77,9 @@ export default async function handler(req, res) {
             }
           };
 
-          console.log('News API GET - Transformed item:', transformed);
           return transformed;
         });
 
-        console.log('News API GET - Raw data:', data);
-        console.log('News API GET - Final transformed data:', transformedData);
       }
 
       return res.status(200).json({
@@ -128,8 +120,6 @@ export default async function handler(req, res) {
         };
 
         // Debug logging
-        console.log('News API - Original data:', itemData);
-        console.log('News API - Transformed data:', transformedItemData);
       }
 
       switch (type) {

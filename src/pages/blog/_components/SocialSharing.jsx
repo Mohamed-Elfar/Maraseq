@@ -10,13 +10,10 @@ const SocialShare = ({ blog }) => {
     const fetchSocialLinks = async () => {
       try {
         const links = await getSocialLinks();
-        console.log('SocialSharing - All social links:', links);
         
         const filteredLinks = links.filter((link) => canShowAtPosition(link?.position, "news"));
-        console.log('SocialSharing - Filtered links for news:', filteredLinks);
         setSocialLinks(filteredLinks);
       } catch (error) {
-        console.error('Failed to fetch social links:', error);
       }
     };
 
