@@ -87,11 +87,11 @@ const BlogSideBar = ({ popularProducts, topRatedProducts, latestdBlogs }) => {
         <div className="widget ltn__author-widget">
           <div className="ltn__author-widget-inner text-center">
             <img
-              src={`/img/team/${product.agent.img}`}
-              alt={`${product.agent.fullName}`}
+              src={`/img/team/${product?.agent?.img}`}
+              alt={`${product?.agent?.fullName}`}
             />
-            <h5>{product.agent.fullName}</h5>
-            <small>{product.agent.designation}</small>
+            <h5>{product?.agent?.fullName}</h5>
+            <small>{product?.agent?.designation}</small>
             <div className="product-ratting">
               <ul>
                 <li>
@@ -120,11 +120,11 @@ const BlogSideBar = ({ popularProducts, topRatedProducts, latestdBlogs }) => {
                   </Link>
                 </li>
                 <li className="review-total">
-                  <Link href="#">( {product.agent.raiting} Reviews )</Link>
+                  <Link href="#">( {product?.agent?.raiting} Reviews )</Link>
                 </li>
               </ul>
             </div>
-            <p>{product.agent.description}</p>
+            <p>{product?.agent?.description}</p>
 
             <div className="ltn__social-media">
               <ul>
