@@ -87,16 +87,14 @@ const Contact = () => {
                   ) : contactInfo?.phones?.length > 0 ? (
                     contactInfo.phones
                       .filter(phone => phone.visible)
-                      .map(phone => (
-                        <span key={phone.id}>
+                      .map((phone, index) => (
+                        <div key={phone.id} style={{ marginBottom: index < contactInfo.phones.filter(p => p.visible).length - 1 ? '5px' : '0' }}>
                           {phone.value}
-                          <br />
-                        </span>
+                        </div>
                       ))
                   ) : (
                     <>
-                      +201102223231 <br />
-                      +20102223232
+                      +201102223231 
                     </>
                   )}
                 </p>
