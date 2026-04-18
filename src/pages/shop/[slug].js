@@ -33,6 +33,21 @@ import Tags from "@/components/tags";
 import CallToAction from "@/components/callToAction";
 import { formatPropertyStatus } from "@/utils/property-status";
 
+// Helper function to get unit type label
+const getUnitTypeLabel = (unitType) => {
+  const unitLabels = {
+    'sq_m': 'm²',
+    'sq_ft': 'sq ft',
+    'm': 'm',
+    'feddan': 'feddan',
+    'kirat': 'kirat',
+    'sahm': 'sahm',
+    'hectare': 'ha',
+    'acre': 'acre'
+  };
+  return unitLabels[unitType] || 'm²';
+};
+
 function ProductDetails({ product, latestBlogs, categories }) {
   const { products } = useSelector((state) => state.product);
   const { cartItems } = useSelector((state) => state.cart);
@@ -259,7 +274,7 @@ function ProductDetails({ product, latestBlogs, categories }) {
                     <ul>
                       <li>
                         <label>Home Area:</label>{" "}
-                        <span>{product.propertyDetails.area} sqft</span>
+                        <span>{product.propertyDetails.area} {getUnitTypeLabel(product.propertyDetails.unitType)}</span>
                       </li>
                       <li>
                         <label>Beds:</label>{" "}
@@ -838,7 +853,7 @@ function ProductDetails({ product, latestBlogs, categories }) {
                                 </li>
                                 <li>
                                   <span>{product.propertyDetails.area}</span>
-                                  <span className="ms-1">square Ft</span>
+                                  <span className="ms-1">{getUnitTypeLabel(product.propertyDetails.unitType)}</span>
                                 </li>
                               </ul>
                             </div>
@@ -987,6 +1002,7 @@ export async function getStaticProps({ params }) {
     propertyDetails: {
       propertyId: property.id,
       area: property.area,
+      unitType: property.unit_type || 'sq_m',
       propertyStatus: property.status,
       rooms: property.rooms || 0,
       bedrooms: property.bedrooms,
