@@ -48,6 +48,20 @@ const getUnitTypeLabel = (unitType) => {
   return unitLabels[unitType] || 'm²';
 };
 
+// Helper function to get finish status label
+const getFinishStatusLabel = (finishStatus) => {
+  const finishLabels = {
+    'without_finish': 'Without Finish',
+    'semi_finished': 'Semi Finished',
+    'fully_finished': 'Fully Finished',
+    'super_lux': 'Super Lux',
+    'lux': 'Lux',
+    'deluxe_finish': 'Deluxe Finish',
+    'furnished': 'Furnished'
+  };
+  return finishLabels[finishStatus] || 'Without Finish';
+};
+
 function ProductDetails({ product, latestBlogs, categories }) {
   const { products } = useSelector((state) => state.product);
   const { cartItems } = useSelector((state) => state.cart);
@@ -302,6 +316,10 @@ function ProductDetails({ product, latestBlogs, categories }) {
                         <span>
                           {formatPropertyStatus(product.propertyDetails.propertyStatus)}
                         </span>
+                      </li>
+                      <li>
+                        <label>Finish Status:</label>{" "}
+                        <span>{getFinishStatusLabel(product.propertyDetails.finishStatus)}</span>
                       </li>
                     </ul>
                   </div>
@@ -1004,6 +1022,7 @@ export async function getStaticProps({ params }) {
       area: property.area,
       unitType: property.unit_type || 'sq_m',
       propertyStatus: property.status,
+      finishStatus: property.finish_status || 'without_finish',
       rooms: property.rooms || 0,
       bedrooms: property.bedrooms,
       baths: property.bathrooms,
