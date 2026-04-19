@@ -330,7 +330,7 @@ function ProductDetails({ product, latestBlogs, categories }) {
                       <div className="ltn__property-details-gallery mb-30">
                         <div className="row">
                           {product.galleryImages.map((imageUrl, index) => (
-                            <div key={index} className={index === 0 ? "col-md-6" : index < 3 ? "col-md-6" : "col-md-4"}>
+                            <div key={index} className="col-md-4 mb-4">
                               <Link
                                 href={imageUrl}
                                 data-rel="lightcase:myCollection"
