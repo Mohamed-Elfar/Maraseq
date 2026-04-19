@@ -21,10 +21,13 @@ import {
   FaCalendarAlt,
 } from "react-icons/fa";
 import BreadCrumb from "@/components/breadCrumbs";
+import PropertyGallery from "@/components/PropertyGallery";
+import PropertyAreaBreakdown from "@/components/PropertyAreaBreakdown";
+import { getUnitTypeLabel, getFinishStatusLabel, getFinishStatusInArabic, productSlug } from "@/utils/propertyHelpers";
 
 import { LayoutOne } from "@/layouts";
 import { useSelector } from "react-redux";
-import { getProducts, productSlug, getDiscountPrice } from "@/lib/product";
+import { getProducts, getDiscountPrice } from "@/lib/product";
 import { getProperties } from "@/lib/supabase";
 import { Container, Row, Col, Nav, Tab } from "react-bootstrap";
 import RelatedProduct from "@/components/product/related-product";
@@ -33,65 +36,11 @@ import Tags from "@/components/tags";
 import CallToAction from "@/components/callToAction";
 import { formatPropertyStatus } from "@/utils/property-status";
 
-// Helper function to get unit type label
-const getUnitTypeLabel = (unitType) => {
-  const unitLabels = {
-    'sq_m': 'm²',
-    'sq_ft': 'sq ft',
-    'm': 'm',
-    'feddan': 'feddan',
-    'kirat': 'kirat',
-    'sahm': 'sahm',
-    'hectare': 'ha',
-    'acre': 'acre'
-  };
-  return unitLabels[unitType] || 'm²';
-};
-
-// Helper function to get finish status label
-const getFinishStatusLabel = (finishStatus) => {
-  const finishLabels = {
-    'without_finish': 'Without Finish',
-    'semi_finished': 'Semi Finished',
-    'fully_finished': 'Fully Finished',
-    'super_lux': 'Super Lux',
-    'lux': 'Lux',
-    'deluxe_finish': 'Deluxe Finish',
-    'furnished': 'Furnished'
-  };
-  return finishLabels[finishStatus] || 'Without Finish';
-};
-
 function ProductDetails({ product, latestBlogs, categories }) {
   const { products } = useSelector((state) => state.product);
   const { cartItems } = useSelector((state) => state.cart);
   const { wishlistItems } = useSelector((state) => state.wishlist);
   const { compareItems } = useSelector((state) => state.compare);
-
-  // Lightbox state for gallery
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  const openLightbox = (index) => {
-    setCurrentImageIndex(index);
-    setLightboxOpen(true);
-  };
-
-  const closeLightbox = () => {
-    setLightboxOpen(false);
-  };
-
-  const nextImage = () => {
-    setCurrentImageIndex((prev) =>
-      prev === product.galleryImages.length - 1 ? 0 : prev + 1
-    );
-  };
-
-  const prevImage = () => {
-    setCurrentImageIndex((prev) =>
-      prev === 0 ? product.galleryImages.length - 1 : prev - 1
-    );
-  };
 
   const relatedProducts = getProducts(
     products,
@@ -349,159 +298,7 @@ function ProductDetails({ product, latestBlogs, categories }) {
                     </ul>
                   </div>
 
-                  {product.galleryImages && product.galleryImages.length > 0 && (
-                    <>
-                      <h4 className="title-2">From Our Gallery</h4>
-                      <div className="ltn__property-details-gallery mb-30">
-                        <div className="row">
-                          {product.galleryImages.map((imageUrl, index) => (
-                            <div key={index} className="col-md-4 mb-4">
-                              <div
-                                onClick={() => openLightbox(index)}
-                                style={{ cursor: 'pointer' }}
-                              >
-                                <img
-                                  src={imageUrl}
-                                  alt={`Gallery ${index + 1}`}
-                                  className="img-fluid rounded"
-                                  style={{ width: '100%', height: '250px', objectFit: 'cover' }}
-                                />
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Lightbox Modal */}
-                      {lightboxOpen && (
-                        <div
-                          className="lightbox-modal"
-                          style={{
-                            position: 'fixed',
-                            top: 0,
-                            left: 0,
-                            right: 0,
-                            bottom: 0,
-                            backgroundColor: 'rgba(0, 0, 0, 0.9)',
-                            zIndex: 9999,
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                          }}
-                          onClick={closeLightbox}
-                        >
-                          <div
-                            style={{
-                              position: 'relative',
-                              maxWidth: '90%',
-                              maxHeight: '90%',
-                            }}
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            {/* Close button */}
-                            <button
-                              onClick={closeLightbox}
-                              style={{
-                                position: 'absolute',
-                                top: '-50px',
-                                right: '10px',
-                                background: 'rgba(255,255,255,0.3)',
-                                border: 'none',
-                                color: 'white',
-                                fontSize: '24px',
-                                cursor: 'pointer',
-                                zIndex: 10000,
-                                width: '40px',
-                                height: '40px',
-                                borderRadius: '50%',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                backdropFilter: 'blur(4px)',
-                              }}
-                            >
-                              ×
-                            </button>
-
-                            {/* Previous button */}
-                            <button
-                              onClick={prevImage}
-                              style={{
-                                position: 'absolute',
-                                left: '10px',
-                                top: '50%',
-                                transform: 'translateY(-50%)',
-                                background: 'rgba(255,255,255,0.3)',
-                                border: 'none',
-                                color: 'white',
-                                fontSize: '30px',
-                                width: '45px',
-                                height: '45px',
-                                borderRadius: '50%',
-                                cursor: 'pointer',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                backdropFilter: 'blur(4px)',
-                              }}
-                            >
-                              ‹
-                            </button>
-
-                            {/* Image */}
-                            <img
-                              src={product.galleryImages[currentImageIndex]}
-                              alt={`Gallery ${currentImageIndex + 1}`}
-                              style={{
-                                maxWidth: '100%',
-                                maxHeight: '85vh',
-                                objectFit: 'contain',
-                              }}
-                            />
-
-                            {/* Next button */}
-                            <button
-                              onClick={nextImage}
-                              style={{
-                                position: 'absolute',
-                                right: '10px',
-                                top: '50%',
-                                transform: 'translateY(-50%)',
-                                background: 'rgba(255,255,255,0.3)',
-                                border: 'none',
-                                color: 'white',
-                                fontSize: '30px',
-                                width: '45px',
-                                height: '45px',
-                                borderRadius: '50%',
-                                cursor: 'pointer',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                backdropFilter: 'blur(4px)',
-                              }}
-                            >
-                              ›
-                            </button>
-
-                            {/* Image counter */}
-                            <div
-                              style={{
-                                position: 'absolute',
-                                bottom: '-40px',
-                                left: '50%',
-                                transform: 'translateX(-50%)',
-                                color: 'white',
-                                fontSize: '16px',
-                              }}
-                            >
-                              {currentImageIndex + 1} / {product.galleryImages.length}
-                            </div>
-                          </div>
-                        </div>
-                      )}
-                    </>
-                  )}
+                  <PropertyGallery galleryImages={product.galleryImages} />
 
                   <h4 className="title-2">Location</h4>
                   <div className="property-details-google-map mb-60">
@@ -556,7 +353,7 @@ function ProductDetails({ product, latestBlogs, categories }) {
                                         <ul>
                                           <li>
                                             <label>Total Area</label>{" "}
-                                            <span>{product.propertyDetails.totalArea || product.propertyDetails.area || '-'} {product.propertyDetails.totalArea || product.propertyDetails.area ? getUnitTypeLabel(product.propertyDetails.unitType) : ''}</span>
+                                            <span>{product.propertyDetails.totalArea || product.propertyDetails.area} {getUnitTypeLabel(product.propertyDetails.unitType)}</span>
                                           </li>
                                           <li>
                                             <label>Net Area</label>{" "}
