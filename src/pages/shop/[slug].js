@@ -402,11 +402,11 @@ function ProductDetails({ product, latestBlogs, categories }) {
                                         <ul>
                                           <li>
                                             <label>Total Area</label>{" "}
-                                            <span>2800 Sq. Ft</span>
+                                            <span>{product.propertyDetails.totalArea || product.propertyDetails.area || '-'} {product.propertyDetails.totalArea || product.propertyDetails.area ? getUnitTypeLabel(product.propertyDetails.unitType) : ''}</span>
                                           </li>
                                           <li>
-                                            <label>Bedroom</label>{" "}
-                                            <span>150 Sq. Ft</span>
+                                            <label>Net Area</label>{" "}
+                                            <span>{product.propertyDetails.netArea || '-'} {product.propertyDetails.netArea ? getUnitTypeLabel(product.propertyDetails.unitType) : ''}</span>
                                           </li>
                                         </ul>
                                       </div>
@@ -415,12 +415,12 @@ function ProductDetails({ product, latestBlogs, categories }) {
                                       <div className="apartments-info-list apartments-info-list-color">
                                         <ul>
                                           <li>
-                                            <label>Belcony/Pets</label>
-                                            <span>Allowed</span>
+                                            <label>Land Area</label>{" "}
+                                            <span>{product.propertyDetails.landArea || '-'} {product.propertyDetails.landArea ? getUnitTypeLabel(product.propertyDetails.unitType) : ''}</span>
                                           </li>
                                           <li>
-                                            <label>Lounge</label>
-                                            <span>650 Sq. Ft</span>
+                                            <label>Built-up Area</label>
+                                            <span>{product.propertyDetails.builtUpArea || '-'} {product.propertyDetails.builtUpArea ? getUnitTypeLabel(product.propertyDetails.unitType) : ''}</span>
                                           </li>
                                         </ul>
                                       </div>
@@ -459,11 +459,11 @@ function ProductDetails({ product, latestBlogs, categories }) {
                                         <ul>
                                           <li>
                                             <label>Total Area</label>{" "}
-                                            <span>2800 Sq. Ft</span>
+                                            <span>{product.propertyDetails.totalArea || product.propertyDetails.area} {getUnitTypeLabel(product.propertyDetails.unitType)}</span>
                                           </li>
                                           <li>
-                                            <label>Bedroom</label>{" "}
-                                            <span>150 Sq. Ft</span>
+                                            <label>Net Area</label>{" "}
+                                            <span>{product.propertyDetails.netArea || '-'} {product.propertyDetails.netArea ? getUnitTypeLabel(product.propertyDetails.unitType) : ''}</span>
                                           </li>
                                         </ul>
                                       </div>
@@ -472,12 +472,12 @@ function ProductDetails({ product, latestBlogs, categories }) {
                                       <div className="apartments-info-list apartments-info-list-color">
                                         <ul>
                                           <li>
-                                            <label>Belcony/Pets</label>{" "}
-                                            <span>Allowed</span>
+                                            <label>Land Area</label>{" "}
+                                            <span>{product.propertyDetails.landArea || '-'} {product.propertyDetails.landArea ? getUnitTypeLabel(product.propertyDetails.unitType) : ''}</span>
                                           </li>
                                           <li>
-                                            <label>Lounge</label>{" "}
-                                            <span>650 Sq. Ft</span>
+                                            <label>Built-up Area</label>
+                                            <span>{product.propertyDetails.builtUpArea || '-'} {product.propertyDetails.builtUpArea ? getUnitTypeLabel(product.propertyDetails.unitType) : ''}</span>
                                           </li>
                                         </ul>
                                       </div>
@@ -516,11 +516,11 @@ function ProductDetails({ product, latestBlogs, categories }) {
                                         <ul>
                                           <li>
                                             <label>Total Area</label>{" "}
-                                            <span>2800 Sq. Ft</span>
+                                            <span>{product.propertyDetails.totalArea || '-'} {product.propertyDetails.totalArea ? getUnitTypeLabel(product.propertyDetails.unitType) : ''}</span>
                                           </li>
                                           <li>
-                                            <label>Bedroom</label>{" "}
-                                            <span>150 Sq. Ft</span>
+                                            <label>Net Area</label>{" "}
+                                            <span>{product.propertyDetails.netArea || '-'} {product.propertyDetails.netArea ? getUnitTypeLabel(product.propertyDetails.unitType) : ''}</span>
                                           </li>
                                         </ul>
                                       </div>
@@ -529,12 +529,12 @@ function ProductDetails({ product, latestBlogs, categories }) {
                                       <div className="apartments-info-list apartments-info-list-color">
                                         <ul>
                                           <li>
-                                            <label>Belcony/Pets</label>{" "}
-                                            <span>Allowed</span>
+                                            <label>Land Area</label>{" "}
+                                            <span>{product.propertyDetails.landArea || '-'} {product.propertyDetails.landArea ? getUnitTypeLabel(product.propertyDetails.unitType) : ''}</span>
                                           </li>
                                           <li>
-                                            <label>Lounge</label>{" "}
-                                            <span>650 Sq. Ft</span>
+                                            <label>Built-up Area</label>
+                                            <span>{product.propertyDetails.builtUpArea || '-'} {product.propertyDetails.builtUpArea ? getUnitTypeLabel(product.propertyDetails.unitType) : ''}</span>
                                           </li>
                                         </ul>
                                       </div>
@@ -573,11 +573,11 @@ function ProductDetails({ product, latestBlogs, categories }) {
                                         <ul>
                                           <li>
                                             <label>Total Area</label>{" "}
-                                            <span>2800 Sq. Ft</span>
+                                            <span>{product.propertyDetails.totalArea || '-'} {product.propertyDetails.totalArea ? getUnitTypeLabel(product.propertyDetails.unitType) : ''}</span>
                                           </li>
                                           <li>
-                                            <label>Bedroom</label>{" "}
-                                            <span>150 Sq. Ft</span>
+                                            <label>Net Area</label>{" "}
+                                            <span>{product.propertyDetails.netArea || '-'} {product.propertyDetails.netArea ? getUnitTypeLabel(product.propertyDetails.unitType) : ''}</span>
                                           </li>
                                         </ul>
                                       </div>
@@ -586,12 +586,12 @@ function ProductDetails({ product, latestBlogs, categories }) {
                                       <div className="apartments-info-list apartments-info-list-color">
                                         <ul>
                                           <li>
-                                            <label>Belcony/Pets</label>{" "}
-                                            <span>Allowed</span>
+                                            <label>Land Area</label>{" "}
+                                            <span>{product.propertyDetails.landArea || '-'} {product.propertyDetails.landArea ? getUnitTypeLabel(product.propertyDetails.unitType) : ''}</span>
                                           </li>
                                           <li>
-                                            <label>Lounge</label>{" "}
-                                            <span>650 Sq. Ft</span>
+                                            <label>Built-up Area</label>
+                                            <span>{product.propertyDetails.builtUpArea || '-'} {product.propertyDetails.builtUpArea ? getUnitTypeLabel(product.propertyDetails.unitType) : ''}</span>
                                           </li>
                                         </ul>
                                       </div>
@@ -1018,16 +1018,30 @@ export async function getStaticProps({ params }) {
       shortDescription: property.short_description || property.meta_description || ''
     },
     propertyDetails: {
+      ...(property.property_details || {}),
       propertyId: property.id,
       area: property.area,
       unitType: property.unit_type || 'sq_m',
       propertyStatus: property.status,
       finishStatus: property.finish_status || 'without_finish',
+      totalArea: property.total_area || property.property_details?.totalArea || null,
+      netArea: property.net_area || property.property_details?.netArea || null,
+      builtUpArea: property.built_up_area || property.property_details?.builtUpArea || null,
+      landArea: property.land_area || property.property_details?.landArea || null,
       rooms: property.rooms || 0,
       bedrooms: property.bedrooms,
       baths: property.bathrooms,
       createdYear: property.year_built || new Date(property.created_at).getFullYear(),
-      ...(property.property_details || {})
+      areaBreakdown: {
+        livingArea: property.living_area ?? null,
+        kitchenArea: property.kitchen_area ?? null,
+        diningArea: property.dining_area ?? null,
+        bedroomArea: property.bedroom_area ?? null,
+        bathroomArea: property.bathroom_area ?? null,
+        storageArea: property.storage_area ?? null,
+        outdoorArea: property.outdoor_area ?? null,
+        otherArea: property.other_area ?? null,
+      }
     },
     factsAndFeatures: property.facts_and_features || {},
     amenities1: property.amenities1 || [],
