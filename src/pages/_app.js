@@ -58,6 +58,7 @@ const MyApp = ({ Component, ...rest }) => {
         title: property.title,
         productImg: property.product_img || property.images?.[0] || '',
         price: parseFloat(property.price) || 0,
+        currency: property.currency || 'USD',
         priceRange: property.price_range || [],
         discount: property.discount || 0,
         country: property.country || false,

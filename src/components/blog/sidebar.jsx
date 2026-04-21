@@ -325,8 +325,8 @@ const BlogSideBar = ({ popularProducts, topRatedProducts, latestdBlogs }) => {
                   <div className="product-info">
                     <div className="product-price">
                       <span>
-                        ${product.price}
-                        <label>/Month</label>
+                        {product.currency || '$'} {product.price}
+                        {(product.propertyDetails?.propertyStatus === 'for_rent' || product.propertyDetails?.propertyStatus === 'rented') && <label>/Month</label>}
                       </span>
                     </div>
                     <h2 className="product-title">

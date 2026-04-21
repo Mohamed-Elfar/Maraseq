@@ -22,6 +22,7 @@ const ProductItem = ({
   wishlistItem,
   compareItem,
 }) => {
+  console.log('ProductItem productData:', productData);
   const badgeText = formatPropertyStatus(productData.propertyDetails?.propertyStatus) || "For Sale";
   const defaultProductImage = "/img/product-3/1.jpg";
   const resolvedProductImage = !productData.productImg
@@ -140,7 +141,7 @@ const ProductItem = ({
         </div>
         <div className="product-info">
           <div className="product-price">
-            <span>{`From $${productData.price} / month`}</span>
+            <span>{`From ${productData.currency || '$'}${productData.price} / month`}</span>
           </div>
           <h2 className="product-title">
             <Link href={`/${baseUrl}/${slug}`}>{productData.title}</Link>

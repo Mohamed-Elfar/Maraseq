@@ -71,8 +71,8 @@ const ProductList = ({
 
             <div className="product-price">
               <span>
-                {`$ ${productData.price}`}
-                <label>/Month</label>
+                {productData.currency || '$'} {productData.price}
+                {(productData.propertyDetails?.propertyStatus === 'for_rent' || productData.propertyDetails?.propertyStatus === 'rented') && <label>/Month</label>}
               </span>
             </div>
           </div>

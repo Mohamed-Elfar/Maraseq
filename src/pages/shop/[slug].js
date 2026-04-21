@@ -287,7 +287,7 @@ function ProductDetails({ product, latestBlogs, categories }) {
                     </ul>
                     <ul>
                       <li>
-                        <label>Price:</label> <span>${product.price}</span>
+                        <label>Price:</label> <span>{product.currency} {product.price}</span>
                       </li>
                       <li>
                         <label>Property Status:</label>{" "}
@@ -731,8 +731,8 @@ function ProductDetails({ product, latestBlogs, categories }) {
                                   <a href={`/shop/${slug}`}>{product.title}</a>
                                 </h6>
                                 <div className="product-price">
-                                  <span>${product.price}</span>
-                                  <del>${discountedPrice}</del>
+                                  <span>{product.currency} {product.price}</span>
+                                  <del>{product.currency} {discountedPrice}</del>
                                 </div>
                               </div>
                             </div>
@@ -806,8 +806,8 @@ function ProductDetails({ product, latestBlogs, categories }) {
                             <div className="product-info">
                               <div className="product-price">
                                 <span>
-                                  ${product.price}
-                                  <label>/Month</label>
+                                  {product.currency} {product.price}
+                                  {(product.propertyDetails?.propertyStatus === 'for_rent' || product.propertyDetails?.propertyStatus === 'rented') && <label>/Month</label>}
                                 </span>
                               </div>
                               <h2 className="product-title">
@@ -956,6 +956,7 @@ export async function getServerSideProps({ params }) {
     title: property.title,
     productImg: property.product_img || property.images?.[0] || '',
     price: parseFloat(property.price) || 0,
+    currency: property.currency || 'USD',
     priceRange: property.price_range || [],
     discount: property.discount || 0,
     country: property.country || false,

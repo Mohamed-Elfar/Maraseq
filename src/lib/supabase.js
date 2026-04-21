@@ -108,14 +108,16 @@ export const getFormOptions = async (type = null) => {
     return {
       locations: data.filter(item => item.type === 'locations'),
       propertyTypes: data.filter(item => item.type === 'property_types'),
-      objectives: data.filter(item => item.type === 'objectives')
+      objectives: data.filter(item => item.type === 'objectives'),
+      priceTypes: data.filter(item => item.type === 'price_types')
     }
   } catch (error) {
     console.error('Error fetching form options:', error)
     return {
       locations: [],
       propertyTypes: [],
-      objectives: []
+      objectives: [],
+      priceTypes: []
     }
   }
 }
