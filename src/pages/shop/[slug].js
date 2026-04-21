@@ -253,6 +253,7 @@ function ProductDetails({ product, latestBlogs, categories }) {
                     </span>{" "}
                     {product.locantion}
                   </label>
+
                   <h4 className="title-2"> {product.description.title}</h4>
                   <p>{product.description.fullDescription}</p>
                   <p>{product.description.shortDescription}</p>
@@ -397,6 +398,21 @@ function ProductDetails({ product, latestBlogs, categories }) {
                               </div>
                             </div>
                           </div>
+
+                          {/* WhatsApp Contact Button */}
+                          <div className="text-center mt-4 mb-4">
+                            <a
+                              className="btn theme-btn-1 btn-effect-1 text-uppercase"
+                              href={`https://wa.me/+201102223231?text=${encodeURIComponent(`Hello, I am interested in this property: ${product.title}`)}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
+                            >
+                              <i className="fab fa-whatsapp" style={{ fontSize: '20px' }}></i>
+                              Contact on WhatsApp
+                            </a>
+                          </div>
+
                         </Tab.Pane>
                         <Tab.Pane eventKey="second">
                           <div className="ltn__product-tab-content-inner">
