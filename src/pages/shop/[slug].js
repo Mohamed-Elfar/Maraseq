@@ -910,7 +910,8 @@ function ProductDetails({ product, latestBlogs, categories }) {
 
 export default ProductDetails;
 
-export async function getStaticProps({ params }) {
+
+export async function getServerSideProps({ params }) {
   // get product data based on slug from Supabase
   const properties = await getProperties();
 
@@ -1016,16 +1017,8 @@ export async function getStaticProps({ params }) {
     return { notFound: true };
   }
 
-  return { props: { product, latestBlogs, categories }, revalidate: 1 };
+  return { props: { product, latestBlogs, categories } };
 }
 
-export async function getStaticPaths() {
-  // get the paths we want to pre render based on products from Supabase
-  const properties = await getProperties();
 
-  const paths = properties.map((property) => ({
-    params: { slug: productSlug(property.title) },
-  }));
-
-  return { paths, fallback: 'blocking' };
-}
+// getStaticPaths removed: not needed for getServerSideProps
