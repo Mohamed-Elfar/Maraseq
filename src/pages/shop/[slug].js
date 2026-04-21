@@ -277,8 +277,12 @@ function ProductDetails({ product, latestBlogs, categories }) {
                         <span>{product.propertyDetails.rooms || 0}</span>
                       </li>
                       <li>
-                        <label>Year built:</label>{" "}
-                        <span>{product.propertyDetails.createdYear}</span>
+                        <label>Living Room:</label>{" "}
+                        <span>{product.propertyDetails.livingRoom ?? 0}</span>
+                      </li>
+                      <li>
+                        <label>Nanny Room:</label>{" "}
+                        <span>{product.propertyDetails.nannyRoom ?? 0}</span>
                       </li>
                     </ul>
                     <ul>
@@ -294,6 +298,18 @@ function ProductDetails({ product, latestBlogs, categories }) {
                       <li>
                         <label>Finish Status:</label>{" "}
                         <span>{getFinishStatusLabel(product.propertyDetails.finishStatus)}</span>
+                      </li>
+                      <li>
+                        <label>Year built:</label>{" "}
+                        <span>{product.propertyDetails.createdYear}</span>
+                      </li>
+                      <li>
+                        <label>Number of floors:</label>{" "}
+                        <span>{product.propertyDetails.numberOfFloors ?? 0}</span>
+                      </li>
+                      <li>
+                        <label>Other distinctive addition:</label>{" "}
+                        <span>{product.propertyDetails.otherDistinctiveAddition || '-'}</span>
                       </li>
                     </ul>
                   </div>

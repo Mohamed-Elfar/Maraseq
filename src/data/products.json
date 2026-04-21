@@ -2,15 +2,25 @@
   {
     "id": "1",
     "carousel": [
-      { "img": "35.jpg" },
-      { "img": "31.jpg" },
-      { "img": "32.jpg" },
-      { "img": "33.jpg" }
+      {
+        "img": "35.jpg"
+      },
+      {
+        "img": "31.jpg"
+      },
+      {
+        "img": "32.jpg"
+      },
+      {
+        "img": "33.jpg"
+      }
     ],
     "title": "Luxury Villa in Rego Park",
     "productImg": "1.jpg",
     "price": 69,
-    "priceRange": ["Low Budget"],
+    "priceRange": [
+      "Low Budget"
+    ],
     "discount": 5,
     "country": true,
     "district": "Mission District Area",
@@ -18,13 +28,27 @@
     "featured": true,
     "new": true,
     "rent": false,
-    "photo": ["buying", "women", "women"],
-    "video": ["buying", "women"],
-    "bedBath": ["Single", "renting", "selling"],
+    "photo": [
+      "buying",
+      "women",
+      "women"
+    ],
+    "video": [
+      "buying",
+      "women"
+    ],
+    "bedBath": [
+      "Single",
+      "renting",
+      "selling"
+    ],
     "ratingCount": 5,
     "rating": 3,
     "saleCount": 5,
-    "category": ["buying", "renting"],
+    "category": [
+      "buying",
+      "renting"
+    ],
     "tag": [
       "Popular",
       "desgin",
@@ -61,6 +85,8 @@
       "rooms": 7,
       "bedrooms": 3,
       "baths": 2,
+      "livingRoom": 1,
+      "nannyRoom": 0,
       "createdYear": 1992
     },
     "factsAndFeatures": {
@@ -73,7 +99,6 @@
       "garden": "20 x 16 sq feet",
       "parking": "20 x 16 sq feet"
     },
-
     "amenities1": [
       "Air Conditioning",
       "Gym",
@@ -95,7 +120,9 @@
       "24x7 Security",
       "Indoor Game"
     ],
-    "AmenitiesList": ["Dishwasher"],
+    "AmenitiesList": [
+      "Dishwasher"
+    ],
     "agent": {
       "firstName": "Rosalina D.",
       "lastName": "Willaimson",
@@ -105,28 +132,46 @@
       "designation": "Traveller/Photographer",
       "raiting": 3,
       "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis distinctio, odio, eligendi suscipit reprehenderit atque.",
-      "social": ["FaPlay", "FaHome", "FaArrowRight", "FaArrowLeft"]
+      "social": [
+        "FaPlay",
+        "FaHome",
+        "FaArrowRight",
+        "FaArrowLeft"
+      ]
     },
-
     "gallery": {
       "img1": "14.jpg",
       "img2": "15.jpg",
       "img3": "16.jpg"
     },
-    "propertyTypes": ["House", "Office Villa", "Luxary Home"]
+    "propertyTypes": [
+      "House",
+      "Office Villa",
+      "Luxary Home"
+    ]
   },
   {
     "id": "2",
     "carousel": [
-      { "img": "35.jpg" },
-      { "img": "31.jpg" },
-      { "img": "32.jpg" },
-      { "img": "33.jpg" }
+      {
+        "img": "35.jpg"
+      },
+      {
+        "img": "31.jpg"
+      },
+      {
+        "img": "32.jpg"
+      },
+      {
+        "img": "33.jpg"
+      }
     ],
     "title": "New Apartment Nice View",
     "productImg": "2.jpg",
     "price": 159,
-    "priceRange": ["Medium"],
+    "priceRange": [
+      "Medium"
+    ],
     "discount": 5,
     "country": true,
     "district": "Pacific Heights Area",
@@ -134,13 +179,26 @@
     "featured": false,
     "new": false,
     "rent": true,
-    "photo": ["buying", "women", "women"],
-    "video": ["buying", "women"],
-    "bedBath": ["Single", "renting", "selling"],
+    "photo": [
+      "buying",
+      "women",
+      "women"
+    ],
+    "video": [
+      "buying",
+      "women"
+    ],
+    "bedBath": [
+      "Single",
+      "renting",
+      "selling"
+    ],
     "ratingCount": 3,
     "rating": 4,
     "saleCount": 10,
-    "category": ["buying"],
+    "category": [
+      "buying"
+    ],
     "tag": [
       "Popular",
       "desgin",
@@ -239,6 +297,8 @@
       "rooms": 7,
       "bedrooms": 3,
       "baths": 2,
+      "livingRoom": 2,
+      "nannyRoom": 1,
       "createdYear": 1992
     },
     "factsAndFeatures": {
@@ -251,7 +311,6 @@
       "garden": "20 x 16 sq feet",
       "parking": "20 x 16 sq feet"
     },
-
     "amenities1": [
       "Air Conditioning",
       "Gym",
@@ -273,7 +332,9 @@
       "24x7 Security",
       "Indoor Game"
     ],
-    "AmenitiesList": ["Kids Zone"],
+    "AmenitiesList": [
+      "Kids Zone"
+    ],
     "agent": {
       "firstName": "Rosalina D.",
       "lastName": "Willaimson",
@@ -283,28 +344,47 @@
       "designation": "Traveller/Photographer",
       "raiting": 3,
       "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis distinctio, odio, eligendi suscipit reprehenderit atque.",
-      "social": ["FaPlay", "FaHome", "FaArrowRight", "FaArrowLeft"]
+      "social": [
+        "FaPlay",
+        "FaHome",
+        "FaArrowRight",
+        "FaArrowLeft"
+      ]
     },
-
     "gallery": {
       "img1": "14.jpg",
       "img2": "15.jpg",
       "img3": "16.jpg"
     },
-    "propertyTypes": ["Apartment", "Office Villa", "Luxary Home", "Studio"]
+    "propertyTypes": [
+      "Apartment",
+      "Office Villa",
+      "Luxary Home",
+      "Studio"
+    ]
   },
   {
     "id": "3",
     "carousel": [
-      { "img": "35.jpg" },
-      { "img": "31.jpg" },
-      { "img": "32.jpg" },
-      { "img": "33.jpg" }
+      {
+        "img": "35.jpg"
+      },
+      {
+        "img": "31.jpg"
+      },
+      {
+        "img": "32.jpg"
+      },
+      {
+        "img": "33.jpg"
+      }
     ],
     "title": "Citra Puri California Living",
     "productImg": "3.jpg",
     "price": 49,
-    "priceRange": ["High Budget"],
+    "priceRange": [
+      "High Budget"
+    ],
     "discount": 15,
     "country": false,
     "district": "Noe Valley Zones",
@@ -312,13 +392,27 @@
     "featured": false,
     "new": true,
     "rent": false,
-    "photo": ["buying", "women", "women"],
-    "video": ["buying", "women"],
-    "bedBath": ["Single", "renting", "selling"],
+    "photo": [
+      "buying",
+      "women",
+      "women"
+    ],
+    "video": [
+      "buying",
+      "women"
+    ],
+    "bedBath": [
+      "Single",
+      "renting",
+      "selling"
+    ],
     "ratingCount": 2,
     "rating": 3,
     "saleCount": 15,
-    "category": ["buying", "selling"],
+    "category": [
+      "buying",
+      "selling"
+    ],
     "tag": [
       "Popular",
       "desgin",
@@ -362,7 +456,6 @@
       "garden": "20 x 16 sq feet",
       "parking": "20 x 16 sq feet"
     },
-
     "amenities1": [
       "Air Conditioning",
       "Gym",
@@ -384,7 +477,9 @@
       "24x7 Security",
       "Indoor Game"
     ],
-    "AmenitiesList": ["Floor Coverings"],
+    "AmenitiesList": [
+      "Floor Coverings"
+    ],
     "agent": {
       "firstName": "Rosalina D.",
       "lastName": "Willaimson",
@@ -394,28 +489,47 @@
       "designation": "Traveller/Photographer",
       "raiting": 3,
       "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis distinctio, odio, eligendi suscipit reprehenderit atque.",
-      "social": ["FaPlay", "FaHome", "FaArrowRight", "FaArrowLeft"]
+      "social": [
+        "FaPlay",
+        "FaHome",
+        "FaArrowRight",
+        "FaArrowLeft"
+      ]
     },
-
     "gallery": {
       "img1": "14.jpg",
       "img2": "15.jpg",
       "img3": "16.jpg"
     },
-    "propertyTypes": ["House", "Single Family", "Luxary Home", "Studio"]
+    "propertyTypes": [
+      "House",
+      "Single Family",
+      "Luxary Home",
+      "Studio"
+    ]
   },
   {
     "id": "4",
     "carousel": [
-      { "img": "35.jpg" },
-      { "img": "31.jpg" },
-      { "img": "32.jpg" },
-      { "img": "33.jpg" }
+      {
+        "img": "35.jpg"
+      },
+      {
+        "img": "31.jpg"
+      },
+      {
+        "img": "32.jpg"
+      },
+      {
+        "img": "33.jpg"
+      }
     ],
     "title": "Get Best Property On Our",
     "productImg": "4.jpg",
     "price": 19,
-    "priceRange": ["Medium"],
+    "priceRange": [
+      "Medium"
+    ],
     "discount": 10,
     "country": false,
     "district": "Mission District Area",
@@ -423,13 +537,28 @@
     "featured": true,
     "new": false,
     "rent": true,
-    "photo": ["buying", "women", "men"],
-    "video": ["buying", "women", "children"],
-    "bedBath": ["Single", "renting", "selling"],
+    "photo": [
+      "buying",
+      "women",
+      "men"
+    ],
+    "video": [
+      "buying",
+      "women",
+      "children"
+    ],
+    "bedBath": [
+      "Single",
+      "renting",
+      "selling"
+    ],
     "ratingCount": 5,
     "rating": 5,
     "saleCount": 20,
-    "category": ["buying", "renting"],
+    "category": [
+      "buying",
+      "renting"
+    ],
     "tag": [
       "Popular",
       "desgin",
@@ -473,7 +602,6 @@
       "garden": "20 x 16 sq feet",
       "parking": "20 x 16 sq feet"
     },
-
     "amenities1": [
       "Air Conditioning",
       "Gym",
@@ -495,7 +623,9 @@
       "24x7 Security",
       "Indoor Game"
     ],
-    "AmenitiesList": ["Floor Coverings"],
+    "AmenitiesList": [
+      "Floor Coverings"
+    ],
     "agent": {
       "firstName": "Rosalina D.",
       "lastName": "Willaimson",
@@ -505,9 +635,13 @@
       "designation": "Traveller/Photographer",
       "raiting": 3,
       "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis distinctio, odio, eligendi suscipit reprehenderit atque.",
-      "social": ["FaPlay", "FaHome", "FaArrowRight", "FaArrowLeft"]
+      "social": [
+        "FaPlay",
+        "FaHome",
+        "FaArrowRight",
+        "FaArrowLeft"
+      ]
     },
-
     "gallery": {
       "img1": "14.jpg",
       "img2": "15.jpg",
@@ -524,15 +658,25 @@
   {
     "id": "5",
     "carousel": [
-      { "img": "35.jpg" },
-      { "img": "31.jpg" },
-      { "img": "32.jpg" },
-      { "img": "33.jpg" }
+      {
+        "img": "35.jpg"
+      },
+      {
+        "img": "31.jpg"
+      },
+      {
+        "img": "32.jpg"
+      },
+      {
+        "img": "33.jpg"
+      }
     ],
     "title": "New Apartment Nice View",
     "productImg": "5.jpg",
     "price": 149,
-    "priceRange": ["Low Budget"],
+    "priceRange": [
+      "Low Budget"
+    ],
     "discount": 5,
     "country": true,
     "district": "Mission District Area",
@@ -540,13 +684,27 @@
     "featured": true,
     "new": true,
     "rent": true,
-    "photo": ["buying", "women", "women"],
-    "video": ["buying", "women"],
-    "bedBath": ["Single", "renting", "selling"],
+    "photo": [
+      "buying",
+      "women",
+      "women"
+    ],
+    "video": [
+      "buying",
+      "women"
+    ],
+    "bedBath": [
+      "Single",
+      "renting",
+      "selling"
+    ],
     "ratingCount": 5,
     "rating": 5,
     "saleCount": 90,
-    "category": ["buying", "renting"],
+    "category": [
+      "buying",
+      "renting"
+    ],
     "tag": [
       "Popular",
       "desgin",
@@ -590,7 +748,6 @@
       "garden": "20 x 16 sq feet",
       "parking": "20 x 16 sq feet"
     },
-
     "amenities1": [
       "Air Conditioning",
       "Gym",
@@ -612,7 +769,9 @@
       "24x7 Security",
       "Indoor Game"
     ],
-    "AmenitiesList": ["Supermarket"],
+    "AmenitiesList": [
+      "Supermarket"
+    ],
     "agent": {
       "firstName": "Rosalina D.",
       "lastName": "Willaimson",
@@ -622,28 +781,47 @@
       "designation": "Traveller/Photographer",
       "raiting": 3,
       "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis distinctio, odio, eligendi suscipit reprehenderit atque.",
-      "social": ["FaPlay", "FaHome", "FaArrowRight", "FaArrowLeft"]
+      "social": [
+        "FaPlay",
+        "FaHome",
+        "FaArrowRight",
+        "FaArrowLeft"
+      ]
     },
-
     "gallery": {
       "img1": "14.jpg",
       "img2": "15.jpg",
       "img3": "16.jpg"
     },
-    "propertyTypes": ["House", "Single Family", "Apartment", "Office Villa"]
+    "propertyTypes": [
+      "House",
+      "Single Family",
+      "Apartment",
+      "Office Villa"
+    ]
   },
   {
     "id": "6",
     "carousel": [
-      { "img": "35.jpg" },
-      { "img": "31.jpg" },
-      { "img": "32.jpg" },
-      { "img": "33.jpg" }
+      {
+        "img": "35.jpg"
+      },
+      {
+        "img": "31.jpg"
+      },
+      {
+        "img": "32.jpg"
+      },
+      {
+        "img": "33.jpg"
+      }
     ],
     "title": "Citra Puri Los Angles Living",
     "productImg": "6.jpg",
     "price": 215,
-    "priceRange": ["Low"],
+    "priceRange": [
+      "Low"
+    ],
     "discount": 5,
     "country": true,
     "district": "Mission District Area",
@@ -651,13 +829,28 @@
     "featured": true,
     "new": false,
     "rent": true,
-    "photo": ["buying", "women", "women"],
-    "video": ["buying", "women"],
-    "bedBath": ["Single", "renting", "selling"],
+    "photo": [
+      "buying",
+      "women",
+      "women"
+    ],
+    "video": [
+      "buying",
+      "women"
+    ],
+    "bedBath": [
+      "Single",
+      "renting",
+      "selling"
+    ],
     "ratingCount": 2,
     "rating": 3,
     "saleCount": 25,
-    "category": ["buying", "selling", "renting"],
+    "category": [
+      "buying",
+      "selling",
+      "renting"
+    ],
     "tag": [
       "Popular",
       "desgin",
@@ -701,7 +894,6 @@
       "garden": "20 x 16 sq feet",
       "parking": "20 x 16 sq feet"
     },
-
     "amenities1": [
       "Air Conditioning",
       "Gym",
@@ -723,7 +915,9 @@
       "24x7 Security",
       "Indoor Game"
     ],
-    "AmenitiesList": ["Kids Zone"],
+    "AmenitiesList": [
+      "Kids Zone"
+    ],
     "agent": {
       "firstName": "Rosalina D.",
       "lastName": "Willaimson",
@@ -733,28 +927,48 @@
       "designation": "Traveller/Photographer",
       "raiting": 3,
       "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis distinctio, odio, eligendi suscipit reprehenderit atque.",
-      "social": ["FaPlay", "FaHome", "FaArrowRight", "FaArrowLeft"]
+      "social": [
+        "FaPlay",
+        "FaHome",
+        "FaArrowRight",
+        "FaArrowLeft"
+      ]
     },
-
     "gallery": {
       "img1": "14.jpg",
       "img2": "15.jpg",
       "img3": "16.jpg"
     },
-    "propertyTypes": ["House", "Single Family", "Apartment", "Office Villa"]
+    "propertyTypes": [
+      "House",
+      "Single Family",
+      "Apartment",
+      "Office Villa"
+    ]
   },
   {
     "id": "7",
     "carousel": [
-      { "img": "35.jpg" },
-      { "img": "31.jpg" },
-      { "img": "32.jpg" },
-      { "img": "33.jpg" }
+      {
+        "img": "35.jpg"
+      },
+      {
+        "img": "31.jpg"
+      },
+      {
+        "img": "32.jpg"
+      },
+      {
+        "img": "33.jpg"
+      }
     ],
     "title": "Citra Puri Los Angles Living",
     "productImg": "1.jpg",
     "price": 225,
-    "priceRange": ["Low Budget", "Medium"],
+    "priceRange": [
+      "Low Budget",
+      "Medium"
+    ],
     "discount": 5,
     "country": false,
     "district": "Mission District Area",
@@ -762,13 +976,28 @@
     "featured": true,
     "new": true,
     "rent": false,
-    "photo": ["buying", "women", "women"],
-    "video": ["buying", "women"],
-    "bedBath": ["Single", "renting", "selling"],
+    "photo": [
+      "buying",
+      "women",
+      "women"
+    ],
+    "video": [
+      "buying",
+      "women"
+    ],
+    "bedBath": [
+      "Single",
+      "renting",
+      "selling"
+    ],
     "ratingCount": 5,
     "rating": 5,
     "saleCount": 30,
-    "category": ["buying", "renting", "selling"],
+    "category": [
+      "buying",
+      "renting",
+      "selling"
+    ],
     "tag": [
       "Popular",
       "desgin",
@@ -812,7 +1041,6 @@
       "garden": "20 x 16 sq feet",
       "parking": "20 x 16 sq feet"
     },
-
     "amenities1": [
       "Air Conditioning",
       "Gym",
@@ -834,7 +1062,9 @@
       "24x7 Security",
       "Indoor Game"
     ],
-    "AmenitiesList": ["Supermarket"],
+    "AmenitiesList": [
+      "Supermarket"
+    ],
     "agent": {
       "firstName": "Rosalina D.",
       "lastName": "Willaimson",
@@ -844,28 +1074,45 @@
       "designation": "Traveller/Photographer",
       "raiting": 3,
       "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis distinctio, odio, eligendi suscipit reprehenderit atque.",
-      "social": ["FaPlay", "FaHome", "FaArrowRight", "FaArrowLeft"]
+      "social": [
+        "FaPlay",
+        "FaHome",
+        "FaArrowRight",
+        "FaArrowLeft"
+      ]
     },
-
     "gallery": {
       "img1": "14.jpg",
       "img2": "15.jpg",
       "img3": "16.jpg"
     },
-    "propertyTypes": ["Office Villa"]
+    "propertyTypes": [
+      "Office Villa"
+    ]
   },
   {
     "id": "8",
     "carousel": [
-      { "img": "35.jpg" },
-      { "img": "31.jpg" },
-      { "img": "32.jpg" },
-      { "img": "33.jpg" }
+      {
+        "img": "35.jpg"
+      },
+      {
+        "img": "31.jpg"
+      },
+      {
+        "img": "32.jpg"
+      },
+      {
+        "img": "33.jpg"
+      }
     ],
     "title": "New Apartment Nice View",
     "productImg": "2.jpg",
     "price": 500,
-    "priceRange": ["Low Budget", "Medium"],
+    "priceRange": [
+      "Low Budget",
+      "Medium"
+    ],
     "discount": 5,
     "country": false,
     "district": "Mission District Area",
@@ -873,13 +1120,28 @@
     "featured": false,
     "new": true,
     "rent": true,
-    "photo": ["buying", "women", "women"],
-    "video": ["buying", "women"],
-    "bedBath": ["Single", "renting", "selling"],
+    "photo": [
+      "buying",
+      "women",
+      "women"
+    ],
+    "video": [
+      "buying",
+      "women"
+    ],
+    "bedBath": [
+      "Single",
+      "renting",
+      "selling"
+    ],
     "ratingCount": 5,
     "rating": 5,
     "saleCount": 35,
-    "category": ["buying", "renting", "selling"],
+    "category": [
+      "buying",
+      "renting",
+      "selling"
+    ],
     "tag": [
       "Popular",
       "desgin",
@@ -923,7 +1185,6 @@
       "garden": "20 x 16 sq feet",
       "parking": "20 x 16 sq feet"
     },
-
     "amenities1": [
       "Air Conditioning",
       "Gym",
@@ -945,7 +1206,9 @@
       "24x7 Security",
       "Indoor Game"
     ],
-    "AmenitiesList": ["Supermarket"],
+    "AmenitiesList": [
+      "Supermarket"
+    ],
     "agent": {
       "firstName": "Rosalina D.",
       "lastName": "Willaimson",
@@ -955,28 +1218,44 @@
       "designation": "Traveller/Photographer",
       "raiting": 3,
       "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis distinctio, odio, eligendi suscipit reprehenderit atque.",
-      "social": ["FaPlay", "FaHome", "FaArrowRight", "FaArrowLeft"]
+      "social": [
+        "FaPlay",
+        "FaHome",
+        "FaArrowRight",
+        "FaArrowLeft"
+      ]
     },
-
     "gallery": {
       "img1": "14.jpg",
       "img2": "15.jpg",
       "img3": "16.jpg"
     },
-    "propertyTypes": ["Single Family"]
+    "propertyTypes": [
+      "Single Family"
+    ]
   },
   {
     "id": "9",
     "carousel": [
-      { "img": "35.jpg" },
-      { "img": "31.jpg" },
-      { "img": "32.jpg" },
-      { "img": "33.jpg" }
+      {
+        "img": "35.jpg"
+      },
+      {
+        "img": "31.jpg"
+      },
+      {
+        "img": "32.jpg"
+      },
+      {
+        "img": "33.jpg"
+      }
     ],
     "title": "Citra Puri Los Angles Living",
     "productImg": "4.jpg",
     "price": 270,
-    "priceRange": ["Low Budget"],
+    "priceRange": [
+      "Low Budget"
+    ],
     "discount": 5,
     "country": true,
     "district": "Mission District Area",
@@ -984,13 +1263,27 @@
     "featured": false,
     "new": true,
     "rent": false,
-    "photo": ["buying", "women", "women"],
-    "video": ["buying", "women"],
-    "bedBath": ["Single", "renting", "selling"],
+    "photo": [
+      "buying",
+      "women",
+      "women"
+    ],
+    "video": [
+      "buying",
+      "women"
+    ],
+    "bedBath": [
+      "Single",
+      "renting",
+      "selling"
+    ],
     "ratingCount": 5,
     "rating": 5,
     "saleCount": 90,
-    "category": ["buying", "selling"],
+    "category": [
+      "buying",
+      "selling"
+    ],
     "tag": [
       "Popular",
       "desgin",
@@ -1034,7 +1327,6 @@
       "garden": "20 x 16 sq feet",
       "parking": "20 x 16 sq feet"
     },
-
     "amenities1": [
       "Air Conditioning",
       "Gym",
@@ -1056,7 +1348,9 @@
       "24x7 Security",
       "Indoor Game"
     ],
-    "AmenitiesList": ["Supermarket"],
+    "AmenitiesList": [
+      "Supermarket"
+    ],
     "agent": {
       "firstName": "Rosalina D.",
       "lastName": "Willaimson",
@@ -1066,14 +1360,21 @@
       "designation": "Traveller/Photographer",
       "raiting": 3,
       "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis distinctio, odio, eligendi suscipit reprehenderit atque.",
-      "social": ["FaPlay", "FaHome", "FaArrowRight", "FaArrowLeft"]
+      "social": [
+        "FaPlay",
+        "FaHome",
+        "FaArrowRight",
+        "FaArrowLeft"
+      ]
     },
-
     "gallery": {
       "img1": "14.jpg",
       "img2": "15.jpg",
       "img3": "16.jpg"
     },
-    "propertyTypes": ["House", "Single Family"]
+    "propertyTypes": [
+      "House",
+      "Single Family"
+    ]
   }
 ]

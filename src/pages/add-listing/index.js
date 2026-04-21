@@ -408,9 +408,36 @@ function AddListingPage() {
                             <Col xs={12} md={6}>
                               <div className="input-item input-item-textarea ltn__custom-icon">
                                 <input
-                                  type="text"
-                                  name="ltn__name"
+                                  type="number"
+                                  min="0"
+                                  name="rooms"
                                   placeholder="Rooms (*only numbers)"
+                                />
+                                <span className="inline-icon">
+                                  <FaPencilAlt />
+                                </span>
+                              </div>
+                            </Col>
+                            <Col xs={12} md={6}>
+                              <div className="input-item input-item-textarea ltn__custom-icon">
+                                <input
+                                  type="number"
+                                  min="0"
+                                  name="livingRoom"
+                                  placeholder="Living Room (*only numbers)"
+                                />
+                                <span className="inline-icon">
+                                  <FaPencilAlt />
+                                </span>
+                              </div>
+                            </Col>
+                            <Col xs={12} md={6}>
+                              <div className="input-item input-item-textarea ltn__custom-icon">
+                                <input
+                                  type="number"
+                                  min="0"
+                                  name="nannyRoom"
+                                  placeholder="Nanny Room (*only numbers)"
                                 />
                                 <span className="inline-icon">
                                   <FaPencilAlt />
