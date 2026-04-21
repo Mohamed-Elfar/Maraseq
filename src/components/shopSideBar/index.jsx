@@ -105,7 +105,7 @@ const SideBar = ({
                 onChange={onPriceFilterChange}
               />
             </div>
-            <small>
+            <small className="mt-3 d-block">
               Price bounds: {formatAmount(0)} - {formatAmount(1000000)}
             </small>
           </div>
