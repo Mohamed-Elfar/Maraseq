@@ -74,7 +74,7 @@ function BrandCarouselOne({ data }) {
     { src: maraseqArLogo.src, alt: "Maraseq Arabic Logo" },
     { src: separatorLogo.src, alt: "Separator Logo" },
     { src: maraseqEnLogo.src, alt: "Maraseq English Logo" },
-        { src: separatorLogo.src, alt: "Separator Logo" },
+    { src: separatorLogo.src, alt: "Separator Logo" },
 
   ];
 
