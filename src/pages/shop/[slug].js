@@ -190,7 +190,16 @@ function ProductDetails({ product, latestBlogs, categories }) {
     return (match && match[7].length === 11) ? match[7] : null;
   };
 
+  // Check if video is a direct file upload or YouTube URL
+  const isDirectVideoFile = (url) => {
+    if (!url) return false;
+    const videoExtensions = ['.mp4', '.webm', '.ogg', '.mov', '.avi'];
+    const urlLower = url.toLowerCase();
+    return videoExtensions.some(ext => urlLower.includes(ext));
+  };
+
   const videoId = getYouTubeVideoId(product.videoUrl);
+  const isVideoFile = isDirectVideoFile(product.videoUrl);
 
   return (
     <>
@@ -203,6 +212,40 @@ function ProductDetails({ product, latestBlogs, categories }) {
             videoId={videoId}
             onClose={() => setOpen(false)}
           />
+        )}
+
+        {/* Custom Video Modal for direct video files */}
+        {isVideoFile && (
+          <div
+            className={`modal fade ${isOpen ? 'show d-block' : ''}`}
+            tabIndex="-1"
+            style={{ backgroundColor: 'rgba(0,0,0,0.8)' }}
+            onClick={() => setOpen(false)}
+          >
+            <div className="modal-dialog modal-dialog-centered modal-lg">
+              <div className="modal-content bg-dark">
+                <div className="modal-body p-0">
+                  <button
+                    type="button"
+                    className="btn-close btn-close-white position-absolute top-0 end-0 m-3 z-1"
+                    onClick={() => setOpen(false)}
+                    style={{ zIndex: 1050 }}
+                  ></button>
+                  <video
+                    controls
+                    autoPlay
+                    className="w-100"
+                    style={{ maxHeight: '80vh' }}
+                  >
+                    <source src={product.videoUrl} type="video/mp4" />
+                    <source src={product.videoUrl} type="video/webm" />
+                    <source src={product.videoUrl} type="video/ogg" />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+              </div>
+            </div>
+          </div>
         )}
         {/* <!-- BREADCRUMB AREA START --> */}
 
@@ -605,7 +648,7 @@ function ProductDetails({ product, latestBlogs, categories }) {
 
                   {/* <!-- APARTMENTS PLAN AREA END --> */}
 
-                  {videoId && (
+                  {(videoId || isVideoFile) && (
                     <>
                       <h4 className="title-2">Property Video</h4>
                       <div
