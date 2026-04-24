@@ -23,6 +23,7 @@ import ReactPaginate from "react-paginate";
 import CallToAction from "@/components/callToAction";
 import { useRouter } from "next/router";
 import { formatPropertyStatus } from "@/utils/property-status";
+import { supabase } from "@/lib/supabase";
 
 const SEARCH_KEYS = ["title"];
 const PRICE_MIN = 0;
@@ -42,7 +43,15 @@ const PRICE_BUCKETS = [
 function ShopLeftSideBar() {
   const router = useRouter();
   const { products } = useSelector((state) => state.product);
-  console.log('Products in Redux store:', products.length, products);
+  const [dbCategories, setDbCategories] = useState([]);
+  console.log('Products in Redux store:', products.length);
+  // Show sample product categories for debugging
+  if (products.length > 0) {
+    console.log('Sample product categories:');
+    products.slice(0, 3).forEach(p => {
+      console.log(`- ${p.title}: category=${JSON.stringify(p.category)}`);
+    });
+  }
   const [sortType, setSortType] = useState("");
   const [sortValue, setSortValue] = useState("");
   const [filterSortType, setFilterSortType] = useState("");
@@ -62,7 +71,42 @@ function ShopLeftSideBar() {
   const selectedLocationQuery =
     typeof router.query.location === "string" ? router.query.location : "";
 
-  const categories = useMemo(() => getIndividualCategories(products), [products]);
+  const categories = useMemo(() => {
+    // Count properties in each category
+    const categoryCounts = new Map();
+
+    products.forEach((product) => {
+      if (product.category) {
+        // Handle category as array
+        if (Array.isArray(product.category)) {
+          product.category.forEach(cat => {
+            if (cat) {
+              categoryCounts.set(cat, (categoryCounts.get(cat) || 0) + 1);
+            }
+          });
+        } else if (typeof product.category === 'string') {
+          // Handle category as string
+          categoryCounts.set(product.category, (categoryCounts.get(product.category) || 0) + 1);
+        }
+      }
+    });
+
+    // Combine database categories with property counts
+    const result = dbCategories.map(dbCat => ({
+      name: dbCat.name,
+      count: categoryCounts.get(dbCat.name) || 0
+    }));
+
+    // Add any categories that exist in products but not in database
+    categoryCounts.forEach((count, name) => {
+      if (!dbCategories.find(dbCat => dbCat.name === name)) {
+        result.push({ name, count });
+      }
+    });
+
+    console.log('Final categories:', result);
+    return result;
+  }, [products, dbCategories]);
   const statusOptions = useMemo(() => {
     const statusMap = new Map();
 
@@ -135,6 +179,64 @@ function ShopLeftSideBar() {
     setSelectedLocation(selectedLocationQuery);
     setOffset(0);
   }, [selectedLocationQuery]);
+
+  // Fetch categories from database
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        // Try to fetch from a categories table first
+        const { data: categoriesData, error } = await supabase
+          .from('categories')
+          .select('*')
+          .eq('type', 'properties')
+          .eq('visible', true)
+          .order('order_index', { ascending: true });
+
+        if (!error && categoriesData) {
+          console.log('Categories from database:', categoriesData);
+          console.log('Categories query filters: type=properties, visible=true');
+          // Filter again to ensure only property categories
+          const propertyCategories = categoriesData.filter(cat =>
+            cat.type === 'properties' && cat.visible === true
+          );
+          console.log('Filtered property categories:', propertyCategories);
+          setDbCategories(propertyCategories);
+        } else {
+          // If no categories table, try to get unique categories from properties
+          const { data: propertiesData } = await supabase
+            .from('properties')
+            .select('category')
+            .not('category', 'is', null);
+
+          if (propertiesData) {
+            const allCategories = new Set();
+            propertiesData.forEach(prop => {
+              if (prop.category) {
+                if (Array.isArray(prop.category)) {
+                  prop.category.forEach(cat => allCategories.add(cat));
+                } else {
+                  allCategories.add(prop.category);
+                }
+              }
+            });
+
+            const categoriesArray = Array.from(allCategories).map((cat, index) => ({
+              id: index,
+              name: cat,
+              count: 0 // Will be updated when products are loaded
+            }));
+
+            console.log('Categories from properties:', categoriesArray);
+            setDbCategories(categoriesArray);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   // Update currentItems when products change
   useEffect(() => {
