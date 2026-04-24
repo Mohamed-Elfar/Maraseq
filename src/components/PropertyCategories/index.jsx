@@ -17,7 +17,13 @@ const resolveImageSrc = (value, fallbackImage) => {
     return fallbackImage;
   }
 
-  if (/^(https?:)?\/\//i.test(normalizedValue) || normalizedValue.startsWith("/")) {
+  // Handle full URLs (including Supabase URLs)
+  if (/^(https?:)?\/\//i.test(normalizedValue)) {
+    return normalizedValue;
+  }
+
+  // Handle absolute paths
+  if (normalizedValue.startsWith("/")) {
     return normalizedValue;
   }
 
@@ -59,16 +65,11 @@ const getDisplayCategories = (products, propertyCategories) => {
       .map((category) => ({
         name: category.name,
         description: category.description,
-        image_url:
-          category.image_url ||
-          category.image ||
-          category.featured_image ||
-          category.thumbImage ||
-          "",
+        image_url: String(category.image_url || ""),
         count: counts.get(normalizeCategoryKey(category.name)) || 0,
       }))
       .filter((category) => String(category.name || "").trim())
-      .slice(0, 5);
+      .slice(0, 7);
   }
 
   return Array.from(counts.entries())
