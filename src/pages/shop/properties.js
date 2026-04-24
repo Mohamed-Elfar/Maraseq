@@ -108,7 +108,19 @@ function ShopLeftSideBar() {
     return result;
   }, [products, dbCategories]);
   const statusOptions = useMemo(() => {
-    const statusMap = new Map();
+    // Define all possible property statuses
+    const allStatuses = [
+      'for_sale',
+      'for_rent',
+      'rented',
+      'sold',
+      'under_contract',
+      'coming_soon',
+      'off_market'
+    ];
+
+    // Count properties in each status
+    const statusCounts = new Map();
 
     products.forEach((product) => {
       const statusValue =
@@ -116,13 +128,20 @@ function ShopLeftSideBar() {
       const statusLabel = formatPropertyStatus(statusValue);
 
       if (!statusLabel) return;
-      statusMap.set(statusLabel, (statusMap.get(statusLabel) || 0) + 1);
+      statusCounts.set(statusLabel, (statusCounts.get(statusLabel) || 0) + 1);
     });
 
-    return Array.from(statusMap.entries()).map(([name, count]) => ({
-      name,
-      count,
-    }));
+    // Create result with all statuses, even those with 0 count
+    const result = allStatuses.map(status => {
+      const statusLabel = formatPropertyStatus(status);
+      return {
+        name: statusLabel,
+        count: statusCounts.get(statusLabel) || 0
+      };
+    });
+
+    console.log('All property statuses:', result);
+    return result;
   }, [products]);
 
   const bedBathOptions = useMemo(() => {
