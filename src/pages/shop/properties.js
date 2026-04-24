@@ -26,17 +26,23 @@ import { formatPropertyStatus } from "@/utils/property-status";
 
 const SEARCH_KEYS = ["title"];
 const PRICE_MIN = 0;
-const PRICE_MAX = 1000000;
+const PRICE_MAX = 2000000000;
 const PRICE_BUCKETS = [
-  { name: "0 - 100,000", min: 0, max: 100000 },
-  { name: "100,001 - 250,000", min: 100001, max: 250000 },
-  { name: "250,001 - 500,000", min: 250001, max: 500000 },
-  { name: "500,001 - 1,000,000", min: 500001, max: 1000000 },
+  { name: "0 - 500,000", min: 0, max: 500000 },
+  { name: "500,001 - 2,000,000", min: 500001, max: 2000000 },
+  { name: "2,000,001 - 5,000,000", min: 2000001, max: 5000000 },
+  { name: "5,000,001 - 10,000,000", min: 5000001, max: 10000000 },
+  { name: "10,000,001 - 50,000,000", min: 10000001, max: 50000000 },
+  { name: "50,000,001 - 100,000,000", min: 50000001, max: 100000000 },
+  { name: "100,000,001 - 500,000,000", min: 100000001, max: 500000000 },
+  { name: "500,000,001 - 1,000,000,000", min: 500000001, max: 1000000000 },
+  { name: "1,000,000,001 - 2,000,000,000", min: 1000000001, max: 2000000000 },
 ];
 
 function ShopLeftSideBar() {
   const router = useRouter();
   const { products } = useSelector((state) => state.product);
+  console.log('Products in Redux store:', products.length, products);
   const [sortType, setSortType] = useState("");
   const [sortValue, setSortValue] = useState("");
   const [filterSortType, setFilterSortType] = useState("");
@@ -46,12 +52,11 @@ function ShopLeftSideBar() {
   const pageLimit = 6;
   const [currentItems, setCurrentItems] = useState(products);
   const [pageCount, setPageCount] = useState(0);
+  console.log('Initial currentItems:', currentItems.length);
   const [selectedStatuses, setSelectedStatuses] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedBedBaths, setSelectedBedBaths] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState("");
-  const [selectedPriceRanges, setSelectedPriceRanges] = useState([]);
-  const [priceFilterValue, setPriceFilterValue] = useState([PRICE_MIN, PRICE_MAX]);
   const selectedCategory =
     typeof router.query.category === "string" ? router.query.category : "";
   const selectedLocationQuery =
@@ -98,22 +103,6 @@ function ShopLeftSideBar() {
     }));
   }, [products]);
 
-  const getProductPrice = (product) => {
-    const numericPrice = Number(product?.price);
-    return Number.isFinite(numericPrice) ? numericPrice : 0;
-  };
-
-  const priceRanges = useMemo(() => {
-    return PRICE_BUCKETS.map((bucket) => ({
-      name: bucket.name,
-      min: bucket.min,
-      max: bucket.max,
-      count: products.filter((product) => {
-        const price = getProductPrice(product);
-        return price >= bucket.min && price <= bucket.max;
-      }).length,
-    }));
-  }, [products]);
 
   const { cartItems } = useSelector((state) => state.cart);
   const { wishlistItems } = useSelector((state) => state.wishlist);
@@ -146,6 +135,15 @@ function ShopLeftSideBar() {
     setSelectedLocation(selectedLocationQuery);
     setOffset(0);
   }, [selectedLocationQuery]);
+
+  // Update currentItems when products change
+  useEffect(() => {
+    console.log('Products changed, updating currentItems:', products.length);
+    if (products.length > 0) {
+      setCurrentItems(products.slice(0, pageLimit));
+      setPageCount(Math.ceil(products.length / pageLimit));
+    }
+  }, [products]);
 
   const getProductBedBathLabel = (product) => {
     const bedrooms = product?.propertyDetails?.bedrooms ?? product?.bedrooms;
@@ -191,98 +189,82 @@ function ShopLeftSideBar() {
     });
   };
 
-  const handlePriceRangeToggle = (rangeName, isChecked) => {
-    setOffset(0);
-    setSelectedPriceRanges((prev) => {
-      if (isChecked) {
-        return prev.includes(rangeName) ? prev : [...prev, rangeName];
-      }
-
-      return prev.filter((name) => name !== rangeName);
-    });
-  };
-
-  const handlePriceFilterChange = (rangeValues) => {
-    setOffset(0);
-    setPriceFilterValue(rangeValues);
-  };
 
   useEffect(() => {
+    // Don't run if products is empty and not loaded yet
+    if (products.length === 0) {
+      return;
+    }
+
     let filteredProducts = getSortedProducts(products, sortType, sortValue);
+    console.log('After initial sort:', filteredProducts.length);
 
     const filterSortedProducts = getSortedProducts(
       filteredProducts,
       filterSortType,
       filterSortValue
     );
-
     filteredProducts = filterSortedProducts;
-
-    if (
-      selectedStatuses.length > 0 &&
-      selectedStatuses.length < statusOptions.length
-    ) {
-      filteredProducts = filteredProducts.filter((product) => {
-        const statusLabel = formatPropertyStatus(
-          product?.propertyDetails?.propertyStatus ?? product?.status
-        );
-
-        return selectedStatuses.includes(statusLabel);
-      });
-    }
-
-    if (
-      selectedCategories.length > 0 &&
-      selectedCategories.length < categories.length
-    ) {
-      filteredProducts = filteredProducts.filter((product) => {
-        if (!product.category) return false;
-        if (Array.isArray(product.category)) {
-          return product.category.some((category) =>
-            selectedCategories.includes(category)
-          );
-        }
-
-        return selectedCategories.includes(product.category);
-      });
-    }
-
-    if (selectedBedBaths.length > 0) {
-      filteredProducts = filteredProducts.filter((product) =>
-        selectedBedBaths.includes(getProductBedBathLabel(product))
-      );
-    }
-
-    if (selectedLocation) {
-      const normalizedLocation = selectedLocation.trim().toLowerCase();
-      filteredProducts = filteredProducts.filter((product) =>
-        String(product?.locantion || "").toLowerCase().includes(normalizedLocation)
-      );
-    }
-
-    if (
-      selectedPriceRanges.length > 0 &&
-      selectedPriceRanges.length < priceRanges.length
-    ) {
-      const selectedBuckets = priceRanges.filter((range) =>
-        selectedPriceRanges.includes(range.name)
-      );
-
-      filteredProducts = filteredProducts.filter((product) => {
-        const price = getProductPrice(product);
-        return selectedBuckets.some(
-          (range) => price >= range.min && price <= range.max
-        );
-      });
-    }
+    console.log('After filter sort:', filteredProducts.length);
 
     filteredProducts = filteredProducts.filter((product) => {
-      const price = getProductPrice(product);
-      return price >= priceFilterValue[0] && price <= priceFilterValue[1];
+      if (selectedCategories.length > 0) {
+        const result = selectedCategories.includes(product.category[0]);
+        if (!result && filteredProducts.length <= 5) {
+          console.log('Category filter failed for:', product.title, 'category:', product.category);
+        }
+        return result;
+      }
+      return true;
     });
+    console.log('After category filter:', filteredProducts.length);
+
+    filteredProducts = filteredProducts.filter((product) => {
+      if (selectedStatuses.length > 0) {
+        const statusValue =
+          product?.propertyDetails?.propertyStatus ?? product?.status;
+        const statusLabel = formatPropertyStatus(statusValue);
+        const result = selectedStatuses.includes(statusLabel);
+        if (!result && filteredProducts.length <= 5) {
+          console.log('Status filter failed for:', product.title, 'status:', statusLabel);
+        }
+        return result;
+      }
+      return true;
+    });
+    console.log('After status filter:', filteredProducts.length);
+
+    filteredProducts = filteredProducts.filter((product) => {
+      if (selectedBedBaths.length > 0) {
+        const result = selectedBedBaths.includes(getProductBedBathLabel(product));
+        if (!result && filteredProducts.length <= 5) {
+          console.log('BedBath filter failed for:', product.title, 'bedBath:', getProductBedBathLabel(product));
+        }
+        return result;
+      }
+      return true;
+    });
+    console.log('After bedBath filter:', filteredProducts.length);
+
+    filteredProducts = filteredProducts.filter((product) => {
+      if (selectedLocation) {
+        const result = product.locantion
+          .toLowerCase()
+          .includes(selectedLocation.toLowerCase());
+        if (!result && filteredProducts.length <= 5) {
+          console.log('Location filter failed for:', product.title, 'location:', product.locantion);
+        }
+        return result;
+      }
+      return true;
+    });
+    console.log('After location filter:', filteredProducts.length);
 
     const searchedProducts = SearchProduct(filteredProducts);
+    console.log('After search filter:', searchedProducts.length);
     const endOffset = offset + pageLimit;
+
+    console.log('Setting currentItems to:', searchedProducts.slice(offset, endOffset).length);
 
     setSortedProducts(filteredProducts);
     setCurrentItems(searchedProducts.slice(offset, endOffset));
@@ -300,11 +282,8 @@ function ShopLeftSideBar() {
     selectedCategories,
     selectedBedBaths,
     selectedLocation,
-    selectedPriceRanges,
-    priceFilterValue,
     statusOptions.length,
     categories.length,
-    priceRanges,
   ]);
 
   const handlePageClick = (event) => {
@@ -483,11 +462,6 @@ function ShopLeftSideBar() {
                 bedBaths={bedBathOptions}
                 selectedBedBaths={selectedBedBaths}
                 onBedBathToggle={handleBedBathToggle}
-                priceRanges={priceRanges}
-                selectedPriceRanges={selectedPriceRanges}
-                onPriceRangeToggle={handlePriceRangeToggle}
-                priceFilterValue={priceFilterValue}
-                onPriceFilterChange={handlePriceFilterChange}
               />
             </Col>
           </Row>

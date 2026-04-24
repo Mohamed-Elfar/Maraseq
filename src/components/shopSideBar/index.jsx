@@ -106,7 +106,7 @@ const SideBar = ({
               />
             </div>
             <small className="mt-3 d-block">
-              Price bounds: {formatAmount(0)} - {formatAmount(1000000)}
+              Price bounds: {formatAmount(0)} - {formatAmount(2000000000)}
             </small>
           </div>
           <hr />

@@ -50,6 +50,7 @@ const MyApp = ({ Component, ...rest }) => {
       }
 
       const properties = await getProperties();
+      console.log('Fetched properties from database:', properties.length);
 
       // Transform database format to match website JSON format
       const transformedProperties = properties.map(property => ({
@@ -114,8 +115,9 @@ const MyApp = ({ Component, ...rest }) => {
       }));
 
 
-      // If no properties from database, add test data
+      console.log('Transformed properties count:', transformedProperties.length);
       if (transformedProperties.length === 0) {
+        console.log('Using test data - no properties from database');
         const testProperties = [
           {
             id: 'test-1',
@@ -148,6 +150,7 @@ const MyApp = ({ Component, ...rest }) => {
         ];
         store.dispatch(setProducts(testProperties));
       } else {
+        console.log('Setting products in Redux store:', transformedProperties.length);
         store.dispatch(setProducts(transformedProperties));
       }
     };
