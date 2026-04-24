@@ -12,6 +12,20 @@ import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import { formatPropertyStatus } from "@/utils/property-status";
 
+const formatPrice = (value) => {
+  // Convert to string if not already a string
+  const stringValue = String(value || '')
+  
+  // Remove all non-digit characters and dots
+  let cleanValue = stringValue.replace(/[^0-9]/g, '')
+  
+  // If empty, return empty
+  if (!cleanValue) return ''
+  
+  // Add dots as thousands separators (e.g., 2300100 becomes 2.300.100)
+  return cleanValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+}
+
 const ProductItem = ({
   productData,
   slug,
@@ -141,7 +155,7 @@ const ProductItem = ({
         </div>
         <div className="product-info">
           <div className="product-price">
-            <span>{`From ${productData.currency || '$'}${productData.price} / month`}</span>
+            <span>{`From ${productData.currency || '$'} ${formatPrice(productData.price)} / month`}</span>
           </div>
           <h2 className="product-title">
             <Link href={`/${baseUrl}/${slug}`}>{productData.title}</Link>

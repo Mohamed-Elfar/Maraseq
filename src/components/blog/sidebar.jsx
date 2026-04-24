@@ -1,4 +1,18 @@
 ﻿import Link from "next/link";
+
+const formatPrice = (value) => {
+  // Convert to string if not already a string
+  const stringValue = String(value || '')
+  
+  // Remove all non-digit characters and dots
+  let cleanValue = stringValue.replace(/[^0-9]/g, '')
+  
+  // If empty, return empty
+  if (!cleanValue) return ''
+  
+  // Add dots as thousands separators (e.g., 2300100 becomes 2.300.100)
+  return cleanValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+}
 import Slider from "react-slick";
 import { useState, useEffect } from "react";
 import {
@@ -325,7 +339,7 @@ const BlogSideBar = ({ popularProducts, topRatedProducts, latestdBlogs }) => {
                   <div className="product-info">
                     <div className="product-price">
                       <span>
-                        {product.currency || '$'} {product.price}
+                        {product.currency || '$'} {formatPrice(product.price)}
                         {(product.propertyDetails?.propertyStatus === 'for_rent' || product.propertyDetails?.propertyStatus === 'rented') && <label>/Month</label>}
                       </span>
                     </div>

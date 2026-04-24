@@ -36,6 +36,20 @@ import Tags from "@/components/tags";
 import CallToAction from "@/components/callToAction";
 import { formatPropertyStatus } from "@/utils/property-status";
 
+const formatPrice = (value) => {
+  // Convert to string if not already a string
+  const stringValue = String(value || '')
+
+  // Remove all non-digit characters and dots
+  let cleanValue = stringValue.replace(/[^0-9]/g, '')
+
+  // If empty, return empty
+  if (!cleanValue) return ''
+
+  // Add dots as thousands separators (e.g., 2300100 becomes 2.300.100)
+  return cleanValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+}
+
 function ProductDetails({ product, latestBlogs, categories }) {
   const { products } = useSelector((state) => state.product);
   const { cartItems } = useSelector((state) => state.cart);
@@ -288,7 +302,7 @@ function ProductDetails({ product, latestBlogs, categories }) {
                     </ul>
                     <ul>
                       <li>
-                        <label>Price:</label> <span>{product.currency} {product.price}</span>
+                        <label>Price:</label> <span>{product.currency} {formatPrice(product.price)}</span>
                       </li>
                       <li>
                         <label>Property Status:</label>{" "}
@@ -747,8 +761,8 @@ function ProductDetails({ product, latestBlogs, categories }) {
                                   <a href={`/shop/${slug}`}>{product.title}</a>
                                 </h6>
                                 <div className="product-price">
-                                  <span>{product.currency} {product.price}</span>
-                                  <del>{product.currency} {discountedPrice}</del>
+                                  <span>{product.currency} {formatPrice(product.price)}</span>
+                                  <del>{product.currency} {formatPrice(discountedPrice)}</del>
                                 </div>
                               </div>
                             </div>
@@ -822,7 +836,7 @@ function ProductDetails({ product, latestBlogs, categories }) {
                             <div className="product-info">
                               <div className="product-price">
                                 <span>
-                                  {product.currency} {product.price}
+                                  {product.currency} {formatPrice(product.price)}
                                   {(product.propertyDetails?.propertyStatus === 'for_rent' || product.propertyDetails?.propertyStatus === 'rented') && <label>/Month</label>}
                                 </span>
                               </div>

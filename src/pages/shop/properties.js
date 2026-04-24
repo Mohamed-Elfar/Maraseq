@@ -25,6 +25,20 @@ import { useRouter } from "next/router";
 import { formatPropertyStatus } from "@/utils/property-status";
 import { supabase } from "@/lib/supabase";
 
+const formatPrice = (value) => {
+  // Convert to string if not already a string
+  const stringValue = String(value || '')
+
+  // Remove all non-digit characters and dots
+  let cleanValue = stringValue.replace(/[^0-9]/g, '')
+
+  // If empty, return empty
+  if (!cleanValue) return ''
+
+  // Add dots as thousands separators (e.g., 2300100 becomes 2.300.100)
+  return cleanValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+}
+
 const SEARCH_KEYS = ["title"];
 const PRICE_MIN = 0;
 const PRICE_MAX = 2000000000;
@@ -475,11 +489,10 @@ function ShopLeftSideBar() {
                       <Row>
                         {currentItems.map((product, key) => {
                           const slug = productSlug(product.title);
-                          const discountedPrice = getDiscountPrice(
-                            product.price,
-                            product.discount
-                          ).toFixed(2);
-                          const productPrice = product.price.toFixed(2);
+                          const discountedPrice = formatPrice(
+                            getDiscountPrice(product.price, product.discount)
+                          );
+                          const productPrice = formatPrice(product.price);
                           const cartItem = cartItems.find(
                             (cartItem) => cartItem.id === product.id
                           );
@@ -512,11 +525,10 @@ function ShopLeftSideBar() {
                       <Row>
                         {currentItems.map((product, key) => {
                           const slug = productSlug(product.title);
-                          const discountedPrice = getDiscountPrice(
-                            product.price,
-                            product.discount
-                          ).toFixed(2);
-                          const productPrice = product.price.toFixed(2);
+                          const discountedPrice = formatPrice(
+                            getDiscountPrice(product.price, product.discount)
+                          );
+                          const productPrice = formatPrice(product.price);
                           const cartItem = cartItems.find(
                             (cartItem) => cartItem.id === product.id
                           );

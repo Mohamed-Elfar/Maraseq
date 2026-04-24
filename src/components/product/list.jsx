@@ -9,6 +9,21 @@ import QuickViewtModal from "@/components/modals/quickViewModal";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import { formatPropertyStatus } from "@/utils/property-status";
+
+const formatPrice = (value) => {
+  // Convert to string if not already a string
+  const stringValue = String(value || '')
+  
+  // Remove all non-digit characters and dots
+  let cleanValue = stringValue.replace(/[^0-9]/g, '')
+  
+  // If empty, return empty
+  if (!cleanValue) return ''
+  
+  // Add dots as thousands separators (e.g., 2300100 becomes 2.300.100)
+  return cleanValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+}
+
 const ProductList = ({
   productData,
   slug,
@@ -71,7 +86,7 @@ const ProductList = ({
 
             <div className="product-price">
               <span>
-                {productData.currency || '$'} {productData.price}
+                {productData.currency || '$'} {formatPrice(productData.price)}
                 {(productData.propertyDetails?.propertyStatus === 'for_rent' || productData.propertyDetails?.propertyStatus === 'rented') && <label>/Month</label>}
               </span>
             </div>
