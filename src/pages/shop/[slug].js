@@ -668,77 +668,80 @@ function ProductDetails({ product, latestBlogs, categories }) {
                       Popular Properties
                     </h4>
 
-                    <Slider
-                      {...popular_product}
-                      className="row ltn__popular-product-widget-active slick-arrow-1"
-                    >
-                      {/* <!-- ltn__product-item --> */}
+                    <div style={{ overflow: 'hidden' }}>
+                      <Slider
+                        {...popular_product}
+                        className="row ltn__popular-product-widget-active slick-arrow-1"
+                      >
+                        {/* <!-- ltn__product-item --> */}
 
-                      {popularProducts.map((product, key) => {
-                        const slug = productSlug(product.title);
-                        return (
-                          <div
-                            key={key}
-                            className="ltn__product-item ltn__product-item-4 ltn__product-item-5 text-center---"
-                          >
-                            <div className="product-img">
-                              <Link href={`/shop/${slug}`}>
-                                <img
-                                  src={`/img/product-3/${product.productImg}`}
-                                  alt={slug}
-                                />
-                              </Link>
-                              <div className="real-estate-agent">
-                                <div className="agent-img">
-                                  <Link href="#">
-                                    <img src={`/img/blog/author.jpg`} alt="#" />
-                                  </Link>
+                        {popularProducts.map((product, key) => {
+                          const slug = productSlug(product.title);
+                          return (
+                            <div
+                              key={key}
+                              className="ltn__product-item ltn__product-item-4 ltn__product-item-5 text-center---"
+                            >
+                              <div className="product-img" style={{ width: '100%', height: '300px', overflow: 'hidden' }}>
+                                <Link href={`/shop/${slug}`}>
+                                  <img
+                                    src={product.productImg?.startsWith('http') ? product.productImg : `/img/product-3/${product.productImg || '1.jpg'}`}
+                                    alt={slug}
+                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                  />
+                                </Link>
+                                <div className="real-estate-agent">
+                                  <div className="agent-img">
+                                    <Link href="#">
+                                      <img src={`/img/blog/author.jpg`} alt="#" />
+                                    </Link>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                            <div className="product-info">
-                              <div className="product-price">
-                                <span>
-                                  {product.currency} {formatPrice(product.price)}
-                                  {(product.propertyDetails?.propertyStatus === 'for_rent' || product.propertyDetails?.propertyStatus === 'rented') && <label>/Month</label>}
-                                </span>
-                              </div>
-                              <h2 className="product-title">
-                                <Link href={`/shop/${slug}`}>
-                                  {product.title}
-                                </Link>
-                              </h2>
-                              <div className="product-img-location">
-                                <ul>
+                              <div className="product-info">
+                                <div className="product-price">
+                                  <span>
+                                    {product.currency} {formatPrice(product.price)}
+                                    {(product.propertyDetails?.propertyStatus === 'for_rent' || product.propertyDetails?.propertyStatus === 'rented') && <label>/Month</label>}
+                                  </span>
+                                </div>
+                                <h2 className="product-title">
+                                  <Link href={`/shop/${slug}`}>
+                                    {product.title}
+                                  </Link>
+                                </h2>
+                                <div className="product-img-location">
+                                  <ul>
+                                    <li>
+                                      <Link href="product-details">
+                                        <i className="flaticon-pin"></i>
+                                        {product.locantion}
+                                      </Link>
+                                    </li>
+                                  </ul>
+                                </div>
+                                <ul className="ltn__list-item-2--- ltn__list-item-2-before--- ltn__plot-brief">
                                   <li>
-                                    <Link href="product-details">
-                                      <i className="flaticon-pin"></i>
-                                      {product.locantion}
-                                    </Link>
+                                    <span>
+                                      {product.propertyDetails.bedrooms}
+                                    </span>
+                                    <span className="ms-1">Bedrooms</span>
+                                  </li>
+                                  <li>
+                                    <span>{product.propertyDetails.baths}</span>
+                                    <span className="ms-1">Bathrooms</span>
+                                  </li>
+                                  <li>
+                                    <span>{product.propertyDetails.area}</span>
+                                    <span className="ms-1">{getUnitTypeLabel(product.propertyDetails.unitType)}</span>
                                   </li>
                                 </ul>
                               </div>
-                              <ul className="ltn__list-item-2--- ltn__list-item-2-before--- ltn__plot-brief">
-                                <li>
-                                  <span>
-                                    {product.propertyDetails.bedrooms}
-                                  </span>
-                                  <span className="ms-1">Bedrooms</span>
-                                </li>
-                                <li>
-                                  <span>{product.propertyDetails.baths}</span>
-                                  <span className="ms-1">Bathrooms</span>
-                                </li>
-                                <li>
-                                  <span>{product.propertyDetails.area}</span>
-                                  <span className="ms-1">{getUnitTypeLabel(product.propertyDetails.unitType)}</span>
-                                </li>
-                              </ul>
                             </div>
-                          </div>
-                        );
-                      })}
-                    </Slider>
+                          );
+                        })}
+                      </Slider>
+                    </div>
                   </div>
                   {/* <!-- Popular Post Widget --> */}
                   <div className="widget ltn__popular-post-widget">
