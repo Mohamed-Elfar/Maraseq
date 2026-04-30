@@ -4,7 +4,12 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { VisibilityObserver } from "reactjs-visibility";
-function CounterUp() {
+function CounterUp({ showStatistics = true }) {
+  // Don't render the section if showStatistics is false
+  if (showStatistics === 'false' || showStatistics === false) {
+    return null;
+  }
+
   const [loading, setLoading] = useState(false);
 
   const onVisibilityChange = (isVisible) => {

@@ -16,8 +16,9 @@ import CallToAction from "@/components/callToAction";
 import CounterUp from "@/components/counterUp";
 import Link from "next/link";
 import { submitMailForm } from "@/lib/mailtoForm";
+import { getSiteSetting } from "@/lib/supabase";
 
-function TermsAndConditions() {
+function TermsAndConditions({ showStatistics }) {
   const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
     <button
       {...props}
@@ -205,7 +206,7 @@ function TermsAndConditions() {
           </div>
         </div>
 
-        <CounterUp />
+        <CounterUp showStatistics={showStatistics} />
 
         <div className="ltn__blog-area pt-120 pb-70">
           <Container>
@@ -247,6 +248,17 @@ function TermsAndConditions() {
       </LayoutOne>
     </>
   );
+}
+
+export async function getStaticProps() {
+  const showStatistics = await getSiteSetting('show_statistics', 'true');
+
+  return {
+    props: {
+      showStatistics,
+    },
+    revalidate: 60,
+  };
 }
 
 export default TermsAndConditions;

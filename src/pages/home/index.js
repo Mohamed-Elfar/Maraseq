@@ -22,6 +22,7 @@ import ProductsSection from "./_components/ProductsSection";
 import VideoSection from "./_components/VideoSection";
 import BrandsSection from "./_components/BrandsSection";
 import BlogSection from "./_components/BlogSection";
+import CounterUp from "@/components/counterUp";
 
 function HomeVersionThree(props) {
   const [isOpen, setOpen] = useState(false);
