@@ -26,7 +26,7 @@ import BlogSection from "./_components/BlogSection";
 function HomeVersionThree(props) {
   const [isOpen, setOpen] = useState(false);
   const { products } = useSelector((state) => state.product);
-  const { data, brand, newsData, propertyCategories, objectives, homeVideoUrl } = props;
+  const { data, brand, newsData, propertyCategories, objectives, homeVideoUrl, showPropertyTypes } = props;
 
   const featureData = getProducts(props.servicesData || [], "buying", "featured", 3);
   // Temporarily show all properties instead of just featured to test display
@@ -65,7 +65,7 @@ function HomeVersionThree(props) {
       <AboutSection />
       <FeaturesSection featureData={featureData} />
       <CategoriesSection propertyCategories={propertyCategories} />
-      <ShowcaseSection portfolios={portfolios} />
+      <ShowcaseSection portfolios={portfolios} showPropertyTypes={showPropertyTypes} />
       <ProductsSection
         featuredProducts={featuredProducts}
         featuredFilterOptions={featuredFilterOptions}
@@ -106,6 +106,7 @@ export async function getStaticProps() {
   const propertyCategories = await getCategories("properties");
   const objectives = await getFormOptions("objectives");
   const homeVideoUrl = await getSiteSetting('home_video_url', 'https://www.youtube.com/watch?v=X7R-q9rsrtU');
+  const showPropertyTypes = await getSiteSetting('show_property_types', 'true');
 
   return {
     props: {
@@ -117,6 +118,7 @@ export async function getStaticProps() {
       propertyCategories,
       objectives,
       homeVideoUrl,
+      showPropertyTypes,
     },
     revalidate: 60,
   };
