@@ -389,268 +389,84 @@ function ProductDetails({ product, latestBlogs, categories }) {
                     </>
                   )}
 
-                  <h4 className="title-2">Floor Plans</h4>
-                  {/* <!-- APARTMENTS PLAN AREA START --> */}
+                  <>
+                    {/* <!-- APARTMENTS PLAN AREA START --> */}
+                    <div className="ltn__apartments-plan-area product-details-apartments-plan mb-60">
+                      {product.floorPlans && product.floorPlans.filter(p => p.image || p.description).length > 0 && (
+                        <h4 className="title-2">Floor Plans</h4>
+                      )}
+                      {product.floorPlans && product.floorPlans.filter(p => p.image || p.description).length > 0 && (
+                        <Tab.Container defaultActiveKey={`floor-0`}>
+                          <div className="ltn__tab-menu ltn__tab-menu-3">
+                            <Nav className="nav">
+                              {product.floorPlans.filter(p => p.image || p.description).map((plan, i) => (
+                                <Nav.Link key={i} eventKey={`floor-${i}`}>{plan.label || `Floor ${i + 1}`}</Nav.Link>
+                              ))}
+                            </Nav>
+                          </div>
+                          <Tab.Content>
+                            {product.floorPlans.filter(p => p.image || p.description).map((plan, i) => (
+                              <Tab.Pane key={i} eventKey={`floor-${i}`}>
+                                <div className="ltn__apartments-tab-content-inner">
+                                  <div className="row">
+                                    {plan.image && (
+                                      <div className={plan.description ? 'col-lg-7' : 'col-lg-12'}>
+                                        <div className="apartments-plan-img">
+                                          <img src={plan.image} alt={plan.label || `Floor ${i + 1}`} />
+                                        </div>
+                                      </div>
+                                    )}
+                                    {plan.description && (
+                                      <div className={plan.image ? 'col-lg-5' : 'col-lg-12'}>
+                                        <div className="apartments-plan-info">
+                                          <h2>{plan.label || `Floor ${i + 1}`}</h2>
+                                          <p>{plan.description}</p>
+                                        </div>
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                              </Tab.Pane>
+                            ))}
+                          </Tab.Content>
+                        </Tab.Container>
+                      )}
 
-                  <div className="ltn__apartments-plan-area product-details-apartments-plan mb-60">
-                    <Tab.Container defaultActiveKey="first">
-                      <div className="ltn__tab-menu ltn__tab-menu-3">
-                        <Nav className="nav">
-                          <Nav.Link eventKey="first">First Floor</Nav.Link>
-                          <Nav.Link eventKey="second">Second Floor</Nav.Link>
-                          <Nav.Link eventKey="third">Third Floor</Nav.Link>
-                          <Nav.Link eventKey="fourth">Top Garden</Nav.Link>
-                        </Nav>
+                      <div className="product-details-apartments-info-list section-bg-1 mt-30">
+                        <div className="row">
+                          <div className="col-lg-6">
+                            <div className="apartments-info-list apartments-info-list-color">
+                              <ul>
+                                <li>
+                                  <label>Total Area</label>{" "}
+                                  <span>{product.propertyDetails.totalArea || '-'} {product.propertyDetails.totalArea ? getUnitTypeLabel(product.propertyDetails.unitType) : ''}</span>
+                                </li>
+                                <li>
+                                  <label>Net Area</label>{" "}
+                                  <span>{product.propertyDetails.netArea || '-'} {product.propertyDetails.netArea ? getUnitTypeLabel(product.propertyDetails.unitType) : ''}</span>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                          <div className="col-lg-6">
+                            <div className="apartments-info-list apartments-info-list-color">
+                              <ul>
+                                <li>
+                                  <label>Land Area</label>{" "}
+                                  <span>{product.propertyDetails.landArea || '-'} {product.propertyDetails.landArea ? getUnitTypeLabel(product.propertyDetails.unitType) : ''}</span>
+                                </li>
+                                <li>
+                                  <label>Built-up Area</label>
+                                  <span>{product.propertyDetails.builtUpArea || '-'} {product.propertyDetails.builtUpArea ? getUnitTypeLabel(product.propertyDetails.unitType) : ''}</span>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <Tab.Content>
-                        <Tab.Pane eventKey="first">
-                          <div className="ltn__apartments-tab-content-inner">
-                            <div className="row">
-                              <div className="col-lg-7">
-                                <div className="apartments-plan-img">
-                                  <img src="/img/others/10.png" alt="#" />
-                                </div>
-                              </div>
-                              <div className="col-lg-5">
-                                <div className="apartments-plan-info">
-                                  <h2>First Floor</h2>
-                                  <p>
-                                    Enimad minim veniam quis nostrud
-                                    exercitation ullamco laboris. Lorem ipsum
-                                    dolor sit amet cons aetetur adipisicing elit
-                                    sedo eiusmod tempor.Incididunt labore et
-                                    dolore magna aliqua. sed ayd minim veniam.
-                                  </p>
-                                </div>
-                              </div>
-                              <div className="col-lg-12">
-                                <div className="product-details-apartments-info-list  section-bg-1">
-                                  <div className="row">
-                                    <div className="col-lg-6">
-                                      <div className="apartments-info-list apartments-info-list-color">
-                                        <ul>
-                                          <li>
-                                            <label>Total Area</label>{" "}
-                                            <span>{product.propertyDetails.totalArea || product.propertyDetails.area} {getUnitTypeLabel(product.propertyDetails.unitType)}</span>
-                                          </li>
-                                          <li>
-                                            <label>Net Area</label>{" "}
-                                            <span>{product.propertyDetails.netArea || '-'} {product.propertyDetails.netArea ? getUnitTypeLabel(product.propertyDetails.unitType) : ''}</span>
-                                          </li>
-                                        </ul>
-                                      </div>
-                                    </div>
-                                    <div className="col-lg-6">
-                                      <div className="apartments-info-list apartments-info-list-color">
-                                        <ul>
-                                          <li>
-                                            <label>Land Area</label>{" "}
-                                            <span>{product.propertyDetails.landArea || '-'} {product.propertyDetails.landArea ? getUnitTypeLabel(product.propertyDetails.unitType) : ''}</span>
-                                          </li>
-                                          <li>
-                                            <label>Built-up Area</label>
-                                            <span>{product.propertyDetails.builtUpArea || '-'} {product.propertyDetails.builtUpArea ? getUnitTypeLabel(product.propertyDetails.unitType) : ''}</span>
-                                          </li>
-                                        </ul>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-
-                          {/* WhatsApp Contact Button */}
-                          <div className="text-center mt-4 mb-4">
-                            <a
-                              className="btn theme-btn-1 btn-effect-1 text-uppercase"
-                              href={`https://wa.me/+201102223231?text=${encodeURIComponent(`Hello, I am interested in this property: ${product.title}`)}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
-                            >
-                              <i className="fab fa-whatsapp" style={{ fontSize: '20px' }}></i>
-                              Contact on WhatsApp
-                            </a>
-                          </div>
-
-                        </Tab.Pane>
-                        <Tab.Pane eventKey="second">
-                          <div className="ltn__product-tab-content-inner">
-                            <div className="row">
-                              <div className="col-lg-7">
-                                <div className="apartments-plan-img">
-                                  <img src="/img/others/10.png" alt="#" />
-                                </div>
-                              </div>
-                              <div className="col-lg-5">
-                                <div className="apartments-plan-info">
-                                  <h2>Second Floor</h2>
-                                  <p>
-                                    Enimad minim veniam quis nostrud
-                                    exercitation ullamco laboris. Lorem ipsum
-                                    dolor sit amet cons aetetur adipisicing elit
-                                    sedo eiusmod tempor.Incididunt labore et
-                                    dolore magna aliqua. sed ayd minim veniam.
-                                  </p>
-                                </div>
-                              </div>
-                              <div className="col-lg-12">
-                                <div className="product-details-apartments-info-list  section-bg-1">
-                                  <div className="row">
-                                    <div className="col-lg-6">
-                                      <div className="apartments-info-list apartments-info-list-color">
-                                        <ul>
-                                          <li>
-                                            <label>Total Area</label>{" "}
-                                            <span>{product.propertyDetails.totalArea || product.propertyDetails.area} {getUnitTypeLabel(product.propertyDetails.unitType)}</span>
-                                          </li>
-                                          <li>
-                                            <label>Net Area</label>{" "}
-                                            <span>{product.propertyDetails.netArea || '-'} {product.propertyDetails.netArea ? getUnitTypeLabel(product.propertyDetails.unitType) : ''}</span>
-                                          </li>
-                                        </ul>
-                                      </div>
-                                    </div>
-                                    <div className="col-lg-6">
-                                      <div className="apartments-info-list apartments-info-list-color">
-                                        <ul>
-                                          <li>
-                                            <label>Land Area</label>{" "}
-                                            <span>{product.propertyDetails.landArea || '-'} {product.propertyDetails.landArea ? getUnitTypeLabel(product.propertyDetails.unitType) : ''}</span>
-                                          </li>
-                                          <li>
-                                            <label>Built-up Area</label>
-                                            <span>{product.propertyDetails.builtUpArea || '-'} {product.propertyDetails.builtUpArea ? getUnitTypeLabel(product.propertyDetails.unitType) : ''}</span>
-                                          </li>
-                                        </ul>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </Tab.Pane>
-                        <Tab.Pane eventKey="third">
-                          <div className="ltn__product-tab-content-inner">
-                            <div className="row">
-                              <div className="col-lg-7">
-                                <div className="apartments-plan-img">
-                                  <img src="/img/others/10.png" alt="#" />
-                                </div>
-                              </div>
-                              <div className="col-lg-5">
-                                <div className="apartments-plan-info">
-                                  <h2>Third Floor</h2>
-                                  <p>
-                                    Enimad minim veniam quis nostrud
-                                    exercitation ullamco laboris. Lorem ipsum
-                                    dolor sit amet cons aetetur adipisicing elit
-                                    sedo eiusmod tempor.Incididunt labore et
-                                    dolore magna aliqua. sed ayd minim veniam.
-                                  </p>
-                                </div>
-                              </div>
-                              <div className="col-lg-12">
-                                <div className="product-details-apartments-info-list  section-bg-1">
-                                  <div className="row">
-                                    <div className="col-lg-6">
-                                      <div className="apartments-info-list apartments-info-list-color">
-                                        <ul>
-                                          <li>
-                                            <label>Total Area</label>{" "}
-                                            <span>{product.propertyDetails.totalArea || '-'} {product.propertyDetails.totalArea ? getUnitTypeLabel(product.propertyDetails.unitType) : ''}</span>
-                                          </li>
-                                          <li>
-                                            <label>Net Area</label>{" "}
-                                            <span>{product.propertyDetails.netArea || '-'} {product.propertyDetails.netArea ? getUnitTypeLabel(product.propertyDetails.unitType) : ''}</span>
-                                          </li>
-                                        </ul>
-                                      </div>
-                                    </div>
-                                    <div className="col-lg-6">
-                                      <div className="apartments-info-list apartments-info-list-color">
-                                        <ul>
-                                          <li>
-                                            <label>Land Area</label>{" "}
-                                            <span>{product.propertyDetails.landArea || '-'} {product.propertyDetails.landArea ? getUnitTypeLabel(product.propertyDetails.unitType) : ''}</span>
-                                          </li>
-                                          <li>
-                                            <label>Built-up Area</label>
-                                            <span>{product.propertyDetails.builtUpArea || '-'} {product.propertyDetails.builtUpArea ? getUnitTypeLabel(product.propertyDetails.unitType) : ''}</span>
-                                          </li>
-                                        </ul>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </Tab.Pane>
-                        <Tab.Pane eventKey="fourth">
-                          <div className="ltn__product-tab-content-inner">
-                            <div className="row">
-                              <div className="col-lg-7">
-                                <div className="apartments-plan-img">
-                                  <img src="/img/others/10.png" alt="#" />
-                                </div>
-                              </div>
-                              <div className="col-lg-5">
-                                <div className="apartments-plan-info">
-                                  <h2>Top Garden</h2>
-                                  <p>
-                                    Enimad minim veniam quis nostrud
-                                    exercitation ullamco laboris. Lorem ipsum
-                                    dolor sit amet cons aetetur adipisicing elit
-                                    sedo eiusmod tempor.Incididunt labore et
-                                    dolore magna aliqua. sed ayd minim veniam.
-                                  </p>
-                                </div>
-                              </div>
-                              <div className="col-lg-12">
-                                <div className="product-details-apartments-info-list  section-bg-1">
-                                  <div className="row">
-                                    <div className="col-lg-6">
-                                      <div className="apartments-info-list apartments-info-list-color">
-                                        <ul>
-                                          <li>
-                                            <label>Total Area</label>{" "}
-                                            <span>{product.propertyDetails.totalArea || '-'} {product.propertyDetails.totalArea ? getUnitTypeLabel(product.propertyDetails.unitType) : ''}</span>
-                                          </li>
-                                          <li>
-                                            <label>Net Area</label>{" "}
-                                            <span>{product.propertyDetails.netArea || '-'} {product.propertyDetails.netArea ? getUnitTypeLabel(product.propertyDetails.unitType) : ''}</span>
-                                          </li>
-                                        </ul>
-                                      </div>
-                                    </div>
-                                    <div className="col-lg-6">
-                                      <div className="apartments-info-list apartments-info-list-color">
-                                        <ul>
-                                          <li>
-                                            <label>Land Area</label>{" "}
-                                            <span>{product.propertyDetails.landArea || '-'} {product.propertyDetails.landArea ? getUnitTypeLabel(product.propertyDetails.unitType) : ''}</span>
-                                          </li>
-                                          <li>
-                                            <label>Built-up Area</label>
-                                            <span>{product.propertyDetails.builtUpArea || '-'} {product.propertyDetails.builtUpArea ? getUnitTypeLabel(product.propertyDetails.unitType) : ''}</span>
-                                          </li>
-                                        </ul>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </Tab.Pane>
-                      </Tab.Content>
-                    </Tab.Container>
-                  </div>
-
-                  {/* <!-- APARTMENTS PLAN AREA END --> */}
+                    </div>
+                    {/* <!-- APARTMENTS PLAN AREA END --> */}
+                  </>
 
                   {(videoId || isVideoFile) && (
                     <>
@@ -1100,7 +916,8 @@ export async function getServerSideProps({ params }) {
     mapEmbedUrl: property.map_embed_url || null,
     videoUrl: property.video_url || null,
     videoPoster: property.video_poster || null,
-    galleryImages: property.gallery_images || []
+    galleryImages: property.gallery_images || [],
+    floorPlans: property.floor_plans || []
   }));
 
   const product = transformedProperties.find(
