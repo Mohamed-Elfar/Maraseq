@@ -59,39 +59,6 @@ const SideBar = ({
             "No categories found"
           )}
 
-          <hr />
-          <h4 className="ltn__widget-title">Price Renge</h4>
-          {priceRanges.length > 0 ? (
-            <>
-              <ul>
-                {priceRanges &&
-                  priceRanges.map((price) => {
-                    return (
-                      <li key={price.name}>
-                        <div>
-                          <label className="checkbox-item">
-                            {price.name}
-                            <input
-                              checked={selectedPriceRanges.includes(price.name)}
-                              onChange={(e) =>
-                                onPriceRangeToggle?.(price.name, e.target.checked)
-                              }
-                              type="checkbox"
-                            />
-                            <span className="checkmark"></span>
-                          </label>
-                          <span className="categorey-no">
-                            ({price.count})
-                          </span>
-                        </div>
-                      </li>
-                    );
-                  })}
-              </ul>
-            </>
-          ) : (
-            "No categories found"
-          )}
 
           {/* <hr /> */}
           {/* <!-- Price Filter Widget --> */}
@@ -100,13 +67,13 @@ const SideBar = ({
             <div className="price_filter">
               <FilterByPrice
                 min={0}
-                max={1000000}
+                max={1000000000}
                 value={priceFilterValue}
                 onChange={onPriceFilterChange}
               />
             </div>
             <small className="mt-3 d-block">
-              Price bounds: {formatAmount(0)} - {formatAmount(2000000000)}
+              Price bounds: {formatAmount(0)} - {formatAmount(1000000000)}
             </small>
           </div>
           <hr />

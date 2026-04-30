@@ -80,6 +80,8 @@ function ShopLeftSideBar() {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedBedBaths, setSelectedBedBaths] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState("");
+  const SLIDER_MAX = 1000000000;
+  const [priceFilterValue, setPriceFilterValue] = useState([0, SLIDER_MAX]);
   const selectedCategory =
     typeof router.query.category === "string" ? router.query.category : "";
   const selectedLocationQuery =
@@ -382,6 +384,13 @@ function ShopLeftSideBar() {
     console.log('After bedBath filter:', filteredProducts.length);
 
     filteredProducts = filteredProducts.filter((product) => {
+      const price = product?.price ?? 0;
+      const effectiveMax = priceFilterValue[1] >= SLIDER_MAX ? Infinity : priceFilterValue[1];
+      return price >= priceFilterValue[0] && price <= effectiveMax;
+    });
+    console.log('After price slider filter:', filteredProducts.length);
+
+    filteredProducts = filteredProducts.filter((product) => {
       if (selectedLocation) {
         const result = product.locantion
           .toLowerCase()
@@ -417,6 +426,7 @@ function ShopLeftSideBar() {
     selectedCategories,
     selectedBedBaths,
     selectedLocation,
+    priceFilterValue,
     statusOptions.length,
     categories.length,
   ]);
@@ -595,6 +605,8 @@ function ShopLeftSideBar() {
                 bedBaths={bedBathOptions}
                 selectedBedBaths={selectedBedBaths}
                 onBedBathToggle={handleBedBathToggle}
+                priceFilterValue={priceFilterValue}
+                onPriceFilterChange={(val) => { setPriceFilterValue(val); setOffset(0); }}
               />
             </Col>
           </Row>
