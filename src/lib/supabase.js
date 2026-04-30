@@ -544,3 +544,20 @@ export const getFaqs = async () => {
 
 }
 
+export async function getSiteSetting(key, fallback = null) {
+  try {
+    const { data, error } = await supabase
+      .from('site_settings')
+      .select('value')
+      .eq('key', key)
+      .single()
+
+    if (error) throw error
+
+    return data?.value ?? fallback
+  } catch (error) {
+    console.error(`Error fetching site setting "${key}":`, error)
+    return fallback
+  }
+}
+

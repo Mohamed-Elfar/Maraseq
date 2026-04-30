@@ -22,12 +22,7 @@ const BlogItem = ({ baseUrl, data, slug, imageSrc }) => {
         <div className="ltn__blog-brief">
           <div className="ltn__blog-meta">
             <ul>
-              <li className="ltn__blog-author">
-                <Link href="#">
-                  <img src="/img/logo.svg" alt="Maraseq Logo" style={{ width: '16px', height: '16px', marginRight: '5px' }} />
-                  by: Maraseq Team
-                </Link>
-              </li>
+
               <li className="ltn__blog-tags">
                 <Link href="#">
                   <FaTags className="me-2" />

@@ -14,12 +14,6 @@ const BlogContent = ({ blog }) => {
         <h2 className="ltn__blog-title">{blog.title}</h2>
         <div className="ltn__blog-meta">
           <ul>
-            <li className="ltn__blog-author">
-              <a href="#">
-                <img src="/img/logo.svg" alt="Maraseq Logo" style={{ width: '20px', height: '20px', marginRight: '5px' }} />
-                By: Maraseq Team
-              </a>
-            </li>
             <li className="ltn__blog-date">
               <i className="far fa-calendar-alt"></i>
               {blog.published_at ? new Date(blog.published_at).toLocaleDateString() : blog.date}

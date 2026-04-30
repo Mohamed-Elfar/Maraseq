@@ -10,7 +10,7 @@ import ModalVideo from "react-modal-video";
 import CallToAction from "@/components/callToAction";
 import portfolioData from "@/data/portfolio";
 import EditableSection from "@/components/cms/EditableSection";
-import { getServices, getNews, getCategories, getFormOptions } from "@/lib/supabase";
+import { getServices, getNews, getCategories, getFormOptions, getSiteSetting } from "@/lib/supabase";
 
 // Import section components
 import SearchSection from "./_components/SearchSection";
@@ -26,7 +26,7 @@ import BlogSection from "./_components/BlogSection";
 function HomeVersionThree(props) {
   const [isOpen, setOpen] = useState(false);
   const { products } = useSelector((state) => state.product);
-  const { data, brand, newsData, propertyCategories, objectives } = props;
+  const { data, brand, newsData, propertyCategories, objectives, homeVideoUrl } = props;
 
   const featureData = getProducts(props.servicesData || [], "buying", "featured", 3);
   // Temporarily show all properties instead of just featured to test display
@@ -70,7 +70,7 @@ function HomeVersionThree(props) {
         featuredProducts={featuredProducts}
         featuredFilterOptions={featuredFilterOptions}
       />
-      <VideoSection />
+      <VideoSection videoUrl={homeVideoUrl} />
       <BrandsSection brand={brand} />
       <BlogSection blogData={blogData} />
 
@@ -105,6 +105,7 @@ export async function getStaticProps() {
   const newsData = await getNews();
   const propertyCategories = await getCategories("properties");
   const objectives = await getFormOptions("objectives");
+  const homeVideoUrl = await getSiteSetting('home_video_url', 'https://www.youtube.com/watch?v=X7R-q9rsrtU');
 
   return {
     props: {
@@ -115,6 +116,7 @@ export async function getStaticProps() {
       newsData,
       propertyCategories,
       objectives,
+      homeVideoUrl,
     },
     revalidate: 60,
   };
