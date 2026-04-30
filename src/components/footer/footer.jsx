@@ -1,5 +1,6 @@
 ﻿import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import Slider from "react-slick";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -101,6 +102,26 @@ const Footer = function () {
       .filter((link) => canShowAtPosition(link?.position, "footer"))
       .sort(bySavedOrder);
   }, [loadingSocialLinks, socialLinks]);
+
+  const qrLinks = useMemo(() => {
+    return socialLinks
+      .filter((link) => link?.active !== false && link?.qr_image)
+      .sort(bySavedOrder);
+  }, [socialLinks]);
+
+  const qrSliderSettings = {
+    infinite: qrLinks.length > 1,
+    slidesToShow: Math.min(4, qrLinks.length),
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    dots: false,
+    arrows: false,
+    responsive: [
+      { breakpoint: 768, settings: { slidesToShow: 2 } },
+      { breakpoint: 480, settings: { slidesToShow: 4 } },
+    ],
+  };
 
   return (
     <>
@@ -294,6 +315,34 @@ const Footer = function () {
                   </div>
                   <h5 className="mt-30">We Accept</h5>
                   <img src="/img/icons/payment-4.png" alt="Payment Image" />
+
+                  {qrLinks.length > 0 && (
+                    <div className="mt-30">
+                      <h5 className="mb-15">Follow Us</h5>
+                      <Slider {...qrSliderSettings}>
+                        {qrLinks.map((link) => {
+                          const IconComponent = getIconComponent(link.icon);
+                          return (
+                            <div key={link.id} style={{ padding: '0 6px' }}>
+                              <Link href={link.url || '#'} target="_blank" rel="noopener noreferrer" title={link.name}>
+                                <div style={{ textAlign: 'center' }}>
+                                  <img
+                                    src={link.qr_image}
+                                    alt={`${link.name} QR Code`}
+                                    style={{ width: '80px', height: '80px', objectFit: 'contain', borderRadius: '8px', background: '#fff', padding: '4px' }}
+                                  />
+                                  <p style={{ fontSize: '11px', marginTop: '6px', color: '#aaa', marginBottom: 0, display: 'flex', alignItems: 'center', justifyContent: 'start', gap: '4px' }}>
+                                    <IconComponent style={{ fontSize: '12px' }} />
+                                    {link.name}
+                                  </p>
+                                </div>
+                              </Link>
+                            </div>
+                          );
+                        })}
+                      </Slider>
+                    </div>
+                  )}
                 </div>
               </Col>
             </Row>

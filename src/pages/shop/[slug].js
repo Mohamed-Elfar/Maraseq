@@ -680,7 +680,7 @@ function ProductDetails({ product, latestBlogs, categories }) {
                           return (
                             <div
                               key={key}
-                              className="ltn__product-item ltn__product-item-4 ltn__product-item-5 text-center---"
+                              className="ltn__product-item ltn__product-item-4 ltn__product-item-5 text-center--- "
                             >
                               <div className="product-img" style={{ width: '100%', height: '300px', overflow: 'hidden' }}>
                                 <Link href={`/shop/${slug}`}>
