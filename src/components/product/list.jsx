@@ -150,6 +150,25 @@ const ProductList = ({
                 </OverlayTrigger>
               </li>
               <li>
+                <OverlayTrigger
+                  placement="right"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={(props) => (
+                    <Tooltip id="button-tooltip" {...props}>
+                      Contact on WhatsApp
+                    </Tooltip>
+                  )}
+                >
+                  <a
+                    href={`https://wa.me/201102223231?text=${encodeURIComponent(`Hello, I am interested in this property: ${productData.title}\n\nPrice: ${productData.currency || '$'} ${formatPrice(productData.price)}`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <i className="icon-whatsapp"></i>
+                  </a>
+                </OverlayTrigger>
+              </li>
+              <li>
 
               <OverlayTrigger
                   placement="right"

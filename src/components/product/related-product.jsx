@@ -55,6 +55,18 @@ const RelatedProduct = ({
       Quick View
     </Tooltip>
   );
+  const whatsappTooltip = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Contact on WhatsApp
+    </Tooltip>
+  );
+  
+  // WhatsApp functionality
+  const whatsappNumber = "201102223231";
+  const whatsappMessage = encodeURIComponent(
+    `Hello, I am interested in this property: ${productData.title}\n\nProperty Details:\nPrice: ${productData.currency || '$'} ${formatPrice(productData.price)}\nLocation: ${productData.locantion}\nBedrooms: ${productData.propertyDetails.bedrooms}\nBathrooms: ${productData.propertyDetails.baths}\nArea: ${productData.propertyDetails.area} square Ft`
+  );
+  const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
   return (
     <>
       <div className="ltn__product-item ltn__product-item-4 ltn__product-item-5">
@@ -128,6 +140,21 @@ const RelatedProduct = ({
                   <button onClick={() => setModalShow(true)}>
                     <i className="flaticon-expand"></i>
                   </button>
+                </OverlayTrigger>
+              </li>
+              <li>
+                <OverlayTrigger
+                  placement="right"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={whatsappTooltip}
+                >
+                  <a
+                    href={whatsappLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <i className="icon-whatsapp"></i>
+                  </a>
                 </OverlayTrigger>
               </li>
               <li>

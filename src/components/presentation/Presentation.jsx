@@ -194,7 +194,7 @@ function Slide7() {
     <div className="content">
       <p className="section-kicker reveal pres-mb-5">Logo Concept</p>
       <div className="pres-grid pres-grid-cols-2 pres-gap-10 pres-items-center">
-        <div className="glass pres-p-12 reveal pres-flex pres-place-items-center" style={{ minHeight: 420 }}>
+        <div className="glass pres-p-10 reveal pres-flex pres-place-items-center pres-slide-hero-box">
           <HeroMark size="large" />
         </div>
         <div>
