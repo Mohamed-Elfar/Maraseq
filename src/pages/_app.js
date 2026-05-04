@@ -19,6 +19,7 @@ import "@/assets/responsive.css";
 import "@/components/presentation/presentation.css";
 import { EditModeProvider } from "@/context/EditModeContext";
 import EditModeToolbar from "@/components/cms/EditModeToolbar";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 
 
@@ -186,6 +187,7 @@ const MyApp = ({ Component, ...rest }) => {
           <EditModeProvider>
             <Component {...props.pageProps} />
             <EditModeToolbar />
+            <SpeedInsights />
           </EditModeProvider>
         </PersistGate>
       </Provider>
