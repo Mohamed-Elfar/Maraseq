@@ -16,8 +16,11 @@ import "yet-another-react-lightbox/styles.css";
 import "yet-another-react-lightbox/plugins/counter.css";
 import "@/assets/sass/style.scss";
 import "@/assets/responsive.css";
+import "@/components/presentation/presentation.css";
 import { EditModeProvider } from "@/context/EditModeContext";
 import EditModeToolbar from "@/components/cms/EditModeToolbar";
+
+
 
 const nunito = Nunito_Sans({
   weight: ["200", "300", "400", "600", "700", "800", "900"],
@@ -50,7 +53,7 @@ const MyApp = ({ Component, ...rest }) => {
       }
 
       const properties = await getProperties();
-      console.log('Fetched properties from database:', properties.length);
+
 
       // Transform database format to match website JSON format
       const transformedProperties = properties.map(property => ({
@@ -115,9 +118,9 @@ const MyApp = ({ Component, ...rest }) => {
       }));
 
 
-      console.log('Transformed properties count:', transformedProperties.length);
+
       if (transformedProperties.length === 0) {
-        console.log('Using test data - no properties from database');
+
         const testProperties = [
           {
             id: 'test-1',
@@ -150,7 +153,7 @@ const MyApp = ({ Component, ...rest }) => {
         ];
         store.dispatch(setProducts(testProperties));
       } else {
-        console.log('Setting products in Redux store:', transformedProperties.length);
+
         store.dispatch(setProducts(transformedProperties));
       }
     };

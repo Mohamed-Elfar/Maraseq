@@ -58,14 +58,7 @@ function ShopLeftSideBar() {
   const router = useRouter();
   const { products } = useSelector((state) => state.product);
   const [dbCategories, setDbCategories] = useState([]);
-  console.log('Products in Redux store:', products.length);
-  // Show sample product categories for debugging
-  if (products.length > 0) {
-    console.log('Sample product categories:');
-    products.slice(0, 3).forEach(p => {
-      console.log(`- ${p.title}: category=${JSON.stringify(p.category)}`);
-    });
-  }
+  
   const [sortType, setSortType] = useState("");
   const [sortValue, setSortValue] = useState("");
   const [filterSortType, setFilterSortType] = useState("");
@@ -75,7 +68,7 @@ function ShopLeftSideBar() {
   const pageLimit = 6;
   const [currentItems, setCurrentItems] = useState(products);
   const [pageCount, setPageCount] = useState(0);
-  console.log('Initial currentItems:', currentItems.length);
+
   const [selectedStatuses, setSelectedStatuses] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedBedBaths, setSelectedBedBaths] = useState([]);
@@ -120,7 +113,7 @@ function ShopLeftSideBar() {
       }
     });
 
-    console.log('Final categories:', result);
+
     return result;
   }, [products, dbCategories]);
   const statusOptions = useMemo(() => {
@@ -156,7 +149,7 @@ function ShopLeftSideBar() {
       };
     });
 
-    console.log('All property statuses:', result);
+
     return result;
   }, [products]);
 
@@ -228,13 +221,10 @@ function ShopLeftSideBar() {
           .order('order_index', { ascending: true });
 
         if (!error && categoriesData) {
-          console.log('Categories from database:', categoriesData);
-          console.log('Categories query filters: type=properties, visible=true');
           // Filter again to ensure only property categories
           const propertyCategories = categoriesData.filter(cat =>
             cat.type === 'properties' && cat.visible === true
           );
-          console.log('Filtered property categories:', propertyCategories);
           setDbCategories(propertyCategories);
         } else {
           // If no categories table, try to get unique categories from properties
@@ -261,7 +251,6 @@ function ShopLeftSideBar() {
               count: 0 // Will be updated when products are loaded
             }));
 
-            console.log('Categories from properties:', categoriesArray);
             setDbCategories(categoriesArray);
           }
         }
@@ -275,7 +264,7 @@ function ShopLeftSideBar() {
 
   // Update currentItems when products change
   useEffect(() => {
-    console.log('Products changed, updating currentItems:', products.length);
+
     if (products.length > 0) {
       setCurrentItems(products.slice(0, pageLimit));
       setPageCount(Math.ceil(products.length / pageLimit));
@@ -334,7 +323,7 @@ function ShopLeftSideBar() {
     }
 
     let filteredProducts = getSortedProducts(products, sortType, sortValue);
-    console.log('After initial sort:', filteredProducts.length);
+
 
     const filterSortedProducts = getSortedProducts(
       filteredProducts,
@@ -342,73 +331,57 @@ function ShopLeftSideBar() {
       filterSortValue
     );
     filteredProducts = filterSortedProducts;
-    console.log('After filter sort:', filteredProducts.length);
+
 
     filteredProducts = filteredProducts.filter((product) => {
       if (selectedCategories.length > 0) {
-        const result = selectedCategories.includes(product.category[0]);
-        if (!result && filteredProducts.length <= 5) {
-          console.log('Category filter failed for:', product.title, 'category:', product.category);
-        }
-        return result;
+        return selectedCategories.includes(product.category[0]);
       }
       return true;
     });
-    console.log('After category filter:', filteredProducts.length);
+
 
     filteredProducts = filteredProducts.filter((product) => {
       if (selectedStatuses.length > 0) {
         const statusValue =
           product?.propertyDetails?.propertyStatus ?? product?.status;
         const statusLabel = formatPropertyStatus(statusValue);
-        const result = selectedStatuses.includes(statusLabel);
-        if (!result && filteredProducts.length <= 5) {
-          console.log('Status filter failed for:', product.title, 'status:', statusLabel);
-        }
-        return result;
+        return selectedStatuses.includes(statusLabel);
       }
       return true;
     });
-    console.log('After status filter:', filteredProducts.length);
+
 
     filteredProducts = filteredProducts.filter((product) => {
       if (selectedBedBaths.length > 0) {
-        const result = selectedBedBaths.includes(getProductBedBathLabel(product));
-        if (!result && filteredProducts.length <= 5) {
-          console.log('BedBath filter failed for:', product.title, 'bedBath:', getProductBedBathLabel(product));
-        }
-        return result;
+        return selectedBedBaths.includes(getProductBedBathLabel(product));
       }
       return true;
     });
-    console.log('After bedBath filter:', filteredProducts.length);
+
 
     filteredProducts = filteredProducts.filter((product) => {
       const price = product?.price ?? 0;
       const effectiveMax = priceFilterValue[1] >= SLIDER_MAX ? Infinity : priceFilterValue[1];
       return price >= priceFilterValue[0] && price <= effectiveMax;
     });
-    console.log('After price slider filter:', filteredProducts.length);
+
 
     filteredProducts = filteredProducts.filter((product) => {
       if (selectedLocation) {
-        const result = product.locantion
+        return product.locantion
           .toLowerCase()
           .includes(selectedLocation.toLowerCase());
-        if (!result && filteredProducts.length <= 5) {
-          console.log('Location filter failed for:', product.title, 'location:', product.locantion);
-        }
-        return result;
       }
       return true;
     });
-    console.log('After location filter:', filteredProducts.length);
+
 
     const searchedProducts = SearchProduct(filteredProducts);
-    console.log('After search filter:', searchedProducts.length);
+
     const endOffset = offset + pageLimit;
 
-    console.log('Setting currentItems to:', searchedProducts.slice(offset, endOffset).length);
+
 
     setSortedProducts(filteredProducts);
     setCurrentItems(searchedProducts.slice(offset, endOffset));

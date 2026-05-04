@@ -154,7 +154,7 @@ export const getContactInfo = async () => {
 
   } catch (error) {
 
-    console.error('Error fetching contact info:', error)
+
 
     return {
 
@@ -226,7 +226,7 @@ export const getFormOptions = async (type = null) => {
 
   } catch (error) {
 
-    console.error('Error fetching form options:', error)
+
 
     return {
 
@@ -270,7 +270,7 @@ export const getProperties = async () => {
 
   } catch (error) {
 
-    console.error('Error fetching properties:', error)
+
 
     return []
 
@@ -310,13 +310,13 @@ export const getCategories = async (type = null) => {
 
     if (error) throw error
 
-    console.log('getCategories returning:', data);
+
 
     return data
 
   } catch (error) {
 
-    console.error('Error fetching categories:', error)
+
 
     return []
 
@@ -352,7 +352,7 @@ export const getNews = async () => {
 
   } catch (error) {
 
-    console.error('Error fetching news:', error)
+
 
     return []
 
@@ -398,7 +398,7 @@ export const getServices = async () => {
 
   } catch (error) {
 
-    console.error('Error fetching services:', error)
+
 
     return []
 
@@ -434,7 +434,7 @@ export const getPortfolio = async () => {
 
   } catch (error) {
 
-    console.error('Error fetching portfolio:', error)
+
 
     return []
 
@@ -468,7 +468,7 @@ export const getBrands = async () => {
 
   } catch (error) {
 
-    console.error('Error fetching brands:', error)
+
 
     return []
 
@@ -502,7 +502,7 @@ export const getSocialLinks = async () => {
 
   } catch (error) {
 
-    console.error('Error fetching social links:', error)
+
 
     return []
 
@@ -536,7 +536,7 @@ export const getFaqs = async () => {
 
   } catch (error) {
 
-    console.error('Error fetching FAQs:', error)
+
 
     return []
 
@@ -556,7 +556,7 @@ export async function getSiteSetting(key, fallback = null) {
 
     return data?.value ?? fallback
   } catch (error) {
-    console.error(`Error fetching site setting "${key}":`, error)
+
     return fallback
   }
 }
