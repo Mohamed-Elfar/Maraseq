@@ -20,6 +20,7 @@ import "@/components/presentation/presentation.css";
 import { EditModeProvider } from "@/context/EditModeContext";
 import EditModeToolbar from "@/components/cms/EditModeToolbar";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
 
 
 
@@ -188,6 +189,7 @@ const MyApp = ({ Component, ...rest }) => {
             <Component {...props.pageProps} />
             <EditModeToolbar />
             <SpeedInsights />
+            <Analytics />
           </EditModeProvider>
         </PersistGate>
       </Provider>
